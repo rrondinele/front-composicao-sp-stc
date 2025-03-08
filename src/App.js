@@ -360,9 +360,9 @@ function App() {
 
   // Se o usuário estiver logado, exibe a tela de cadastro
   return (
-    <div className="p-6 max-w-6xl mx-auto bg-white shadow-lg rounded-lg mt-10">
+    <div className="p-6 max-w-7xl mx-auto bg-white shadow-lg rounded-lg mt-10">
       <h1 className="text-3xl font-semibold text-gray-700 text-center mb-6">
-        Cadastro de Equipes
+        Composição de Equipes
       </h1>
       <div className="flex justify-end gap-4 mt-4 mb-6">
         <button
