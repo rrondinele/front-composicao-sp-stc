@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import Select from "react-select";
 import * as XLSX from "xlsx";
-import exitIcon from "./exit.png"; // Importando o ícone de logout
-import excelIcon from "./excel.png"; // Importando o ícone de logout
+import cenegedtIcon from "./ceneged.png"; // Importando o ícone ceneged
+import exitIcon from "./exit.png"; // Importando o ícone logout
+import excelIcon from "./excel.png"; // Importando o ícone excel
 import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Defina como true para ignorar o login
   const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
   const [formData, setFormData] = useState({
     data_atividade: "",
@@ -320,47 +321,47 @@ function App() {
   // Se o usuário não estiver logado, exibe a tela de login
   if (!isLoggedIn) {
     return (
-      <div className="p-6 max-w-6xl mx-auto bg-white shadow-lg rounded-lg mt-10">
-        <h1 className="text-3xl font-semibold text-gray-700 text-center mb-6">
+      <div className="flex items-center justify-center min-h-screen bg-gray-900">
+      <div className="p-8 max-w-md w-full bg-gray-800 shadow-xl rounded-lg mt-[-600px]">
+        <h1 className="text-3xl font-semibold text-white text-center mb-6">
           Login
         </h1>
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div className="grid grid-cols-1 gap-4">
+        <form>
+          <div className="mb-4">
+            <label className="block text-gray-400 text-sm mb-2">Matrícula</label>
             <input
               type="text"
-              name="matricula"
-              placeholder="Matrícula"
-              value={loginData.matricula}
-              onChange={(e) => setLoginData({ ...loginData, matricula: e.target.value })}
-              required
-              className="w-full p-2 border rounded-md"
+              placeholder="Digite sua matrícula"
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-400 text-sm mb-2">Senha</label>
             <input
               type="password"
-              name="senha"
-              placeholder="Senha"
-              value={loginData.senha}
-              onChange={(e) => setLoginData({ ...loginData, senha: e.target.value })}
-              required
-              className="w-full p-2 border rounded-md"
+              placeholder="Digite sua senha"
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
-            disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
           >
-            {loading ? "Carregando..." : "Entrar"}
+            Entrar
           </button>
         </form>
-        <ToastContainer />
+        <p className="text-gray-400 text-sm text-center mt-4">
+          Esqueceu a senha? <a href="#" className="text-blue-400 hover:underline">Pergunte ao Pavão</a>
+        </p>
       </div>
+    </div>
     );
   }
 
   // Se o usuário estiver logado, exibe a tela de cadastro
   return (
-    <div className="p-6 max-w-7xl mx-auto bg-white shadow-lg rounded-lg mt-10">
+    <div className="p-6 max-w-6xl mx-auto bg-white shadow-lg rounded-lg mt-10">
+          <img src={cenegedtIcon} alt="Ceneged" className="w-12 h-12 mr-2" />
       <h1 className="text-3xl font-semibold text-gray-700 text-center mb-6">
         Composição de Equipes
       </h1>
@@ -474,13 +475,13 @@ function App() {
         <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
           <thead>
             <tr className="bg-gray-200 text-gray-700 text-xs">
-              <th className="p-2 border w-12 text-left">Data</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Data</th> {/* Alinhado à esquerda */}
               <th className="p-2 border whitespace-nowrap text-left">Supervisor(a)</th> {/* Alinhado à esquerda */}
               <th className="p-2 border whitespace-nowrap text-left">Status</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border w-12 text-left">Equipe</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Equipe</th> {/* Alinhado à esquerda */}
               <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th> {/* Alinhado à esquerda */}
               <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro(a)</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border w-12 text-left">Serviço</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Serviço</th> {/* Alinhado à esquerda */}
               <th className="p-2 border w-12 text-left">Placa</th> {/* Alinhado à esquerda */}
               <th className="p-2 border w-12 text-center">Ações</th> {/* Centralizado */}
             </tr>
