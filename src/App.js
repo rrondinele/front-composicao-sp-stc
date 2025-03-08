@@ -321,40 +321,58 @@ function App() {
   // Se o usuário não estiver logado, exibe a tela de login
   if (!isLoggedIn) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-900">
-      <div className="p-8 max-w-md w-full bg-gray-800 shadow-xl rounded-lg mt-[-600px]">
-        <h1 className="text-3xl font-semibold text-white text-center mb-6">
-          Login
-        </h1>
-        <form>
-          <div className="mb-4">
-            <label className="block text-gray-400 text-sm mb-2">Matrícula</label>
-            <input
-              type="text"
-              placeholder="Digite sua matrícula"
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-400 text-sm mb-2">Senha</label>
-            <input
-              type="password"
-              placeholder="Digite sua senha"
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
-          >
-            Entrar
-          </button>
-        </form>
-        <p className="text-gray-400 text-sm text-center mt-4">
+<div className="min-h-screen flex items-center justify-center bg-gray-900">
+  <div className="p-8 max-w-md w-full bg-gray-800 shadow-lg rounded-lg mt-[-350px]">
+    <h1 className="text-3xl font-semibold text-white text-center mb-6">
+      Login
+    </h1>
+    <form onSubmit={handleLogin} className="space-y-6">
+      <div>
+        <label htmlFor="matricula" className="block text-sm font-medium text-gray-300">
+        {/*Matrícula*/}
+        </label>
+        <input
+          type="text"
+          id="matricula"
+          name="matricula"
+          placeholder="Digite sua matrícula"
+          value={loginData.matricula}
+          onChange={(e) => setLoginData({ ...loginData, matricula: e.target.value })}
+          required
+          className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div>
+        <label htmlFor="senha" className="block text-sm font-medium text-gray-300">
+          {/*Senha*/}
+        </label>
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          placeholder="Digite sua senha"
+          value={loginData.senha}
+          onChange={(e) => setLoginData({ ...loginData, senha: e.target.value })}
+          required
+          className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div>
+        <button
+          type="submit"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          disabled={loading}
+        >
+          {loading ? "Carregando..." : "Entrar"}
+        </button>
+      </div>
+    </form>
+    <p className="text-gray-400 text-sm text-center mt-4">
           Esqueceu a senha? <a href="#" className="text-blue-400 hover:underline">Pergunte ao Pavão</a>
         </p>
-      </div>
-    </div>
+    <ToastContainer />
+  </div>
+</div>
     );
   }
 
