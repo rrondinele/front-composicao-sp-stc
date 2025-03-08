@@ -27,7 +27,7 @@ function App() {
 
   // Opções para os campos de seleção
   const supervisorOptions = [
-    { value: "0000-JOAO", label: "0000-JOAO" },
+    { value: "016032 - WAGNER AUGUSTO DA SILVA MAURO", label: "016032 - WAGNER AUGUSTO DA SILVA MAURO" },
     { value: "1111-PEDRO", label: "1111-PEDRO" },
     { value: "2222-ANA", label: "2222-ANA" },
   ];
@@ -57,13 +57,17 @@ function App() {
   ];
 
   const eletricistaMotoristaOptions = [
-    { value: "1212 - JOAO", label: "1212 - JOAO" },
-    { value: "1111 - MARIA", label: "1111 - MARIA" },
+    { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" },
+    { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
+    { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
+    { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },
   ];
 
   const eletricistaParceiroOptions = [
-    { value: "1212 - JOAO", label: "1212 - JOAO" },
-    { value: "1111 - MARIA", label: "1111 - MARIA" },
+    { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" },
+    { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
+    { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
+    { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },
   ];
 
   const servicoOptions = [
@@ -255,7 +259,8 @@ function App() {
       setLoading(true);
       try {
         await axios.put("https://composicao-sp-soc.onrender.com/teams/finalizar");
-        setTeams([]);
+  
+        // Resetar todos os campos do formulário
         setFormData({
           data_atividade: "",
           supervisor: "",
@@ -265,8 +270,10 @@ function App() {
           equipe: "",
           servico: "",
           placa_veiculo: "",
-          finalizado: false 
+          finalizado: false,
         });
+  
+        setTeams([]); // Limpa a lista de equipes
         toast.success("Registros finalizados com sucesso!");
       } catch (error) {
         toast.error("Erro ao finalizar registros.");
