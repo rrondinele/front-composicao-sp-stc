@@ -198,7 +198,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
+  
     setLoading(true);
     try {
       if (editId) {
@@ -209,20 +209,17 @@ function App() {
         await axios.post("https://composicao-sp-soc.onrender.com/teams", formData);
         toast.success("Equipe cadastrada com sucesso!");
       }
-
-      setFormData({
-        data_atividade: "",
-        supervisor: "",
-        status: "",
-        eletricista_motorista: "",
-        eletricista_parceiro: "",
-        equipe: "",
-        servico: "",
-        placa_veiculo: "",
-        finalizado: false 
-      });
-
-      fetchTeams();
+  
+      // Resetar apenas os campos que devem ser limpos
+      setFormData((prevFormData) => ({
+        ...prevFormData, // Mantém os campos que não devem ser resetados
+        eletricista_motorista: "", // Reseta o eletricista motorista
+        eletricista_parceiro: "", // Reseta o eletricista parceiro
+        equipe: "", // Reseta a equipe
+        placa_veiculo: "", // Reseta a placa do veículo
+      }));
+  
+      fetchTeams(); // Atualiza a lista de equipes
     } catch (error) {
       toast.error(error.response?.data?.message || "Erro ao cadastrar equipe.");
     } finally {
@@ -268,6 +265,7 @@ function App() {
           equipe: "",
           servico: "",
           placa_veiculo: "",
+          finalizado: false 
         });
         toast.success("Registros finalizados com sucesso!");
       } catch (error) {
@@ -280,7 +278,32 @@ function App() {
 
   // Função para exportar a tabela para Excel
   const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(teams);
+    // Mapeia apenas as colunas visíveis e formata a data
+    const visibleColumns = teams.map(team => [
+      new Date(team.data_atividade).toLocaleDateString('pt-BR'), // Formata a data para DD/MM/AAAA
+      team.supervisor,
+      team.status,
+      team.eletricista_motorista,
+      team.eletricista_parceiro,
+      team.equipe,
+      team.servico,
+      team.placa_veiculo,
+    ]);
+  
+    // Adiciona cabeçalhos personalizados
+    const header = [
+      "Data Atividade",
+      "Supervisor",
+      "Status",
+      "Eletricista Motorista",
+      "Eletricista Parceiro",
+      "Equipe",
+      "Serviço",
+      "Placa Veículo",
+    ];
+  
+    // Cria a planilha com cabeçalhos personalizados
+    const worksheet = XLSX.utils.aoa_to_sheet([header, ...visibleColumns]);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Equipes Cadastradas");
     XLSX.writeFile(workbook, "equipes_cadastradas.xlsx");
