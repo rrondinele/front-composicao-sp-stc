@@ -474,15 +474,15 @@ function App() {
         <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
           <thead>
             <tr className="bg-gray-200 text-gray-700 text-xs">
-              <th className="p-2 border whitespace-nowrap text-left">Data</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border w-12 text-left">Data</th> {/* Alinhado à esquerda */}
               <th className="p-2 border whitespace-nowrap text-left">Supervisor(a)</th> {/* Alinhado à esquerda */}
               <th className="p-2 border whitespace-nowrap text-left">Status</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-left">Equipe</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border w-12 text-left">Equipe</th> {/* Alinhado à esquerda */}
               <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th> {/* Alinhado à esquerda */}
               <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro(a)</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-left">Serviço</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-left">Placa</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-center">Ações</th> {/* Centralizado */}
+              <th className="p-2 border w-12 text-left">Serviço</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border w-12 text-left">Placa</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border w-12 text-center">Ações</th> {/* Centralizado */}
             </tr>
           </thead>
           <tbody className="text-xs">
