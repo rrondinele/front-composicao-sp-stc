@@ -474,13 +474,13 @@ function App() {
         <table className="min-w-full bg-white border rounded-lg">
           <thead>
             <tr className="bg-gray-200 text-gray-700 text-sm">
-              <th className="p-2 border">Data</th>
-              <th className="p-2 border w-56">Supervisor(a)</th>
+              <th className="p-2 border w-24">Data</th>
+              <th className="p-2 border w-60">Supervisor(a)</th>
               <th className="p-2 border">Status</th>
               <th className="p-2 border">Equipe</th>
-              <th className="p-2 border">Eletricista Motorista</th>
-              <th className="p-2 border">Eletricista Parceiro(a)</th>
-              <th className="p-2 border">Serviço</th>
+              <th className="p-2 border  w-60">Eletricista Motorista</th>
+              <th className="p-2 border  w-60">Eletricista Parceiro(a)</th>
+              <th className="p-2 border  w-24">Serviço</th>
               <th className="p-2 border">Placa</th>
               <th className="p-2 border">Ações</th>
             </tr>
