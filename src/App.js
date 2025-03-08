@@ -471,52 +471,54 @@ function App() {
 
       <h2 className="text-xl font-semibold text-gray-700 mt-6">Equipes Cadastradas</h2>
       <div className="overflow-x-auto mt-3">
-  <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
-    <thead>
-      <tr className="bg-gray-200 text-gray-700 text-sm">
-        <th className="p-2 border whitespace-nowrap">Data</th>
-        <th className="p-2 border whitespace-nowrap">Supervisor(a)</th>
-        <th className="p-2 border whitespace-nowrap">Status</th>
-        <th className="p-2 border whitespace-nowrap">Equipe</th>
-        <th className="p-2 border whitespace-nowrap">Eletricista Motorista</th>
-        <th className="p-2 border whitespace-nowrap">Eletricista Parceiro(a)</th>
-        <th className="p-2 border whitespace-nowrap">Serviço</th>
-        <th className="p-2 border whitespace-nowrap">Placa</th>
-        <th className="p-2 border whitespace-nowrap">Ações</th>
-      </tr>
-    </thead>
-    <tbody className="text-sm">
-      {teams.map((team) => (
-        <tr key={team.id} className="text-center">
-          <td className="p-2 border whitespace-nowrap">{team.data_atividade}</td>
-          <td className="p-2 border whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">
-            {team.supervisor}
-          </td>
-          <td className="p-2 border whitespace-nowrap">{team.status}</td>
-          <td className="p-2 border whitespace-nowrap">{team.equipe}</td>
-          <td className="p-2 border whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">
-            {team.eletricista_motorista}
-          </td>
-          <td className="p-2 border whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">
-            {team.eletricista_parceiro}
-          </td>
-          <td className="p-2 border whitespace-nowrap">{team.servico}</td>
-          <td className="p-2 border whitespace-nowrap">{team.placa_veiculo}</td>
-          <td className="p-2 border whitespace-nowrap flex gap-2 justify-center">
-            <button
-              onClick={() => handleEdit(team)}
-              className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
-              disabled={loading}
-            >
-              Editar
-            </button>
-            <button
-              onClick={() => handleDelete(team.id)}
-              className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-              disabled={loading}
-            >
-              Excluir
-            </button>
+        <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
+          <thead>
+            <tr className="bg-gray-200 text-gray-700 text-xs">
+              <th className="p-2 border whitespace-nowrap text-left">Data</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Supervisor(a)</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Status</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Equipe</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro(a)</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Serviço</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-left">Placa</th> {/* Alinhado à esquerda */}
+              <th className="p-2 border whitespace-nowrap text-center">Ações</th> {/* Centralizado */}
+            </tr>
+          </thead>
+          <tbody className="text-xs">
+            {teams.map((team) => (
+              <tr key={team.id}>
+                <td className="p-2 border whitespace-nowrap text-left">{team.data_atividade}</td> {/* Alinhado à esquerda */}
+                <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
+                  {team.supervisor}
+                </td> {/* Alinhado à esquerda */}
+                <td className="p-2 border whitespace-nowrap text-left">{team.status}</td> {/* Alinhado à esquerda */}
+                <td className="p-2 border whitespace-nowrap text-left">{team.equipe}</td> {/* Alinhado à esquerda */}
+                <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
+                  {team.eletricista_motorista}
+                </td> {/* Alinhado à esquerda */}
+                <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
+                  {team.eletricista_parceiro}
+                </td> {/* Alinhado à esquerda */}
+                <td className="p-2 border whitespace-nowrap text-left">{team.servico}</td> {/* Alinhado à esquerda */}
+                <td className="p-2 border whitespace-nowrap text-left">{team.placa_veiculo}</td> {/* Alinhado à esquerda */}
+                <td className="p-2 border whitespace-nowrap text-center"> {/* Centralizado */}
+                  <div className="flex gap-2 justify-center">
+                    <button
+                      onClick={() => handleEdit(team)}
+                      className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-xs"
+                      disabled={loading}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => handleDelete(team.id)}
+                      className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-xs"
+                      disabled={loading}
+                    >
+                      Excluir
+                    </button>
+            </div>
           </td>
         </tr>
       ))}
