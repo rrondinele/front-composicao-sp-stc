@@ -471,52 +471,58 @@ function App() {
 
       <h2 className="text-xl font-semibold text-gray-700 mt-6">Equipes Cadastradas</h2>
       <div className="overflow-x-auto mt-3">
-        <table className="min-w-full bg-white border rounded-lg">
-          <thead>
-            <tr className="bg-gray-200 text-gray-700 text-sm">
-              <th className="p-2 border w-24">Data</th>
-              <th className="p-2 border w-60">Supervisor(a)</th>
-              <th className="p-2 border">Status</th>
-              <th className="p-2 border">Equipe</th>
-              <th className="p-2 border  w-60">Eletricista Motorista</th>
-              <th className="p-2 border  w-60">Eletricista Parceiro(a)</th>
-              <th className="p-2 border  w-24">Serviço</th>
-              <th className="p-2 border">Placa</th>
-              <th className="p-2 border">Ações</th>
-            </tr>
-          </thead>
-          <tbody className="text-sm">
-            {teams.map((team) => (
-              <tr key={team.id} className="text-center">
-                <td className="p-2 border">{team.data_atividade}</td>
-                <td className="p-2 border">{team.supervisor}</td>
-                <td className="p-2 border">{team.status}</td>
-                <td className="p-2 border">{team.equipe}</td>
-                <td className="p-2 border">{team.eletricista_motorista}</td>
-                <td className="p-2 border">{team.eletricista_parceiro}</td>
-                <td className="p-2 border">{team.servico}</td>
-                <td className="p-2 border">{team.placa_veiculo}</td>
-                <td className="p-2 border flex gap-2 justify-center">
-                  <button
-                    onClick={() => handleEdit(team)}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
-                    disabled={loading}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => handleDelete(team.id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-                    disabled={loading}
-                  >
-                    Excluir
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+  <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
+    <thead>
+      <tr className="bg-gray-200 text-gray-700 text-sm">
+        <th className="p-2 border whitespace-nowrap">Data</th>
+        <th className="p-2 border whitespace-nowrap">Supervisor(a)</th>
+        <th className="p-2 border whitespace-nowrap">Status</th>
+        <th className="p-2 border whitespace-nowrap">Equipe</th>
+        <th className="p-2 border whitespace-nowrap">Eletricista Motorista</th>
+        <th className="p-2 border whitespace-nowrap">Eletricista Parceiro(a)</th>
+        <th className="p-2 border whitespace-nowrap">Serviço</th>
+        <th className="p-2 border whitespace-nowrap">Placa</th>
+        <th className="p-2 border whitespace-nowrap">Ações</th>
+      </tr>
+    </thead>
+    <tbody className="text-sm">
+      {teams.map((team) => (
+        <tr key={team.id} className="text-center">
+          <td className="p-2 border whitespace-nowrap">{team.data_atividade}</td>
+          <td className="p-2 border whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">
+            {team.supervisor}
+          </td>
+          <td className="p-2 border whitespace-nowrap">{team.status}</td>
+          <td className="p-2 border whitespace-nowrap">{team.equipe}</td>
+          <td className="p-2 border whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">
+            {team.eletricista_motorista}
+          </td>
+          <td className="p-2 border whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">
+            {team.eletricista_parceiro}
+          </td>
+          <td className="p-2 border whitespace-nowrap">{team.servico}</td>
+          <td className="p-2 border whitespace-nowrap">{team.placa_veiculo}</td>
+          <td className="p-2 border whitespace-nowrap flex gap-2 justify-center">
+            <button
+              onClick={() => handleEdit(team)}
+              className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
+              disabled={loading}
+            >
+              Editar
+            </button>
+            <button
+              onClick={() => handleDelete(team.id)}
+              className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+              disabled={loading}
+            >
+              Excluir
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
       <button
         onClick={handleFinalizar}
