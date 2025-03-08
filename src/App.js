@@ -219,6 +219,7 @@ function App() {
         equipe: "",
         servico: "",
         placa_veiculo: "",
+        finalizado: false 
       });
 
       fetchTeams();
