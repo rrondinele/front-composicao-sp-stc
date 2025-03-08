@@ -203,30 +203,38 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
+  
     setLoading(true);
     try {
-      if (editId) {
-        await axios.put(`https://composicao-sp-soc.onrender.com/teams/${editId}`, formData);
-        toast.success("Equipe atualizada com sucesso!");
+      const url = editId 
+        ? `https://composicao-sp-soc.onrender.com/teams/${editId}` 
+        : "https://composicao-sp-soc.onrender.com/teams";
+      const method = editId ? "put" : "post";
+  
+      const response = await axios[method](url, formData);
+  
+      if (response.status === 201 || response.status === 200) {
+        toast.success(editId ? "Equipe atualizada com sucesso!" : "Equipe cadastrada com sucesso!");
         setEditId(null);
-      } else {
-        await axios.post("https://composicao-sp-soc.onrender.com/teams", formData);
-        toast.success("Equipe cadastrada com sucesso!");
+        setFormData({
+          data_atividade: "",
+          supervisor: "",
+          status: "",
+          eletricista_motorista: "",
+          eletricista_parceiro: "",
+          equipe: "",
+          servico: "",
+          placa_veiculo: "",
+        });
+        fetchTeams();
       }
-
-      // Resetar apenas os campos que devem ser limpos
-      setFormData((prevFormData) => ({
-        ...prevFormData, // Mantém os campos que não devem ser resetados
-        eletricista_motorista: "", // Reseta o eletricista motorista
-        eletricista_parceiro: "", // Reseta o eletricista parceiro
-        equipe: "", // Reseta a equipe
-        placa_veiculo: "", // Reseta a placa do veículo
-      }));
-
-      fetchTeams(); // Atualiza a lista de equipes
     } catch (error) {
-      toast.error(error.response?.data?.message || "Erro ao cadastrar equipe.");
+      if (error.response && error.response.status === 400) {
+        // Erro de duplicidade retornado pelo backend
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Erro ao cadastrar/atualizar equipe.");
+      }
     } finally {
       setLoading(false);
     }
