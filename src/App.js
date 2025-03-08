@@ -4,6 +4,8 @@ import Select from "react-select";
 import * as XLSX from "xlsx";
 import exitIcon from "./exit.png"; // Importando o ícone de logout
 import excelIcon from "./excel.png"; // Importando o ícone de logout
+import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
+import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,6 +23,7 @@ function App() {
 
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
+  const [loading, setLoading] = useState(false); // Estado para indicar carregamento
 
   // Opções para os campos de seleção
   const supervisorOptions = [
@@ -121,7 +124,7 @@ function App() {
 
     for (const field of requiredFields) {
       if (!formData[field]) {
-        alert(`Por favor, preencha o campo: ${field.replace("_", " ")}`);
+        toast.error(`Por favor, preencha o campo: ${field.replace("_", " ")}`);
         return false;
       }
     }
@@ -136,13 +139,17 @@ function App() {
   // Função para lidar com o login
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/login", loginData);
+      const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
       if (response.data.message === "Login bem-sucedido") {
         setIsLoggedIn(true);
+        toast.success("Login bem-sucedido!");
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Erro ao fazer login");
+      toast.error(error.response?.data?.message || "Erro ao fazer login");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -150,47 +157,57 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setLoginData({ matricula: "", senha: "" });
+    toast.info("Logout realizado com sucesso!");
   };
 
   // Função para buscar equipes
   const fetchTeams = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/teams", {
+      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", {
         params: {
           data: formData.data_atividade,
         },
       });
       setTeams(response.data);
     } catch (error) {
-      console.error("Erro ao buscar equipes:", error);
+      toast.error("Erro ao buscar equipes.");
+    } finally {
+      setLoading(false);
     }
   };
 
   // Função para buscar equipes finalizadas
   const fetchFinalizedTeams = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/teams/finalizadas", {
+      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams/finalizadas", {
         params: {
           data: formData.data_atividade,
         },
       });
       setTeams(response.data);
     } catch (error) {
-      console.error("Erro ao buscar equipes finalizadas:", error);
+      toast.error("Erro ao buscar equipes finalizadas.");
+    } finally {
+      setLoading(false);
     }
   };
 
   // Função para enviar o formulário de cadastro/edição
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return; // Valida os campos antes de cadastrar
+    if (!validateForm()) return;
 
+    setLoading(true);
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/teams/${editId}`, formData);
+        await axios.put(`https://composicao-sp-soc.onrender.com/teams/${editId}`, formData);
+        toast.success("Equipe atualizada com sucesso!");
         setEditId(null);
       } else {
-        await axios.post("http://localhost:5000/teams", formData);
+        await axios.post("https://composicao-sp-soc.onrender.com/teams", formData);
+        toast.success("Equipe cadastrada com sucesso!");
       }
 
       setFormData({
@@ -206,7 +223,9 @@ function App() {
 
       fetchTeams();
     } catch (error) {
-      alert(error.response?.data?.message || "Erro ao cadastrar equipe.");
+      toast.error(error.response?.data?.message || "Erro ao cadastrar equipe.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -219,11 +238,15 @@ function App() {
   // Função para excluir uma equipe
   const handleDelete = async (id) => {
     if (window.confirm("Tem certeza que deseja excluir este registro?")) {
+      setLoading(true);
       try {
-        await axios.delete(`http://localhost:5000/teams/${id}`);
+        await axios.delete(`https://composicao-sp-soc.onrender.com/teams/${id}`);
+        toast.success("Equipe excluída com sucesso!");
         fetchTeams();
       } catch (error) {
-        console.error("Erro ao excluir equipe:", error);
+        toast.error("Erro ao excluir equipe.");
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -231,8 +254,9 @@ function App() {
   // Função para finalizar registros
   const handleFinalizar = async () => {
     if (window.confirm("Confirma que todos os registros estão revisados? Isso limpará a tela.")) {
+      setLoading(true);
       try {
-        await axios.put("http://localhost:5000/teams/finalizar");
+        await axios.put("https://composicao-sp-soc.onrender.com/teams/finalizar");
         setTeams([]);
         setFormData({
           data_atividade: "",
@@ -244,10 +268,11 @@ function App() {
           servico: "",
           placa_veiculo: "",
         });
-        alert("Registros finalizados com sucesso!");
+        toast.success("Registros finalizados com sucesso!");
       } catch (error) {
-        console.error("Erro ao finalizar registros:", error);
-        alert("Erro ao finalizar registros.");
+        toast.error("Erro ao finalizar registros.");
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -258,6 +283,7 @@ function App() {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Equipes Cadastradas");
     XLSX.writeFile(workbook, "equipes_cadastradas.xlsx");
+    toast.success("Tabela exportada para Excel com sucesso!");
   };
 
   // Se o usuário não estiver logado, exibe a tela de login
@@ -288,10 +314,15 @@ function App() {
               className="w-full p-2 border rounded-md"
             />
           </div>
-          <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">
-            Entrar
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
+            disabled={loading}
+          >
+            {loading ? "Carregando..." : "Entrar"}
           </button>
         </form>
+        <ToastContainer />
       </div>
     );
   }
@@ -308,7 +339,6 @@ function App() {
           className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
         >
           <img src={exitIcon} alt="Sair" className="w-12 h-12 mr-2" />
-          
         </button>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -384,22 +414,28 @@ function App() {
             className="w-full"
           />
         </div>
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">
-          {editId ? "Atualizar" : "Cadastrar"}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
+          disabled={loading}
+        >
+          {loading ? "Carregando..." : editId ? "Atualizar" : "Cadastrar"}
         </button>
       </form>
       <button
         onClick={fetchTeams}
         className="mt-4 w-full bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500"
+        disabled={loading}
       >
-        Buscar Equipes Pendentes
+        {loading ? "Carregando..." : "Buscar Equipes Pendentes"}
       </button>
 
       <button
         onClick={fetchFinalizedTeams}
         className="mt-4 w-full bg-gray-600 text-white p-2 rounded-md hover:bg-gray-700"
+        disabled={loading}
       >
-        Buscar Equipes Finalizadas
+        {loading ? "Carregando..." : "Buscar Equipes Finalizadas"}
       </button>
 
       <h2 className="text-xl font-semibold text-gray-700 mt-6">Equipes Cadastradas</h2>
@@ -430,10 +466,18 @@ function App() {
                 <td className="p-2 border">{team.servico}</td>
                 <td className="p-2 border">{team.placa_veiculo}</td>
                 <td className="p-2 border flex gap-2 justify-center">
-                  <button onClick={() => handleEdit(team)} className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600">
+                  <button
+                    onClick={() => handleEdit(team)}
+                    className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
+                    disabled={loading}
+                  >
                     Editar
                   </button>
-                  <button onClick={() => handleDelete(team.id)} className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600">
+                  <button
+                    onClick={() => handleDelete(team.id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                    disabled={loading}
+                  >
                     Excluir
                   </button>
                 </td>
@@ -443,19 +487,22 @@ function App() {
         </table>
       </div>
 
-      <button onClick={handleFinalizar} className="mt-4 w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">
-        Finalizar
+      <button
+        onClick={handleFinalizar}
+        className="mt-4 w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700"
+        disabled={loading}
+      >
+        {loading ? "Carregando..." : "Finalizar"}
       </button>
       <div className="flex justify-start gap-4 mt-4">
         <button
           onClick={exportToExcel}
-          className="bg-white-600 text-white px-4 py-2 rounded-md hover:bg-white-700 flex items-center"          
+          className="bg-white-600 text-white px-4 py-2 rounded-md hover:bg-white-700 flex items-center"
         >
-           <img src={excelIcon} alt="Excel" className="w-12 h-12 mr-2" />
-          
+          <img src={excelIcon} alt="Excel" className="w-12 h-12 mr-2" />
         </button>
-
       </div>
+      <ToastContainer />
     </div>
   );
 }
