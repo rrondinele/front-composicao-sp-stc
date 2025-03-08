@@ -202,7 +202,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-  
+
     setLoading(true);
     try {
       if (editId) {
@@ -213,7 +213,7 @@ function App() {
         await axios.post("https://composicao-sp-soc.onrender.com/teams", formData);
         toast.success("Equipe cadastrada com sucesso!");
       }
-  
+
       // Resetar apenas os campos que devem ser limpos
       setFormData((prevFormData) => ({
         ...prevFormData, // Mantém os campos que não devem ser resetados
@@ -222,7 +222,7 @@ function App() {
         equipe: "", // Reseta a equipe
         placa_veiculo: "", // Reseta a placa do veículo
       }));
-  
+
       fetchTeams(); // Atualiza a lista de equipes
     } catch (error) {
       toast.error(error.response?.data?.message || "Erro ao cadastrar equipe.");
@@ -259,7 +259,7 @@ function App() {
       setLoading(true);
       try {
         await axios.put("https://composicao-sp-soc.onrender.com/teams/finalizar");
-  
+
         // Resetar todos os campos do formulário
         setFormData({
           data_atividade: "",
@@ -272,7 +272,7 @@ function App() {
           placa_veiculo: "",
           finalizado: false,
         });
-  
+
         setTeams([]); // Limpa a lista de equipes
         toast.success("Registros finalizados com sucesso!");
       } catch (error) {
@@ -296,7 +296,7 @@ function App() {
       team.servico,
       team.placa_veiculo,
     ]);
-  
+
     // Adiciona cabeçalhos personalizados
     const header = [
       "Data Atividade",
@@ -308,7 +308,7 @@ function App() {
       "Serviço",
       "Placa Veículo",
     ];
-  
+
     // Cria a planilha com cabeçalhos personalizados
     const worksheet = XLSX.utils.aoa_to_sheet([header, ...visibleColumns]);
     const workbook = XLSX.utils.book_new();
@@ -386,7 +386,7 @@ function App() {
             options={supervisorOptions}
             placeholder="Selecione o(a) Supervisor(a)"
             onChange={(selectedOption) => handleSelectChange(selectedOption, "supervisor")}
-            value={supervisorOptions.find(option => option.value === formData.supervisor)}
+            value={supervisorOptions.find(option => option.value === formData.supervisor) || null}
             styles={minimalStyles}
             className="w-full"
           />
@@ -396,7 +396,7 @@ function App() {
             options={statusOptions}
             placeholder="Selecione Status"
             onChange={(selectedOption) => handleSelectChange(selectedOption, "status")}
-            value={statusOptions.find(option => option.value === formData.status)}
+            value={statusOptions.find(option => option.value === formData.status) || null}
             styles={minimalStyles}
             className="w-full"
           />
@@ -404,7 +404,7 @@ function App() {
             options={equipeOptions}
             placeholder="Selecione Equipe"
             onChange={(selectedOption) => handleSelectChange(selectedOption, "equipe")}
-            value={equipeOptions.find(option => option.value === formData.equipe)}
+            value={equipeOptions.find(option => option.value === formData.equipe) || null}
             styles={minimalStyles}
             className="w-full"
           />
@@ -414,7 +414,7 @@ function App() {
             options={eletricistaMotoristaOptions}
             placeholder="Selecione Eletricista Motorista"
             onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_motorista")}
-            value={eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista)}
+            value={eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista) || null}
             styles={minimalStyles}
             className="w-full"
           />
@@ -422,7 +422,7 @@ function App() {
             options={eletricistaParceiroOptions}
             placeholder="Selecione Eletricista Parceiro(a)"
             onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_parceiro")}
-            value={eletricistaParceiroOptions.find(option => option.value === formData.eletricista_parceiro)}
+            value={eletricistaParceiroOptions.find(option => option.value === formData.eletricista_parceiro) || null}
             styles={minimalStyles}
             className="w-full"
           />
@@ -432,7 +432,7 @@ function App() {
             options={servicoOptions}
             placeholder="Selecione Serviço"
             onChange={(selectedOption) => handleSelectChange(selectedOption, "servico")}
-            value={servicoOptions.find(option => option.value === formData.servico)}
+            value={servicoOptions.find(option => option.value === formData.servico) || null}
             styles={minimalStyles}
             className="w-full"
           />
@@ -440,7 +440,7 @@ function App() {
             options={placaVeiculoOptions}
             placeholder="Selecione Placa"
             onChange={(selectedOption) => handleSelectChange(selectedOption, "placa_veiculo")}
-            value={placaVeiculoOptions.find(option => option.value === formData.placa_veiculo)}
+            value={placaVeiculoOptions.find(option => option.value === formData.placa_veiculo) || null}
             styles={minimalStyles}
             className="w-full"
           />
