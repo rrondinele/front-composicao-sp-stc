@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(fase); // Defina como true para ignorar o login
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Defina como true para ignorar o login
   const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
   const [formData, setFormData] = useState({
     data_atividade: "",
@@ -35,11 +35,25 @@ function App() {
     { value: "2222-ANA", label: "2222-ANA" },
   ];
 
+  const eletricistasCompletos = [
+    { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" },
+    { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
+    { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
+    { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },
+  ];
+
   const br0Mapping = {
     "015644 - ADEILDO JOSE DE LIMA JUNIOR": "BR0320023558",
     "017968 - ADILSON NUNES DA SILVA": "BR0298512908",
+    "015646 - ALBERTO MIRANDA SCUOTEGUAZZA": "BR0286139398",
+    "008811 - ALESSANDRO LUIZ DA SILVA": "BR0225606358",
+    "015521 - ALEX GOMES PINHEIRO": "BR0490393838",
+    "011689 - ALEX MUNIZ SANTANA": "BR0427895538",
     // Adicione mais mapeamentos conforme necessário
   };
+
+  const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
+  const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);
 
   const statusOptions = [
     { value: "AFASTADO", label: "AFASTADO" },
@@ -63,20 +77,6 @@ function App() {
     { value: "CCE003", label: "CCE003" },
     { value: "CCE004", label: "CCE004" },
     { value: "CCE005", label: "CCE005" },
-  ];
-
-  const eletricistaMotoristaOptions = [
-    { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" },
-    { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
-    { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
-    { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },
-  ];
-
-  const eletricistaParceiroOptions = [
-    { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" },
-    { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
-    { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
-    { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },
   ];
 
   const servicoOptions = [
@@ -145,19 +145,37 @@ function App() {
   };
 
   const handleSelectChange = (selectedOption, fieldName) => {
-    const newFormData = { ...formData, [fieldName]: selectedOption.value };
+    const updatedFormData = { ...formData, [fieldName]: selectedOption.value };
   
     // Preenche automaticamente o campo BR0 Motorista
     if (fieldName === "eletricista_motorista") {
-      newFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
+      updatedFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
     }
   
     // Preenche automaticamente o campo BR0 Parceiro
     if (fieldName === "eletricista_parceiro") {
-      newFormData.br0_parceiro = br0Mapping[selectedOption.value] || "";
+      updatedFormData.br0_parceiro = br0Mapping[selectedOption.value] || "";
     }
   
-    setFormData(newFormData);
+    // Atualiza o estado do formData
+    setFormData(updatedFormData);
+  
+    // Atualiza as opções dos campos eletricista_motorista e eletricista_parceiro
+    if (fieldName === "eletricista_motorista") {
+      // Remove o eletricista selecionado da lista de parceiros
+      const updatedParceiroOptions = eletricistasCompletos.filter(
+        (eletricista) => eletricista.value !== selectedOption.value
+      );
+      setEletricistaParceiroOptions(updatedParceiroOptions);
+    }
+  
+    if (fieldName === "eletricista_parceiro") {
+      // Remove o eletricista selecionado da lista de motoristas
+      const updatedMotoristaOptions = eletricistasCompletos.filter(
+        (eletricista) => eletricista.value !== selectedOption.value
+      );
+      setEletricistaMotoristaOptions(updatedMotoristaOptions);
+    }
   };
 
   // Função para lidar com o login
@@ -240,18 +258,22 @@ function App() {
           supervisor: "",
           status: "",
           eletricista_motorista: "",
-          br0_motorista: "", 
+          br0_motorista: "",
           eletricista_parceiro: "",
-          br0_parceiro: "", 
+          br0_parceiro: "",
           equipe: "",
           servico: "",
           placa_veiculo: "",
         });
-        fetchTeams();
+  
+        // Resetar as opções dos campos eletricista_motorista e eletricista_parceiro
+        setEletricistaMotoristaOptions(eletricistasCompletos);
+        setEletricistaParceiroOptions(eletricistasCompletos);
+  
+        fetchTeams(); // Atualiza a lista de equipes
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        // Erro de duplicidade retornado pelo backend
         toast.error(error.response.data.message);
       } else {
         toast.error("Erro ao cadastrar/atualizar equipe.");
@@ -298,7 +320,9 @@ function App() {
           supervisor: "",
           status: "",
           eletricista_motorista: "",
+          br0_motorista: "",
           eletricista_parceiro: "",
+          br0_parceiro: "",
           equipe: "",
           servico: "",
           placa_veiculo: "",
@@ -323,7 +347,9 @@ function App() {
       team.supervisor,
       team.status,
       team.eletricista_motorista,
+      team.br0_motorista,
       team.eletricista_parceiro,
+      team.br0_parceiro,
       team.equipe,
       team.servico,
       team.placa_veiculo,
@@ -335,7 +361,9 @@ function App() {
       "Supervisor",
       "Status",
       "Eletricista Motorista",
+      "BR0 Motorista",
       "Eletricista Parceiro",
+      "BR0 Parceiro",
       "Equipe",
       "Serviço",
       "Placa Veículo",
