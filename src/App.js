@@ -52,8 +52,24 @@ function App() {
     // Adicione mais mapeamentos conforme necessário
   };
 
+  const [equipeOptions, setEquipeOptions] = useState([
+    { value: "CCE001", label: "CCE001" },
+    { value: "CCE002", label: "CCE002" },
+    { value: "CCE003", label: "CCE003" },
+    { value: "CCE004", label: "CCE004" },
+    { value: "CCE005", label: "CCE005" },
+  ]);
+  
   const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
   const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);
+
+  const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState([
+    { value: "EWF2J53", label: "EWF2J53" },
+    { value: "EXS4G32", label: "EXS4G32" },
+    { value: "FCY0E42", label: "FCY0E42" },
+    { value: "FGA8E51", label: "FGA8E51" },
+    { value: "FJH0F61", label: "FJH0F61" },
+  ]);
 
   const statusOptions = [
     { value: "AFASTADO", label: "AFASTADO" },
@@ -71,26 +87,6 @@ function App() {
     { value: "TREINAMENTO", label: "TREINAMENTO" },
   ];
 
-  {/*}
-  const equipeOptions = [
-    { value: "CCE001", label: "CCE001" },
-    { value: "CCE002", label: "CCE002" },
-    { value: "CCE003", label: "CCE003" },
-    { value: "CCE004", label: "CCE004" },
-    { value: "CCE005", label: "CCE005" },
-  ];
-  */}
-
-  const [equipeOptions, setEquipeOptions] = useState([
-    { value: "CCE001", label: "CCE001" },
-    { value: "CCE002", label: "CCE002" },
-    { value: "CCE003", label: "CCE003" },
-    { value: "CCE004", label: "CCE004" },
-    { value: "CCE005", label: "CCE005" },
-  ]);
-
-
-
   const servicoOptions = [
     { value: "AFERICAO", label: "AFERICAO" },
     { value: "CORTE", label: "CORTE" },
@@ -98,14 +94,6 @@ function App() {
     { value: "PROJETO RAMAL", label: "PROJETO RAMAL" },
     { value: "RELIGA", label: "RELIGA" },
     { value: "TMA", label: "TMA" },
-  ];
-
-  const placaVeiculoOptions = [
-    { value: "EWF2J53", label: "EWF2J53" },
-    { value: "EXS4G32", label: "EXS4G32" },
-    { value: "FCY0E42", label: "FCY0E42" },
-    { value: "FGA8E51", label: "FGA8E51" },
-    { value: "FJH0F61", label: "FJH0F61" },
   ];
 
   // Estilo minimalista para o react-select
@@ -132,6 +120,20 @@ function App() {
       borderRadius: "0.375rem",
       border: "1px solid #e5e7eb",
     }),
+  };
+
+  // Funcao Buscar as equipes cadastradas para a data selecionada. + Atualizar as listas de seleção com base nas equipes cadastradas.
+  const handleDateChange = async (e) => {
+    const dataSelecionada = e.target.value; // Pega a data selecionada
+    setFormData({ ...formData, data_atividade: dataSelecionada }); // Atualiza o estado formData
+  
+    if (dataSelecionada) {
+      // Busca as equipes cadastradas na data selecionada
+      const equipesCadastradas = await fetchEquipesPorData(dataSelecionada);
+      
+      // Atualiza as listas de seleção com base nas equipes cadastradas
+      atualizarListasDeSelecao(equipesCadastradas);
+    }
   };
 
   // Função para validar se todos os campos estão preenchidos
@@ -228,29 +230,34 @@ function App() {
     }
   };
 
-
   const atualizarListasDeSelecao = (equipesCadastradas) => {
     // Extrai os valores já utilizados
     const equipesUtilizadas = equipesCadastradas.map((equipe) => equipe.equipe);
     const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
     const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
+    const placasUtilizadas = equipesCadastradas.map((equipe) => equipe.placa_veiculo);
   
     // Filtra as opções disponíveis
     const equipesDisponiveis = equipeOptions.filter(
       (equipe) => !equipesUtilizadas.includes(equipe.value)
     );
     const motoristasDisponiveis = eletricistasCompletos.filter(
-      (motorista) => !motoristasUtilizados.includes(motorista.value)
+      (motorista) => !motoristasUtilizados.includes(motorista.value) && !parceirosUtilizados.includes(motorista.value)
     );
     const parceirosDisponiveis = eletricistasCompletos.filter(
-      (parceiro) => !parceirosUtilizados.includes(parceiro.value)
+      (parceiro) => !parceirosUtilizados.includes(parceiro.value) && !motoristasUtilizados.includes(parceiro.value)
+    );
+    const placasDisponiveis = placaVeiculoOptions.filter(
+      (placa) => !placasUtilizadas.includes(placa.value)
     );
   
     // Atualiza os estados das listas de seleção
     setEquipeOptions(equipesDisponiveis);
     setEletricistaMotoristaOptions(motoristasDisponiveis);
     setEletricistaParceiroOptions(parceirosDisponiveis);
+    setPlacaVeiculoOptions(placasDisponiveis);
   };
+
 
   // Função para buscar equipes
   const fetchTeams = async () => {
@@ -524,7 +531,8 @@ function App() {
             type="date"
             name="data_atividade"
             value={formData.data_atividade}
-            onChange={(e) => setFormData({ ...formData, data_atividade: e.target.value })}
+            //onChange={(e) => setFormData({ ...formData, data_atividade: e.target.value })}
+            onChange={handleDateChange} // Usa a função handleDateChange aqui
             required
             className="w-full p-2 border rounded-md"
           />
