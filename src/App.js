@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Defina como true para ignorar o login
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Defina como true para ignorar o login
   const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
   const [formData, setFormData] = useState({
     data_atividade: "",
