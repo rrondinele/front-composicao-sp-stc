@@ -202,6 +202,54 @@ function App() {
     toast.info("Logout realizado com sucesso!");
   };
 
+  const fetchEquipesPorData = async (data) => {
+    try {
+      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", {
+        params: {
+          data: data, // Filtra as equipes pela data
+        },
+      });
+      return response.data; // Retorna as equipes cadastradas na data
+    } catch (error) {
+      console.error("Erro ao buscar equipes:", error);
+      return []; // Retorna um array vazio em caso de erro
+    }
+  };
+
+
+  const atualizarListasDeSelecao = (equipesCadastradas) => {
+    // Extrai os valores já utilizados
+    const equipesUtilizadas = equipesCadastradas.map((equipe) => equipe.equipe);
+    const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
+    const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
+  
+    // Filtra as opções disponíveis
+    const equipesDisponiveis = equipeOptions.filter(
+      (equipe) => !equipesUtilizadas.includes(equipe.value)
+    );
+    const motoristasDisponiveis = eletricistasCompletos.filter(
+      (motorista) => !motoristasUtilizados.includes(motorista.value)
+    );
+    const parceirosDisponiveis = eletricistasCompletos.filter(
+      (parceiro) => !parceirosUtilizados.includes(parceiro.value)
+    );
+  
+    // Atualiza os estados das listas de seleção
+    setEquipeOptions(equipesDisponiveis);
+    setEletricistaMotoristaOptions(motoristasDisponiveis);
+    setEletricistaParceiroOptions(parceirosDisponiveis);
+  };
+
+
+
+
+
+
+
+
+
+
+
   // Função para buscar equipes
   const fetchTeams = async () => {
     setLoading(true); // Ativa o estado de carregamento
@@ -270,34 +318,24 @@ function App() {
         toast.success(editId ? "Equipe atualizada com sucesso!" : "Equipe cadastrada com sucesso!");
         setEditId(null);
   
-        // Limpa o formulário
-        setFormData({
-          data_atividade: "",
-          supervisor: "",
-          status: "",
-          eletricista_motorista: "",
-          br0_motorista: "",
-          eletricista_parceiro: "",
-          br0_parceiro: "",
-          equipe: "",
-          servico: "",
-          placa_veiculo: "",
-        });
+        // Busca as equipes cadastradas na mesma data
+        const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
+  
+        // Atualiza as listas de seleção com base nas equipes cadastradas
+        atualizarListasDeSelecao(equipesCadastradas);
+  
+        // Limpa apenas os campos que devem ser resetados
+        setFormData((prevFormData) => ({
+          ...prevFormData, // Mantém os campos que não devem ser limpos
+          eletricista_motorista: "", // Reseta o eletricista motorista
+          br0_motorista: "", // Reseta o BR0 motorista
+          eletricista_parceiro: "", // Reseta o eletricista parceiro
+          br0_parceiro: "", // Reseta o BR0 parceiro
+          equipe: "", // Reseta a equipe
+          placa_veiculo: "", // Reseta a placa do veículo
+        }));
   
         // Atualiza a lista de equipes
-        if (method === "post") {
-          // Adiciona a nova equipe ao estado `teams`
-          setTeams((prevTeams) => [...prevTeams, response.data]);
-        } else {
-          // Atualiza a equipe existente no estado `teams`
-          setTeams((prevTeams) =>
-            prevTeams.map((team) =>
-              team.id === response.data.id ? response.data : team
-            )
-          );
-        }
-  
-        // Opcional: Busca as equipes atualizadas do backend para garantir sincronização
         fetchTeams();
       }
     } catch (error) {
