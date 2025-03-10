@@ -9,14 +9,16 @@ import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Defina como true para ignorar o login
+  const [isLoggedIn, setIsLoggedIn] = useState(fase); // Defina como true para ignorar o login
   const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
   const [formData, setFormData] = useState({
     data_atividade: "",
     supervisor: "",
     status: "",
     eletricista_motorista: "",
+    br0_motorista: "", 
     eletricista_parceiro: "",
+    br0_parceiro: "", 
     equipe: "",
     servico: "",
     placa_veiculo: "",
@@ -32,6 +34,12 @@ function App() {
     { value: "1111-PEDRO", label: "1111-PEDRO" },
     { value: "2222-ANA", label: "2222-ANA" },
   ];
+
+  const br0Mapping = {
+    "015644 - ADEILDO JOSE DE LIMA JUNIOR": "BR0320023558",
+    "017968 - ADILSON NUNES DA SILVA": "BR0298512908",
+    // Adicione mais mapeamentos conforme necessário
+  };
 
   const statusOptions = [
     { value: "AFASTADO", label: "AFASTADO" },
@@ -136,9 +144,20 @@ function App() {
     return true;
   };
 
-  // Função para lidar com mudanças nos campos de seleção
   const handleSelectChange = (selectedOption, fieldName) => {
-    setFormData({ ...formData, [fieldName]: selectedOption.value });
+    const newFormData = { ...formData, [fieldName]: selectedOption.value };
+  
+    // Preenche automaticamente o campo BR0 Motorista
+    if (fieldName === "eletricista_motorista") {
+      newFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
+    }
+  
+    // Preenche automaticamente o campo BR0 Parceiro
+    if (fieldName === "eletricista_parceiro") {
+      newFormData.br0_parceiro = br0Mapping[selectedOption.value] || "";
+    }
+  
+    setFormData(newFormData);
   };
 
   // Função para lidar com o login
@@ -221,7 +240,9 @@ function App() {
           supervisor: "",
           status: "",
           eletricista_motorista: "",
+          br0_motorista: "", 
           eletricista_parceiro: "",
+          br0_parceiro: "", 
           equipe: "",
           servico: "",
           placa_veiculo: "",
@@ -240,12 +261,14 @@ function App() {
     }
   };
 
-  // Função para editar uma equipe
   const handleEdit = (team) => {
-    setFormData(team);
+    setFormData({
+      ...team,
+      br0_motorista: br0Mapping[team.eletricista_motorista] || "", // Preenche BR0 Motorista
+      br0_parceiro: br0Mapping[team.eletricista_parceiro] || "", // Preenche BR0 Parceiro
+    });
     setEditId(team.id);
   };
-
   // Função para excluir uma equipe
   const handleDelete = async (id) => {
     if (window.confirm("Tem certeza que deseja excluir este registro?")) {
@@ -437,22 +460,41 @@ function App() {
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <Select
-            options={eletricistaMotoristaOptions}
-            placeholder="Selecione Eletricista Motorista"
-            onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_motorista")}
-            value={eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista) || null}
-            styles={minimalStyles}
-            className="w-full"
-          />
-          <Select
-            options={eletricistaParceiroOptions}
-            placeholder="Selecione Eletricista Parceiro(a)"
-            onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_parceiro")}
-            value={eletricistaParceiroOptions.find(option => option.value === formData.eletricista_parceiro) || null}
-            styles={minimalStyles}
-            className="w-full"
-          />
+        <Select
+    options={eletricistaMotoristaOptions}
+    placeholder="Selecione Eletricista Motorista"
+    onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_motorista")}
+    value={eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista) || null}
+    styles={minimalStyles}
+    className="w-full"
+  />
+  <input
+    type="text"
+    name="br0_motorista"
+    placeholder="BR0 Motorista"
+    value={formData.br0_motorista}
+    readOnly // Campo somente leitura
+    className="w-full p-2 border rounded-md bg-gray-100"
+  />
+</div>
+
+<div className="grid grid-cols-2 gap-4">
+  <Select
+    options={eletricistaParceiroOptions}
+    placeholder="Selecione Eletricista Parceiro(a)"
+    onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_parceiro")}
+    value={eletricistaParceiroOptions.find(option => option.value === formData.eletricista_parceiro) || null}
+    styles={minimalStyles}
+    className="w-full"
+  />
+  <input
+    type="text"
+    name="br0_parceiro"
+    placeholder="BR0 Parceiro"
+    value={formData.br0_parceiro}
+    readOnly // Campo somente leitura
+    className="w-full p-2 border rounded-md bg-gray-100"
+  />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Select
