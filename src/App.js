@@ -204,18 +204,34 @@ function App() {
 
   // Função para buscar equipes
   const fetchTeams = async () => {
-    setLoading(true);
+    setLoading(true); // Ativa o estado de carregamento
     try {
+      // Define os parâmetros da requisição
+      const params = {};
+      if (formData.data_atividade) {
+        // Adiciona o filtro por data apenas se formData.data_atividade estiver preenchido
+        params.data = formData.data_atividade;
+      }
+  
+      // Faz a requisição ao backend
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", {
-        params: {
-          data: formData.data_atividade,
-        },
+        params, // Passa os parâmetros da requisição
       });
-      setTeams(response.data);
+  
+      // Atualiza o estado teams com os dados retornados
+      if (response.data && Array.isArray(response.data)) {
+        setTeams(response.data);
+      } else {
+        // Se response.data não for um array, define teams como um array vazio
+        setTeams([]);
+        toast.warning("Nenhuma equipe encontrada.");
+      }
     } catch (error) {
+      // Exibe uma mensagem de erro em caso de falha na requisição
       toast.error("Erro ao buscar equipes.");
+      console.error("Erro ao buscar equipes:", error);
     } finally {
-      setLoading(false);
+      setLoading(false); // Desativa o estado de carregamento
     }
   };
 
@@ -253,6 +269,8 @@ function App() {
       if (response.status === 201 || response.status === 200) {
         toast.success(editId ? "Equipe atualizada com sucesso!" : "Equipe cadastrada com sucesso!");
         setEditId(null);
+  
+        // Limpa o formulário
         setFormData({
           data_atividade: "",
           supervisor: "",
@@ -266,11 +284,21 @@ function App() {
           placa_veiculo: "",
         });
   
-        // Resetar as opções dos campos eletricista_motorista e eletricista_parceiro
-        setEletricistaMotoristaOptions(eletricistasCompletos);
-        setEletricistaParceiroOptions(eletricistasCompletos);
+        // Atualiza a lista de equipes
+        if (method === "post") {
+          // Adiciona a nova equipe ao estado `teams`
+          setTeams((prevTeams) => [...prevTeams, response.data]);
+        } else {
+          // Atualiza a equipe existente no estado `teams`
+          setTeams((prevTeams) =>
+            prevTeams.map((team) =>
+              team.id === response.data.id ? response.data : team
+            )
+          );
+        }
   
-        fetchTeams(); // Atualiza a lista de equipes
+        // Opcional: Busca as equipes atualizadas do backend para garantir sincronização
+        fetchTeams();
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -567,58 +595,68 @@ function App() {
       </button>
 
       <h2 className="text-xl font-semibold text-gray-700 mt-6">Equipes Cadastradas</h2>
-      <div className="overflow-x-auto mt-3">
-        <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
-          <thead>
-            <tr className="bg-gray-200 text-gray-700 text-xs">
-              <th className="p-2 border whitespace-nowrap text-left">Data</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-left">Supervisor(a)</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-left">Status</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-left">Equipe</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro(a)</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border whitespace-nowrap text-left">Serviço</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border w-12 text-left">Placa</th> {/* Alinhado à esquerda */}
-              <th className="p-2 border w-12 text-center">Ações</th> {/* Centralizado */}
-            </tr>
-          </thead>
-          <tbody className="text-xs">
-            {teams.map((team) => (
-              <tr key={team.id}>
-                <td className="p-2 border whitespace-nowrap text-left">{team.data_atividade}</td> {/* Alinhado à esquerda */}
-                <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
-                  {team.supervisor}
-                </td> {/* Alinhado à esquerda */}
-                <td className="p-2 border whitespace-nowrap text-left">{team.status}</td> {/* Alinhado à esquerda */}
-                <td className="p-2 border whitespace-nowrap text-left">{team.equipe}</td> {/* Alinhado à esquerda */}
-                <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
-                  {team.eletricista_motorista}
-                </td> {/* Alinhado à esquerda */}
-                <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
-                  {team.eletricista_parceiro}
-                </td> {/* Alinhado à esquerda */}
-                <td className="p-2 border whitespace-nowrap text-left">{team.servico}</td> {/* Alinhado à esquerda */}
-                <td className="p-2 border whitespace-nowrap text-left">{team.placa_veiculo}</td> {/* Alinhado à esquerda */}
-                <td className="p-2 border whitespace-nowrap text-center"> {/* Centralizado */}
-                  <div className="flex gap-2 justify-center">
-                    <button
-                      onClick={() => handleEdit(team)}
-                      className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-xs"
-                      disabled={loading}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => handleDelete(team.id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-xs"
-                      disabled={loading}
-                    >
-                      Excluir
-                    </button>
-            </div>
+<div className="overflow-x-auto mt-3">
+  <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
+    <thead>
+      <tr className="bg-gray-200 text-gray-700 text-xs">
+        <th className="p-2 border whitespace-nowrap text-left">Data</th>
+        <th className="p-2 border whitespace-nowrap text-left">Supervisor(a)</th>
+        <th className="p-2 border whitespace-nowrap text-left">Status</th>
+        <th className="p-2 border whitespace-nowrap text-left">Equipe</th>
+        <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th>
+        <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro(a)</th>
+        <th className="p-2 border whitespace-nowrap text-left">Serviço</th>
+        <th className="p-2 border whitespace-nowrap text-left">Placa</th>
+        <th className="p-2 border whitespace-nowrap text-center">Ações</th>
+      </tr>
+    </thead>
+    <tbody className="text-xs">
+      {teams && teams.length > 0 ? (
+        teams.map((team) => (
+          <tr key={team.id}>
+            <td className="p-2 border whitespace-nowrap text-left">{team.data_atividade}</td>
+            <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
+              {team.supervisor}
+            </td>
+            <td className="p-2 border whitespace-nowrap text-left">{team.status}</td>
+            <td className="p-2 border whitespace-nowrap text-left">{team.equipe}</td>
+            <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
+              {team.eletricista_motorista}
+            </td>
+            <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
+              {team.eletricista_parceiro}
+            </td>
+            <td className="p-2 border whitespace-nowrap text-left">{team.servico}</td>
+            <td className="p-2 border whitespace-nowrap text-left">{team.placa_veiculo}</td>
+            <td className="p-2 border whitespace-nowrap text-center">
+              <div className="flex gap-2 justify-center">
+                <button
+                  onClick={() => handleEdit(team)}
+                  className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-xs"
+                  disabled={loading}
+                  aria-label={`Editar equipe ${team.equipe}`}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => handleDelete(team.id)}
+                  className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-xs"
+                  disabled={loading}
+                  aria-label={`Excluir equipe ${team.equipe}`}
+                >
+                  Excluir
+                </button>
+              </div>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="9" className="p-2 border text-center text-gray-500">
+            Nenhuma equipe cadastrada.
           </td>
         </tr>
-      ))}
+      )}
     </tbody>
   </table>
 </div>
