@@ -33,22 +33,10 @@ function App() {
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
 
-  /*
+  
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn);
-  }, [isLoggedIn]);
-  */
-
-  useEffect(() => {
-    // Mantém o login ao recarregar a página
-    const storedLoginStatus = localStorage.getItem("isLoggedIn");
-    if (storedLoginStatus === "true") {
-      setIsLoggedIn(true);
-    }
-  }, []);
-  
-
-
+  }, [isLoggedIn]);  
 
 
    useEffect(() => {
@@ -107,7 +95,7 @@ function App() {
   // Opções para os campos de seleção
   const supervisorOptions = [
     { value: "018505 - DIEGO RAFAEL DE MELO SILVA", label: "018505 - DIEGO RAFAEL DE MELO SILVA" },
-    { value: "015540 - EDER JORDELINO GONCALVES CAETANO", label: "EDER JORDELINO GONCALVES CAETANO" },
+    { value: "015540 - EDER JORDELINO GONCALVES CAETANO", label: "015540 - EDER JORDELINO GONCALVES CAETANO"},
     { value: "006061 - JULIO CESAR PEREIRA DA SILVA", label: "006061 - JULIO CESAR PEREIRA DA SILVA" },
     { value: "016032 - WAGNER AUGUSTO DA SILVA MAURO", label: "016032 - WAGNER AUGUSTO DA SILVA MAURO" },
   ];
@@ -192,6 +180,10 @@ function App() {
   
   const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
   const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);
+
+  console.log("Eletricistas Completos:", eletricistasCompletos);
+console.log("Eletricista Motorista Options:", eletricistaMotoristaOptions);
+console.log("Eletricista Parceiro Options:", eletricistaParceiroOptions);
 
   const br0Mapping = {
     "015644 - ADEILDO JOSE DE LIMA JUNIOR": "BR0320023558",
