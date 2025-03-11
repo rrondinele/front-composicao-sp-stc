@@ -4,6 +4,7 @@ import Select from "react-select";
 import * as XLSX from "xlsx";
 import cenegedtIcon from "./ceneged.png"; // Importando o ícone ceneged
 import exitIcon from "./exit.png"; // Importando o ícone logout
+import clearIcon from "./clear.png"; // Importando o ícone Clear
 import excelIcon from "./excel.png"; // Importando o ícone excel
 import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
@@ -12,7 +13,7 @@ function App() {
   //const [isLoggedIn, setIsLoggedIn] = useState(false); // Defina como true para ignorar o login
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "false";
+    return localStorage.getItem("isLoggedIn") === "true";
   });
   
   useEffect(() => {
@@ -52,6 +53,22 @@ function App() {
       placa_veiculo: "",
     });
   }, []);
+  
+  // Função para limpar o formulário
+  const handleClearForm = () => {
+    setFormData({
+      data_atividade: "",
+      supervisor: "",
+      status: "",
+      eletricista_motorista: "",
+      br0_motorista: "",
+      eletricista_parceiro: "",
+      br0_parceiro: "",
+      equipe: "",
+      servico: "",
+      placa_veiculo: "",
+    });
+  };
 
   // Opções para os campos de seleção
   const supervisorOptions = [
@@ -565,6 +582,12 @@ const handleLogout = () => {
           className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
         >
           <img src={exitIcon} alt="Sair" className="w-12 h-12 mr-2" />
+        </button>
+        <button
+          onClick={handleClearForm}
+          className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
+        >
+          <img src={clearIcon} alt="Atualizar" className="w-12 h-12 mr-2" />
         </button>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
