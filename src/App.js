@@ -368,16 +368,16 @@ function App() {
 
   const handleEdit = (team) => {
     setFormData({
-      data_atividade: team.data_atividade,
-      supervisor: team.supervisor,
-      status: team.status,
-      eletricista_motorista: team.eletricista_motorista,
-      br0_motorista: br0Mapping[team.eletricista_motorista] || "", // Preenche BR0 Motorista
-      eletricista_parceiro: team.eletricista_parceiro,
-      br0_parceiro: br0Mapping[team.eletricista_parceiro] || "", // Preenche BR0 Parceiro
-      equipe: team.equipe,
-      servico: team.servico,
-      placa_veiculo: team.placa_veiculo,
+      data_atividade: team.data_atividade, // Data da atividade
+      supervisor: team.supervisor, // Supervisor
+      status: team.status, // Status
+      eletricista_motorista: team.eletricista_motorista, // Eletricista Motorista
+      br0_motorista: br0Mapping[team.eletricista_motorista] || "", // BR0 Motorista
+      eletricista_parceiro: team.eletricista_parceiro, // Eletricista Parceiro
+      br0_parceiro: br0Mapping[team.eletricista_parceiro] || "", // BR0 Parceiro
+      equipe: team.equipe, // Equipe
+      servico: team.servico, // Serviço
+      placa_veiculo: team.placa_veiculo, // Placa do Veículo
     });
     setEditId(team.id); // Define o ID da equipe que está sendo editada
   };
@@ -543,95 +543,103 @@ function App() {
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
-          <input
-            type="date"
-            name="data_atividade"
-            value={formData.data_atividade}
-            //onChange={(e) => setFormData({ ...formData, data_atividade: e.target.value })}
-            onChange={handleDateChange} // Usa a função handleDateChange aqui
-            required
-            className="w-full p-2 border rounded-md"
-          />
-          <Select
-            options={supervisorOptions}
-            placeholder="Selecione o(a) Supervisor(a)"
-            onChange={(selectedOption) => handleSelectChange(selectedOption, "supervisor")}
-            value={supervisorOptions.find(option => option.value === formData.supervisor) || null}
-            styles={minimalStyles}
-            className="w-full"
-          />
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Select
-            options={statusOptions}
-            placeholder="Selecione Status"
-            onChange={(selectedOption) => handleSelectChange(selectedOption, "status")}
-            value={statusOptions.find(option => option.value === formData.status) || null}
-            styles={minimalStyles}
-            className="w-full"
-          />
-          <Select
-            options={equipeOptions}
-            placeholder="Selecione Equipe"
-            onChange={(selectedOption) => handleSelectChange(selectedOption, "equipe")}
-            value={equipeOptions.find(option => option.value === formData.equipe) || null}
-            styles={minimalStyles}
-            className="w-full"
-          />
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-        <Select
-    options={eletricistaMotoristaOptions}
-    placeholder="Selecione Eletricista Motorista"
-    onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_motorista")}
-    value={eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista) || null}
-    styles={minimalStyles}
-    className="w-full"
-  />
-  <input
-    type="text"
-    name="br0_motorista"
-    placeholder="BR0 Motorista"
-    value={formData.br0_motorista}
-    readOnly // Campo somente leitura
-    className="w-full p-2 border rounded-md bg-gray-100"
-  />
-</div>
+        <input
+        type="date"
+        name="data_atividade"
+        value={formData.data_atividade}
+        onChange={handleDateChange} 
+        required
+        className="w-full p-2 border rounded-md"
+      />
 
-<div className="grid grid-cols-2 gap-4">
-  <Select
-    options={eletricistaParceiroOptions}
-    placeholder="Selecione Eletricista Parceiro(a)"
-    onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_parceiro")}
-    value={eletricistaParceiroOptions.find(option => option.value === formData.eletricista_parceiro) || null}
-    styles={minimalStyles}
-    className="w-full"
-  />
-  <input
-    type="text"
-    name="br0_parceiro"
-    placeholder="BR0 Parceiro"
-    value={formData.br0_parceiro}
-    readOnly // Campo somente leitura
-    className="w-full p-2 border rounded-md bg-gray-100"
-  />
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Select
-            options={servicoOptions}
-            placeholder="Selecione Serviço"
-            onChange={(selectedOption) => handleSelectChange(selectedOption, "servico")}
-            value={servicoOptions.find(option => option.value === formData.servico) || null}
-            styles={minimalStyles}
-            className="w-full"
-          />
-          <Select
-            options={placaVeiculoOptions}
-            placeholder="Selecione Placa"
-            onChange={(selectedOption) => handleSelectChange(selectedOption, "placa_veiculo")}
-            value={placaVeiculoOptions.find(option => option.value === formData.placa_veiculo) || null}
-            styles={minimalStyles}
-            className="w-full"
+      {/* Campo: Supervisor */}
+      <Select
+        options={supervisorOptions}
+        placeholder="Selecione o(a) Supervisor(a)"
+        onChange={(selectedOption) => handleSelectChange(selectedOption, "supervisor")}
+        value={supervisorOptions.find(option => option.value === formData.supervisor) || null}
+        styles={minimalStyles}
+        className="w-full"
+      />
+
+      {/* Campo: Status */}
+      <Select
+        options={statusOptions}
+        placeholder="Selecione Status"
+        onChange={(selectedOption) => handleSelectChange(selectedOption, "status")}
+        value={statusOptions.find(option => option.value === formData.status) || null}
+        styles={minimalStyles}
+        className="w-full"
+      />
+
+      {/* Campo: Equipe */}
+      <Select
+        options={equipeOptions}
+        placeholder="Selecione Equipe"
+        onChange={(selectedOption) => handleSelectChange(selectedOption, "equipe")}
+        value={equipeOptions.find(option => option.value === formData.equipe) || null}
+        styles={minimalStyles}
+        className="w-full"
+      />
+
+      {/* Campo: Eletricista Motorista */}
+      <Select
+        options={eletricistaMotoristaOptions}
+        placeholder="Selecione Eletricista Motorista"
+        onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_motorista")}
+        value={eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista) || null}
+        styles={minimalStyles}
+        className="w-full"
+      />
+
+      {/* Campo: BR0 Motorista */}
+      <input
+        type="text"
+        name="br0_motorista"
+        placeholder="BR0 Motorista"
+        value={formData.br0_motorista}
+        readOnly
+        className="w-full p-2 border rounded-md bg-gray-100"
+      />
+
+      {/* Campo: Eletricista Parceiro */}
+      <Select
+        options={eletricistaParceiroOptions}
+        placeholder="Selecione Eletricista Parceiro(a)"
+        onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_parceiro")}
+        value={eletricistaParceiroOptions.find(option => option.value === formData.eletricista_parceiro) || null}
+        styles={minimalStyles}
+        className="w-full"
+      />
+
+      {/* Campo: BR0 Parceiro */}
+      <input
+        type="text"
+        name="br0_parceiro"
+        placeholder="BR0 Parceiro"
+        value={formData.br0_parceiro}
+        readOnly
+        className="w-full p-2 border rounded-md bg-gray-100"
+      />
+
+      {/* Campo: Serviço */}
+      <Select
+        options={servicoOptions}
+        placeholder="Selecione Serviço"
+        onChange={(selectedOption) => handleSelectChange(selectedOption, "servico")}
+        value={servicoOptions.find(option => option.value === formData.servico) || null}
+        styles={minimalStyles}
+        className="w-full"
+      />
+
+      {/* Campo: Placa do Veículo */}
+      <Select
+        options={placaVeiculoOptions}
+        placeholder="Selecione Placa"
+        onChange={(selectedOption) => handleSelectChange(selectedOption, "placa_veiculo")}
+        value={placaVeiculoOptions.find(option => option.value === formData.placa_veiculo) || null}
+        styles={minimalStyles}
+        className="w-full"
           />
         </div>
         <button
