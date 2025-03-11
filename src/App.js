@@ -42,12 +42,12 @@ function App() {
   useEffect(() => {
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(loggedIn);
-
+  
     // Se o usuário estiver logado, preencha o supervisor automaticamente
     if (loggedIn) {
       const userRole = localStorage.getItem("userRole");
       const username = localStorage.getItem("username");
-
+  
       if (userRole === "supervisor" && supervisorMapping[username]) {
         setFormData((prevFormData) => ({
           ...prevFormData,
@@ -74,7 +74,7 @@ function App() {
         localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
         localStorage.setItem("username", loginData.username); // Salva a matrícula do usuário
         toast.success("Login bem-sucedido!");
-
+  
         // Se o usuário for supervisor, preencha o campo supervisor automaticamente
         if (response.data.user.role === "supervisor" && supervisorMapping[loginData.username]) {
           setFormData((prevFormData) => ({
@@ -89,7 +89,7 @@ function App() {
       setLoading(false);
     }
   };
-  
+
   // Função para lidar com o logout
   const handleLogout = () => {
     // 1. Redefinir todos os estados locais
@@ -531,33 +531,36 @@ function App() {
   };
   // Função para buscar equipes
   const fetchTeams = async () => {
-    setLoading(true);
+    setLoading(true); // Ativa o estado de carregamento
     try {
       const params = { data: formData.data_atividade };
-
+  
       const userRole = localStorage.getItem("userRole");
       const username = localStorage.getItem("username");
-
+  
       // Se o usuário for supervisor, filtra os registros pelo supervisor
       if (userRole === "supervisor" && supervisorMapping[username]) {
         params.supervisor = supervisorMapping[username];
       }
-
+  
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
-
+  
       if (response.data && Array.isArray(response.data)) {
         setTeams(response.data);
       } else {
+        // Se response.data não for um array, define teams como um array vazio
         setTeams([]);
         toast.warning("Nenhuma equipe encontrada.");
       }
     } catch (error) {
+      // Exibe uma mensagem de erro em caso de falha na requisição
       toast.error("Erro ao buscar equipes.");
       console.error("Erro ao buscar equipes:", error);
     } finally {
-      setLoading(false);
+      setLoading(false); // Desativa o estado de carregamento
     }
   };
+
   // Função para buscar equipes finalizadas
   const fetchFinalizedTeams = async () => {
     setLoading(true);
@@ -725,64 +728,63 @@ function App() {
   };
 
   // Se o usuário não estiver logado, exibe a tela de login
-if (!isLoggedIn) {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="p-8 max-w-md w-full bg-gray-800 shadow-lg rounded-lg mt-[-350px]">
-        
-        <h1 className="text-3xl font-semibold text-white text-center mb-6">
-          Login
-        </h1>
-        <form onSubmit={handleLogin} className="space-y-6">          
-          <div>
-            <label htmlFor="matricula" className="block text-sm font-medium text-gray-300">
-              {/* Matrícula */}
-            </label>
-            <input
-              type="text"
-              id="matricula"
-              name="matricula"
-              placeholder="Digite sua matrícula"
-              value={loginData.matricula}
-              onChange={(e) => setLoginData({ ...loginData, matricula: e.target.value })}
-              required
-              className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label htmlFor="senha" className="block text-sm font-medium text-gray-300">
-              {/* Senha */}
-            </label>
-            <input
-              type="password"
-              id="senha"
-              name="senha"
-              placeholder="Digite sua senha"
-              value={loginData.senha}
-              onChange={(e) => setLoginData({ ...loginData, senha: e.target.value })}
-              required
-              className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              disabled={loading}
-            >
-              {loading ? "Carregando..." : "Entrar"}
-            </button>
-          </div>
-        </form>
-        <p className="text-gray-400 text-sm text-center mt-4">
-          Esqueceu a senha? 
-          <a href="#" className="text-blue-400 hover:underline"> Pergunte ao Pavão</a>
-        </p>
-        <ToastContainer />
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900">
+        <div className="p-8 max-w-md w-full bg-gray-800 shadow-lg rounded-lg mt-[-350px]">
+          <h1 className="text-3xl font-semibold text-white text-center mb-6">
+            Login
+          </h1>
+          <form onSubmit={handleLogin} className="space-y-6">          
+            <div>
+              <label htmlFor="matricula" className="block text-sm font-medium text-gray-300">
+                {/* Matrícula */}
+              </label>
+              <input
+                type="text"
+                id="matricula"
+                name="matricula"
+                placeholder="Digite sua matrícula"
+                value={loginData.matricula}
+                onChange={(e) => setLoginData({ ...loginData, matricula: e.target.value })}
+                required
+                className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="senha" className="block text-sm font-medium text-gray-300">
+                {/* Senha */}
+              </label>
+              <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Digite sua senha"
+                value={loginData.senha}
+                onChange={(e) => setLoginData({ ...loginData, senha: e.target.value })}
+                required
+                className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                disabled={loading}
+              >
+                {loading ? "Carregando..." : "Entrar"}
+              </button>
+            </div>
+          </form>
+          <p className="text-gray-400 text-sm text-center mt-4">
+            Esqueceu a senha? 
+            <a href="#" className="text-blue-400 hover:underline"> Pergunte ao Pavão</a>
+          </p>
+          <ToastContainer />
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
   // Se o usuário estiver logado, exibe a tela de cadastro
   return (
     <div className="p-6 max-w-6xl mx-auto bg-white shadow-lg rounded-lg mt-10">
