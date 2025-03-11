@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado inicial como false
-  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     data_atividade: "",
@@ -73,7 +73,7 @@ function App() {
         setIsLoggedIn(true);
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
-        localStorage.setItem("username", loginData.username); // Salva a matrícula do usuário
+        localStorage.setItem("username", loginData.matricula); // Salva a matrícula do usuário
         toast.success("Login bem-sucedido!");
   
         // Se o usuário for supervisor, preencha o campo supervisor automaticamente
@@ -743,8 +743,8 @@ function App() {
               </label>
               <input
                 type="text"
-                id="username"
-                name="username"
+                id="matricula"
+                name="matricula"
                 placeholder="Digite sua matrícula"
                 value={loginData.username}
                 onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
@@ -758,8 +758,8 @@ function App() {
               </label>
               <input
                 type="password"
-                id="password"
-                name="password"
+                id="senha"
+                name="senha"
                 placeholder="Digite sua senha"
                 value={loginData.password}
                 onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
