@@ -28,52 +28,89 @@ function App() {
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
 
+  // Mapeamento de matrícula para nome do supervisor
+  const supervisorMapping = {
+    "11101": "11101 - RONDINELE ARAUJO CARVALJO",
+    "16032": "016032 - WAGNER AUGUSTO DA SILVA MAURO",
+    "16032": "6061 - JULIO CESAR PEREIRA DA SILVA",
+    "16032": "15540 - EDER JORDELINO GONCALVES CAETANO",
+    "16032": "18505 - DIEGO RAFAEL DE MELO SILVA",
+    // Adicione outros supervisores aqui
+  };
+
+  // Efeito para verificar se o usuário está logado
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
+
+    // Se o usuário estiver logado, preencha o supervisor automaticamente
+    if (loggedIn) {
+      const userRole = localStorage.getItem("userRole");
+      const username = localStorage.getItem("username");
+
+      if (userRole === "supervisor" && supervisorMapping[username]) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          supervisor: supervisorMapping[username],
+        }));
+      }
+    }
+  }, []);
+
   // Efeito para persistir o estado de login
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
   }, [isLoggedIn]);
 
-      // Função para lidar com o login
-      const handleLogin = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-          const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
-          if (response.data.message === "Login bem-sucedido") {
-            setIsLoggedIn(true);
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
-            toast.success("Login bem-sucedido!");
-          }
-        } catch (error) {
-          toast.error(error.response?.data?.message || "Erro ao fazer login");
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      // Função para lidar com o logout
-      const handleLogout = () => {
-        // 1. Redefinir todos os estados locais
-        setIsLoggedIn(false); // Estado de login
-        setLoginData({ matricula: "", senha: "" }); // Dados de login
-        setFormData({
-          data_atividade: "",
-          supervisor: "",
-          status: "",
-          eletricista_motorista: "",
-          br0_motorista: "",
-          eletricista_parceiro: "",
-          br0_parceiro: "",
-          equipe: "",
-          servico: "",
-          placa_veiculo: "",
-        }); // Dados do formulário
-      
-        // 2. Limpar o localStorage
-        localStorage.clear(); // Remove tudo do localStorage
-      };
+  // Função para lidar com o login
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
+      if (response.data.message === "Login bem-sucedido") {
+        setIsLoggedIn(true);
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
+        localStorage.setItem("username", loginData.username); // Salva a matrícula do usuário
+        toast.success("Login bem-sucedido!");
 
+        // Se o usuário for supervisor, preencha o campo supervisor automaticamente
+        if (response.data.user.role === "supervisor" && supervisorMapping[loginData.username]) {
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            supervisor: supervisorMapping[loginData.username],
+          }));
+        }
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Erro ao fazer login");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Função para lidar com o logout
+  const handleLogout = () => {
+    // 1. Redefinir todos os estados locais
+    setIsLoggedIn(false); // Estado de login
+    setLoginData({ matricula: "", senha: "" }); // Dados de login
+    setFormData({
+      data_atividade: "",
+      supervisor: "",
+      status: "",
+      eletricista_motorista: "",
+      br0_motorista: "",
+      eletricista_parceiro: "",
+      br0_parceiro: "",
+      equipe: "",
+      servico: "",
+      placa_veiculo: "",
+    }); // Dados do formulário
+  
+    // 2. Limpar o localStorage
+    localStorage.clear(); // Remove tudo do localStorage
+  };
   
   // Função para limpar o formulário
   const handleClearForm = () => {
@@ -497,20 +534,17 @@ function App() {
     setLoading(true);
     try {
       const params = { data: formData.data_atividade };
-      
+
       const userRole = localStorage.getItem("userRole");
-      const supervisorMapping = {
-        "11101": "016032 - WAGNER AUGUSTO DA SILVA MAURO",
-      };
-  
-      if (supervisorMapping[loginData.username]) {
-        params.supervisor = supervisorMapping[loginData.username];
-        params.role = "supervisor";
-      } else if (userRole === "supervisor") {
-        params.supervisor = loginData.username;
-        params.role = "supervisor";
-      }  
-      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });  
+      const username = localStorage.getItem("username");
+
+      // Se o usuário for supervisor, filtra os registros pelo supervisor
+      if (userRole === "supervisor" && supervisorMapping[username]) {
+        params.supervisor = supervisorMapping[username];
+      }
+
+      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
+
       if (response.data && Array.isArray(response.data)) {
         setTeams(response.data);
       } else {
