@@ -10,18 +10,13 @@ import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
-  //const [isLoggedIn, setIsLoggedIn] = useState(false); // Defina como true para ignorar o login
-
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true";
   });
-  
-  useEffect(() => {
-    localStorage.setItem("isLoggedIn", isLoggedIn);
-  }, [isLoggedIn]);
 
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
-  const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
   const [formData, setFormData] = useState({
     data_atividade: "",
     supervisor: "",
@@ -37,7 +32,10 @@ function App() {
 
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
-  const [loading, setLoading] = useState(false); // Estado para indicar carregamento
+
+  useEffect(() => {
+    localStorage.setItem("isLoggedIn", isLoggedIn);
+  }, [isLoggedIn]);
 
    useEffect(() => {
     setFormData({
@@ -53,6 +51,28 @@ function App() {
       placa_veiculo: "",
     });
   }, []);
+
+    // Função para lidar com o logout
+    const handleLogout = () => {
+      // 1. Redefinir todos os estados locais
+      setIsLoggedIn(false); // Estado de login
+      setLoginData({ matricula: "", senha: "" }); // Dados de login
+      setFormData({
+        data_atividade: "",
+        supervisor: "",
+        status: "",
+        eletricista_motorista: "",
+        br0_motorista: "",
+        eletricista_parceiro: "",
+        br0_parceiro: "",
+        equipe: "",
+        servico: "",
+        placa_veiculo: "",
+      }); // Dados do formulário
+    
+      // 2. Limpar o localStorage
+      localStorage.clear(); // Remove tudo do localStorage
+    };
   
   // Função para limpar o formulário
   const handleClearForm = () => {
@@ -462,27 +482,7 @@ function App() {
     }
   };
 
-  // Função para lidar com o logout
-  const handleLogout = () => {
-    // 1. Redefinir todos os estados locais
-    setIsLoggedIn(false); // Estado de login
-    setLoginData({ matricula: "", senha: "" }); // Dados de login
-    setFormData({
-      data_atividade: "",
-      supervisor: "",
-      status: "",
-      eletricista_motorista: "",
-      br0_motorista: "",
-      eletricista_parceiro: "",
-      br0_parceiro: "",
-      equipe: "",
-      servico: "",
-      placa_veiculo: "",
-    }); // Dados do formulário
-  
-    // 2. Limpar o localStorage
-    localStorage.clear(); // Remove tudo do localStorage
-  };
+
 
   const fetchEquipesPorData = async (data) => {
     try {
