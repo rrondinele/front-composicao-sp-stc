@@ -13,10 +13,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true";
   });
-
   const [loginData, setLoginData] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
-
   const [formData, setFormData] = useState({
     data_atividade: "",
     supervisor: "",
@@ -29,69 +27,55 @@ function App() {
     servico: "",
     placa_veiculo: "",
   });
-
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
   
+  // Efeito para persistir o estado de login
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
-  }, [isLoggedIn]); 
+  }, [isLoggedIn]);
 
-   useEffect(() => {
-    setFormData({
-      data_atividade: "",
-      supervisor: "",
-      status: "",
-      eletricista_motorista: "",
-      br0_motorista: "",
-      eletricista_parceiro: "",
-      br0_parceiro: "",
-      equipe: "",
-      servico: "",
-      placa_veiculo: "",
-    });
-  }, []);
-
-    // Função para lidar com o login
-    const handleLogin = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-      try {
-        const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
-        if (response.data.message === "Login bem-sucedido") {
-          setIsLoggedIn(true);
-          localStorage.setItem("isLoggedIn", "true");
-          localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
-          toast.success("Login bem-sucedido!");
+      // Função para lidar com o login
+      const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+          const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
+          if (response.data.message === "Login bem-sucedido") {
+            setIsLoggedIn(true);
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
+            toast.success("Login bem-sucedido!");
+          }
+        } catch (error) {
+          toast.error(error.response?.data?.message || "Erro ao fazer login");
+        } finally {
+          setLoading(false);
         }
-      } catch (error) {
-        toast.error(error.response?.data?.message || "Erro ao fazer login");
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
+  
+      // Função para lidar com o logout
+      const handleLogout = () => {
+        // 1. Redefinir todos os estados locais
+        setIsLoggedIn(false); // Estado de login
+        setLoginData({ matricula: "", senha: "" }); // Dados de login
+        setFormData({
+          data_atividade: "",
+          supervisor: "",
+          status: "",
+          eletricista_motorista: "",
+          br0_motorista: "",
+          eletricista_parceiro: "",
+          br0_parceiro: "",
+          equipe: "",
+          servico: "",
+          placa_veiculo: "",
+        }); // Dados do formulário
+      
+        // 2. Limpar o localStorage
+        localStorage.clear(); // Remove tudo do localStorage
+      };
 
-    // Função para lidar com o logout
-    const handleLogout = () => {
-      // 1. Redefinir todos os estados locais
-      setIsLoggedIn(false); // Estado de login
-      setLoginData({ matricula: "", senha: "" }); // Dados de login
-      setFormData({
-        data_atividade: "",
-        supervisor: "",
-        status: "",
-        eletricista_motorista: "",
-        br0_motorista: "",
-        eletricista_parceiro: "",
-        br0_parceiro: "",
-        equipe: "",
-        servico: "",
-        placa_veiculo: "",
-      }); // Dados do formulário
-    
-      // 2. Limpar o localStorage
-      localStorage.clear(); // Remove tudo do localStorage
-    };
   
   // Função para limpar o formulário
   const handleClearForm = () => {
@@ -108,7 +92,6 @@ function App() {
       placa_veiculo: "",
     });
   };
-
   // Opções para os campos de seleção
   const supervisorOptions = [
     { value: "018505 - DIEGO RAFAEL DE MELO SILVA", label: "018505 - DIEGO RAFAEL DE MELO SILVA" },
@@ -116,9 +99,7 @@ function App() {
     { value: "006061 - JULIO CESAR PEREIRA DA SILVA", label: "006061 - JULIO CESAR PEREIRA DA SILVA" },
     { value: "016032 - WAGNER AUGUSTO DA SILVA MAURO", label: "016032 - WAGNER AUGUSTO DA SILVA MAURO" },
   ];
-
-  const [eletricistasCompletos, setEletricistasCompletos] = useState([
-    
+  const [eletricistasCompletos, setEletricistasCompletos] = useState([    
       { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" }, 
       { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
       { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
@@ -192,11 +173,9 @@ function App() {
       { value: "008594 - WILLIAM OLIVEIRA DOS SANTOS", label: "008594 - WILLIAM OLIVEIRA DOS SANTOS" },
       { value: "016059 - WILLIAN CARLOS DA SILVA", label: "016059 - WILLIAN CARLOS DA SILVA" },  
     // Adicione outros eletricistas aqui
-  ]);
-  
+  ]);  
   const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
   const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);
-
   const br0Mapping = {
     "015644 - ADEILDO JOSE DE LIMA JUNIOR": "BR0320023558",
     "017968 - ADILSON NUNES DA SILVA": "BR0298512908",
@@ -269,7 +248,6 @@ function App() {
     "016059 - WILLIAN CARLOS DA SILVA": "BR0130153638",
     // Adicione mais mapeamentos conforme necessário
   };
-
   const [equipeOptionsCompleta, setEquipeOptionsCompleta] = useState([
     { value: "CCE001", label: "CCE001" },
     { value: "CCE002", label: "CCE002" },
@@ -311,7 +289,6 @@ function App() {
     { value: "CCE0209", label: "CCE209" },  
   ]);  
   const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta);
-
   const [placaVeiculoOptionsCompleta, setPlacaVeiculoOptionsCompleta] = useState([
     { value: "EWF2J53", label: "EWF2J53" },
     { value: "EXS4G32", label: "EXS4G32" },
@@ -353,9 +330,7 @@ function App() {
     { value: "RMG6106", label: "RMG6106" },
     { value: "TIT3D32", label: "TIT3D32" },
   ]);
-
   const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState(placaVeiculoOptionsCompleta);
-
   const statusOptions = [
     { value: "AFASTADO", label: "AFASTADO" },
     { value: "ATESTADO", label: "ATESTADO" },
@@ -371,7 +346,6 @@ function App() {
     { value: "SUSPENSAO", label: "SUSPENSAO" },
     { value: "TREINAMENTO", label: "TREINAMENTO" },
   ];
-
   const servicoOptions = [
     { value: "AFERICAO", label: "AFERICAO" },
     { value: "CORTE", label: "CORTE" },
@@ -380,7 +354,6 @@ function App() {
     { value: "RELIGA", label: "RELIGA" },
     { value: "TMA", label: "TMA" },
   ];
-
   // Estilo minimalista para o react-select
   const minimalStyles = {
     control: (provided) => ({
@@ -406,7 +379,6 @@ function App() {
       border: "1px solid #e5e7eb",
     }),
   };
-
   // Funcao Buscar as equipes cadastradas para a data selecionada. + Atualizar as listas de seleção com base nas equipes cadastradas.
   const handleDateChange = async (e) => {
     const dataSelecionada = e.target.value;
@@ -417,7 +389,6 @@ function App() {
       atualizarListasDeSelecao(equipesCadastradas);
     }
   };
-
   // Função para validar se todos os campos estão preenchidos
   const validateForm = () => {
     const requiredFields = [
@@ -484,7 +455,6 @@ function App() {
       }
     }
   };
-
   const fetchEquipesPorData = async (data) => {
     try {
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", {
@@ -498,7 +468,6 @@ function App() {
       return []; // Retorna um array vazio em caso de erro
     }
   };
-
   const atualizarListasDeSelecao = (equipesCadastradas) => {
     // Extrai os valores já utilizados
     const equipesUtilizadas = equipesCadastradas.map((equipe) => equipe.equipe);
@@ -518,15 +487,13 @@ function App() {
     );
     const placasDisponiveis = placaVeiculoOptionsCompleta.filter(
       (placa) => !placasUtilizadas.includes(placa.value)
-    );
-  
+    );  
     // Atualiza os estados das listas de seleção
     setEquipeOptions(equipesDisponiveis);
     setEletricistaMotoristaOptions(motoristasDisponiveis);
     setEletricistaParceiroOptions(parceirosDisponiveis);
     setPlacaVeiculoOptions(placasDisponiveis);
   };
-
   // Função para buscar equipes
   const fetchTeams = async () => {
     setLoading(true);
@@ -544,10 +511,8 @@ function App() {
       } else if (userRole === "supervisor") {
         params.supervisor = loginData.username;
         params.role = "supervisor";
-      }
-  
-      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
-  
+      }  
+      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });  
       if (response.data && Array.isArray(response.data)) {
         setTeams(response.data);
       } else {
@@ -561,7 +526,6 @@ function App() {
       setLoading(false);
     }
   };
-
   // Função para buscar equipes finalizadas
   const fetchFinalizedTeams = async () => {
     setLoading(true);
@@ -578,7 +542,6 @@ function App() {
       setLoading(false);
     }
   };
-
   // Função para enviar o formulário de cadastro/edição
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -659,7 +622,6 @@ function App() {
       }
     }
   };
-
   // Função para finalizar registros
   const handleFinalizar = async () => {
     if (window.confirm("Confirma que todos os registros estão revisados? Isso limpará a tela.")) {
@@ -739,9 +701,7 @@ if (!isLoggedIn) {
         <h1 className="text-3xl font-semibold text-white text-center mb-6">
           Login
         </h1>
-
-        <form onSubmit={handleLogin} className="space-y-6">
-          
+        <form onSubmit={handleLogin} className="space-y-6">          
           <div>
             <label htmlFor="matricula" className="block text-sm font-medium text-gray-300">
               {/* Matrícula */}
@@ -757,7 +717,6 @@ if (!isLoggedIn) {
               className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
           <div>
             <label htmlFor="senha" className="block text-sm font-medium text-gray-300">
               {/* Senha */}
@@ -773,7 +732,6 @@ if (!isLoggedIn) {
               className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
           <div>
             <button
               type="submit"
@@ -783,21 +741,16 @@ if (!isLoggedIn) {
               {loading ? "Carregando..." : "Entrar"}
             </button>
           </div>
-
         </form>
-
         <p className="text-gray-400 text-sm text-center mt-4">
           Esqueceu a senha? 
           <a href="#" className="text-blue-400 hover:underline"> Pergunte ao Pavão</a>
         </p>
-
         <ToastContainer />
       </div>
     </div>
   );
 }
-
-
   // Se o usuário estiver logado, exibe a tela de cadastro
   return (
     <div className="p-6 max-w-6xl mx-auto bg-white shadow-lg rounded-lg mt-10">
