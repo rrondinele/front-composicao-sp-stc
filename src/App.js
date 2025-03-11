@@ -33,9 +33,23 @@ function App() {
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
 
+  /*
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn);
   }, [isLoggedIn]);
+  */
+
+  useEffect(() => {
+    // Mantém o login ao recarregar a página
+    const storedLoginStatus = localStorage.getItem("isLoggedIn");
+    if (storedLoginStatus === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+  
+
+
+
 
    useEffect(() => {
     setFormData({
