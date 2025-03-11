@@ -101,8 +101,14 @@ function App() {
   ];
 
   const [eletricistasCompletos, setEletricistasCompletos] = useState([
-    [
+    
       { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" },
+
+        
+
+
+
+
       { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
       { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
       { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },
@@ -173,17 +179,12 @@ function App() {
       { value: "008721 - WAGNER DE JESUS CAVALCANTE", label: "008721 - WAGNER DE JESUS CAVALCANTE" },
       { value: "017325 - WEBSTER ESTEVES SANTIAGO", label: "017325 - WEBSTER ESTEVES SANTIAGO" },
       { value: "008594 - WILLIAM OLIVEIRA DOS SANTOS", label: "008594 - WILLIAM OLIVEIRA DOS SANTOS" },
-      { value: "016059 - WILLIAN CARLOS DA SILVA", label: "016059 - WILLIAN CARLOS DA SILVA" },
-  ]
+      { value: "016059 - WILLIAN CARLOS DA SILVA", label: "016059 - WILLIAN CARLOS DA SILVA" },  
     // Adicione outros eletricistas aqui
   ]);
   
   const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
   const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);
-
-  console.log("Eletricistas Completos:", eletricistasCompletos);
-console.log("Eletricista Motorista Options:", eletricistaMotoristaOptions);
-console.log("Eletricista Parceiro Options:", eletricistaParceiroOptions);
 
   const br0Mapping = {
     "015644 - ADEILDO JOSE DE LIMA JUNIOR": "BR0320023558",
