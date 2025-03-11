@@ -246,12 +246,6 @@ function App() {
     const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
     const placasUtilizadas = equipesCadastradas.map((equipe) => equipe.placa_veiculo);
   
-    // Reseta as listas para o estado original
-    setEquipeOptions(equipeOptionsCompleta);
-    setEletricistaMotoristaOptions(eletricistasCompletos);
-    setEletricistaParceiroOptions(eletricistasCompletos);
-    setPlacaVeiculoOptions(placaVeiculoOptionsCompleta);
-  
     // Filtra as opções disponíveis
     const equipesDisponiveis = equipeOptionsCompleta.filter(
       (equipe) => !equipesUtilizadas.includes(equipe.value)
@@ -380,6 +374,7 @@ function App() {
     });
     setEditId(team.id);
   };
+
   // Função para excluir uma equipe
   const handleDelete = async (id) => {
     if (window.confirm("Tem certeza que deseja excluir este registro?")) {
