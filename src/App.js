@@ -576,20 +576,23 @@ const handleLogout = () => {
       <h1 className="text-3xl font-semibold text-gray-700 text-center mb-6">
         Composição de Equipes
       </h1>
-      <div className="flex justify-end gap-4 mt-4 mb-6">
-        <button
-          onClick={handleLogout}
-          className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
-        >
-          <img src={exitIcon} alt="Sair" className="w-12 h-12 mr-2" />
-        </button>
-        <button
-          onClick={handleClearForm}
-          className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
-        >
-          <img src={clearIcon} alt="Atualizar" className="w-12 h-12 mr-2" />
-        </button>
-      </div>
+      <div className="flex justify-between mt-4 mb-6">
+  {/* Botão Limpar (extremo esquerdo) */}
+  <button
+    onClick={handleClearForm}
+    className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
+  >
+    <img src={clearIcon} alt="Limpar" className="w-12 h-12 mr-2" />
+  </button>
+
+  {/* Botão Sair (extremo direito) */}
+  <button
+    onClick={handleLogout}
+    className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
+  >
+    <img src={exitIcon} alt="Sair" className="w-12 h-12 mr-2" />
+  </button>
+</div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
         <input
