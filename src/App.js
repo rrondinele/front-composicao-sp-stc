@@ -44,6 +44,7 @@ function App() {
   ]);
   
   const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
+
   const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);
 
   const br0Mapping = {
@@ -64,13 +65,15 @@ function App() {
     { value: "CCE005", label: "CCE005" },  ]);  
   const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta);
 
-  const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState([
+  const [placaVeiculoOptionsCompleta, setPlacaVeiculoOptionsCompleta] = useState([
     { value: "EWF2J53", label: "EWF2J53" },
     { value: "EXS4G32", label: "EXS4G32" },
     { value: "FCY0E42", label: "FCY0E42" },
     { value: "FGA8E51", label: "FGA8E51" },
     { value: "FJH0F61", label: "FJH0F61" },
   ]);
+
+  const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState(placaVeiculoOptionsCompleta);
 
   const statusOptions = [
     { value: "AFASTADO", label: "AFASTADO" },
@@ -228,38 +231,39 @@ function App() {
     }
   };
 
-  const atualizarListasDeSelecao = (equipesCadastradas) => {
-    // Extrai os valores já utilizados
-    const equipesUtilizadas = equipesCadastradas.map((equipe) => equipe.equipe);
-    const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
-    const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
-    const placasUtilizadas = equipesCadastradas.map((equipe) => equipe.placa_veiculo);
-  
-    // Reseta as listas para o estado original
-    setEquipeOptions(equipeOptionsCompleta);
-    setEletricistaMotoristaOptions(eletricistasCompletos);
-    setEletricistaParceiroOptions(eletricistasCompletos);
-  
-    // Filtra as opções disponíveis
-    const equipesDisponiveis = equipeOptionsCompleta.filter(
-      (equipe) => !equipesUtilizadas.includes(equipe.value)
-    );
-    const motoristasDisponiveis = eletricistasCompletos.filter(
-      (motorista) => !motoristasUtilizados.includes(motorista.value) && !parceirosUtilizados.includes(motorista.value)
-    );
-    const parceirosDisponiveis = eletricistasCompletos.filter(
-      (parceiro) => !parceirosUtilizados.includes(parceiro.value) && !motoristasUtilizados.includes(parceiro.value)
-    );
-    const placasDisponiveis = placaVeiculoOptions.filter(
-      (placa) => !placasUtilizadas.includes(placa.value)
-    );
-  
-    // Atualiza os estados das listas de seleção
-    setEquipeOptions(equipesDisponiveis);
-    setEletricistaMotoristaOptions(motoristasDisponiveis);
-    setEletricistaParceiroOptions(parceirosDisponiveis);
-    setPlacaVeiculoOptions(placasDisponiveis);
-  };
+const atualizarListasDeSelecao = (equipesCadastradas) => {
+  // Extrai os valores já utilizados
+  const equipesUtilizadas = equipesCadastradas.map((equipe) => equipe.equipe);
+  const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
+  const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
+  const placasUtilizadas = equipesCadastradas.map((equipe) => equipe.placa_veiculo);
+
+  // Reseta as listas para o estado original
+  setEquipeOptions(equipeOptionsCompleta);
+  setEletricistaMotoristaOptions(eletricistasCompletos);
+  setEletricistaParceiroOptions(eletricistasCompletos);
+  setPlacaVeiculoOptions(placaVeiculoOptionsCompleta);
+
+  // Filtra as opções disponíveis
+  const equipesDisponiveis = equipeOptionsCompleta.filter(
+    (equipe) => !equipesUtilizadas.includes(equipe.value)
+  );
+  const motoristasDisponiveis = eletricistasCompletos.filter(
+    (motorista) => !motoristasUtilizados.includes(motorista.value) && !parceirosUtilizados.includes(motorista.value)
+  );
+  const parceirosDisponiveis = eletricistasCompletos.filter(
+    (parceiro) => !parceirosUtilizados.includes(parceiro.value) && !motoristasUtilizados.includes(parceiro.value)
+  );
+  const placasDisponiveis = placaVeiculoOptionsCompleta.filter(
+    (placa) => !placasUtilizadas.includes(placa.value)
+  );
+
+  // Atualiza os estados das listas de seleção
+  setEquipeOptions(equipesDisponiveis);
+  setEletricistaMotoristaOptions(motoristasDisponiveis);
+  setEletricistaParceiroOptions(parceirosDisponiveis);
+  setPlacaVeiculoOptions(placasDisponiveis);
+};
 
   // Função para buscar equipes
   const fetchTeams = async () => {
