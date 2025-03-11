@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
 import * as XLSX from "xlsx";
@@ -12,7 +12,7 @@ function App() {
   //const [isLoggedIn, setIsLoggedIn] = useState(false); // Defina como true para ignorar o login
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true";
+    return localStorage.getItem("isLoggedIn") === "false";
   });
   
   useEffect(() => {
@@ -38,11 +38,7 @@ function App() {
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false); // Estado para indicar carregamento
 
-
-
-  
-
-  useEffect(() => {
+   useEffect(() => {
     setFormData({
       data_atividade: "",
       supervisor: "",
