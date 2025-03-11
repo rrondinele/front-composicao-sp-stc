@@ -468,7 +468,8 @@ function App() {
         const updatedParceiroOptions = eletricistasCompletos.filter(
           (eletricista) =>
             eletricista.value !== selectedOption.value && // Remove o motorista selecionado
-            !parceirosUtilizados.includes(eletricista.value) // Remove os parceiros já cadastrados
+            !parceirosUtilizados.includes(eletricista.value) && // Remove os parceiros já cadastrados
+            !motoristasUtilizados.includes(eletricista.value) // Remove os motoristas já cadastrados
         );
         setEletricistaParceiroOptions(updatedParceiroOptions);
       } else if (fieldName === "eletricista_parceiro") {
@@ -476,7 +477,8 @@ function App() {
         const updatedMotoristaOptions = eletricistasCompletos.filter(
           (eletricista) =>
             eletricista.value !== selectedOption.value && // Remove o parceiro selecionado
-            !motoristasUtilizados.includes(eletricista.value) // Remove os motoristas já cadastrados
+            !motoristasUtilizados.includes(eletricista.value) && // Remove os motoristas já cadastrados
+            !parceirosUtilizados.includes(eletricista.value) // Remove os parceiros já cadastrados
         );
         setEletricistaMotoristaOptions(updatedMotoristaOptions);
       }
