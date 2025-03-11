@@ -10,9 +10,7 @@ import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true";
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado inicial como false
   const [loginData, setLoginData] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -29,6 +27,12 @@ function App() {
   });
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
+
+  // Efeito para verificar se o usuário está logado
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
+  }, []);
   
   // Efeito para persistir o estado de login
   useEffect(() => {
