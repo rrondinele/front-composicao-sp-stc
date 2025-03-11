@@ -57,6 +57,7 @@ function App() {
       }
     }
   }, []); // Array de dependências vazio para executar apenas uma vez
+
   // Efeito para persistir o estado de login
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
@@ -834,6 +835,7 @@ function App() {
         value={supervisorOptions.find(option => option.value === formData.supervisor) || null}
         styles={minimalStyles}
         className="w-full"
+        isDisabled={true} // Torna o campo somente leitura
       />
 
       {/* Campo: Status */}
