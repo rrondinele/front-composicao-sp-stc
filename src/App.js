@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Defina como true para ignorar o login
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Defina como true para ignorar o login
   const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
   const [formData, setFormData] = useState({
     data_atividade: "",
@@ -52,13 +52,15 @@ function App() {
     // Adicione mais mapeamentos conforme necessário
   };
 
-  const [equipeOptions, setEquipeOptions] = useState([
+  const [equipeOptionsCompleta, setEquipeOptionsCompleta] = useState([
     { value: "CCE001", label: "CCE001" },
     { value: "CCE002", label: "CCE002" },
     { value: "CCE003", label: "CCE003" },
     { value: "CCE004", label: "CCE004" },
     { value: "CCE005", label: "CCE005" },
   ]);
+  
+  const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta);
   
   const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
   const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);
@@ -124,14 +126,11 @@ function App() {
 
   // Funcao Buscar as equipes cadastradas para a data selecionada. + Atualizar as listas de seleção com base nas equipes cadastradas.
   const handleDateChange = async (e) => {
-    const dataSelecionada = e.target.value; // Pega a data selecionada
-    setFormData({ ...formData, data_atividade: dataSelecionada }); // Atualiza o estado formData
+    const dataSelecionada = e.target.value;
+    setFormData({ ...formData, data_atividade: dataSelecionada });
   
     if (dataSelecionada) {
-      // Busca as equipes cadastradas na data selecionada
       const equipesCadastradas = await fetchEquipesPorData(dataSelecionada);
-      
-      // Atualiza as listas de seleção com base nas equipes cadastradas
       atualizarListasDeSelecao(equipesCadastradas);
     }
   };
@@ -237,8 +236,11 @@ function App() {
     const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
     const placasUtilizadas = equipesCadastradas.map((equipe) => equipe.placa_veiculo);
   
+    // Reseta a lista de equipes para o estado original
+    setEquipeOptions(equipeOptionsCompleta);
+  
     // Filtra as opções disponíveis
-    const equipesDisponiveis = equipeOptions.filter(
+    const equipesDisponiveis = equipeOptionsCompleta.filter(
       (equipe) => !equipesUtilizadas.includes(equipe.value)
     );
     const motoristasDisponiveis = eletricistasCompletos.filter(
