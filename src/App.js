@@ -28,12 +28,6 @@ function App() {
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
 
-  // Efeito para verificar se o usuário está logado
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-    setIsLoggedIn(loggedIn);
-  }, []);
-  
   // Efeito para persistir o estado de login
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
