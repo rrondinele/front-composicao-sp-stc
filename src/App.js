@@ -57,7 +57,6 @@ function App() {
       }
     }
   }, []); // Array de dependências vazio para executar apenas uma vez
-
   // Efeito para persistir o estado de login
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
@@ -74,9 +73,15 @@ function App() {
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
         localStorage.setItem("matricula", loginData.matricula); // Salva a matrícula do usuário
+  
+        // Se o usuário for supervisor, salva o nome do supervisor no localStorage
+        if (response.data.user.role === "supervisor" && supervisorMapping[loginData.matricula]) {
+          localStorage.setItem("supervisorName", supervisorMapping[loginData.matricula]);
+        }
+  
         toast.success("Login bem-sucedido!");
   
-        // Se o usuário for supervisor, preencha o campo supervisor automaticamente
+        // Se o usuário for supervisor, preenche o campo supervisor automaticamente
         if (response.data.user.role === "supervisor" && supervisorMapping[loginData.matricula]) {
           setFormData((prevFormData) => ({
             ...prevFormData,
