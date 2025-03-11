@@ -62,6 +62,8 @@ function App() {
         const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
         if (response.data.message === "Login bem-sucedido") {
           setIsLoggedIn(true);
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
           toast.success("Login bem-sucedido!");
         }
       } catch (error) {
@@ -485,9 +487,6 @@ function App() {
     }
   };
 
-
-
-
   const fetchEquipesPorData = async (data) => {
     try {
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", {
@@ -532,34 +531,36 @@ function App() {
 
   // Função para buscar equipes
   const fetchTeams = async () => {
-    setLoading(true); // Ativa o estado de carregamento
+    setLoading(true);
     try {
-      // Define os parâmetros da requisição
-      const params = {};
-      if (formData.data_atividade) {
-        // Adiciona o filtro por data apenas se formData.data_atividade estiver preenchido
-        params.data = formData.data_atividade;
+      const params = { data: formData.data_atividade };
+      
+      const userRole = localStorage.getItem("userRole");
+      const supervisorMapping = {
+        "11101": "016032 - WAGNER AUGUSTO DA SILVA MAURO",
+      };
+  
+      if (supervisorMapping[loginData.username]) {
+        params.supervisor = supervisorMapping[loginData.username];
+        params.role = "supervisor";
+      } else if (userRole === "supervisor") {
+        params.supervisor = loginData.username;
+        params.role = "supervisor";
       }
   
-      // Faz a requisição ao backend
-      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", {
-        params, // Passa os parâmetros da requisição
-      });
+      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
   
-      // Atualiza o estado teams com os dados retornados
       if (response.data && Array.isArray(response.data)) {
         setTeams(response.data);
       } else {
-        // Se response.data não for um array, define teams como um array vazio
         setTeams([]);
         toast.warning("Nenhuma equipe encontrada.");
       }
     } catch (error) {
-      // Exibe uma mensagem de erro em caso de falha na requisição
       toast.error("Erro ao buscar equipes.");
       console.error("Erro ao buscar equipes:", error);
     } finally {
-      setLoading(false); // Desativa o estado de carregamento
+      setLoading(false);
     }
   };
 
