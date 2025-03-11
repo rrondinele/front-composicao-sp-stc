@@ -47,12 +47,12 @@ function App() {
     // Se o usuário estiver logado, preencha o supervisor automaticamente
     if (loggedIn) {
       const userRole = localStorage.getItem("userRole");
-      const username = localStorage.getItem("username");
+      const matricula = localStorage.getItem("matricula");
   
-      if (userRole === "supervisor" && supervisorMapping[username]) {
+      if (userRole === "supervisor" && supervisorMapping[matricula]) {
         setFormData((prevFormData) => ({
           ...prevFormData,
-          supervisor: supervisorMapping[username],
+          supervisor: supervisorMapping[matricula],
         }));
       }
     }
@@ -73,14 +73,14 @@ function App() {
         setIsLoggedIn(true);
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
-        localStorage.setItem("username", loginData.matricula); // Salva a matrícula do usuário
+        localStorage.setItem("matricula", loginData.matricula); // Salva a matrícula do usuário
         toast.success("Login bem-sucedido!");
   
         // Se o usuário for supervisor, preencha o campo supervisor automaticamente
-        if (response.data.user.role === "supervisor" && supervisorMapping[loginData.username]) {
+        if (response.data.user.role === "supervisor" && supervisorMapping[loginData.matricula]) {
           setFormData((prevFormData) => ({
             ...prevFormData,
-            supervisor: supervisorMapping[loginData.username],
+            supervisor: supervisorMapping[loginData.matricula],
           }));
         }
       }
@@ -537,11 +537,11 @@ function App() {
       const params = { data: formData.data_atividade };
   
       const userRole = localStorage.getItem("userRole");
-      const username = localStorage.getItem("username");
+      const matricula = localStorage.getItem("matricula");
   
       // Se o usuário for supervisor, filtra os registros pelo supervisor
-      if (userRole === "supervisor" && supervisorMapping[username]) {
-        params.supervisor = supervisorMapping[username];
+      if (userRole === "supervisor" && supervisorMapping[matricula]) {
+        params.supervisor = supervisorMapping[matricula];
       }
   
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
@@ -738,7 +738,7 @@ function App() {
           </h1>
           <form onSubmit={handleLogin} className="space-y-6">          
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-300">
+              <label htmlFor="matricula" className="block text-sm font-medium text-gray-300">
                 Matrícula
               </label>
               <input
@@ -746,14 +746,14 @@ function App() {
                 id="matricula"
                 name="matricula"
                 placeholder="Digite sua matrícula"
-                value={loginData.username}
-                onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
+                value={loginData.matricula}
+                onChange={(e) => setLoginData({ ...loginData, matricula: e.target.value })}
                 required
                 className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+              <label htmlFor="senha" className="block text-sm font-medium text-gray-300">
                 Senha
               </label>
               <input
@@ -761,8 +761,8 @@ function App() {
                 id="senha"
                 name="senha"
                 placeholder="Digite sua senha"
-                value={loginData.password}
-                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                value={loginData.senha}
+                onChange={(e) => setLoginData({ ...loginData, senha: e.target.value })}
                 required
                 className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
