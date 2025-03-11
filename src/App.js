@@ -9,7 +9,17 @@ import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Defina como true para ignorar o login
+  //const [isLoggedIn, setIsLoggedIn] = useState(false); // Defina como true para ignorar o login
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
+  
+  useEffect(() => {
+    localStorage.setItem("isLoggedIn", isLoggedIn);
+  }, [isLoggedIn]);
+
+
   const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
   const [formData, setFormData] = useState({
     data_atividade: "",
@@ -27,6 +37,25 @@ function App() {
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false); // Estado para indicar carregamento
+
+
+
+  
+
+  useEffect(() => {
+    setFormData({
+      data_atividade: "",
+      supervisor: "",
+      status: "",
+      eletricista_motorista: "",
+      br0_motorista: "",
+      eletricista_parceiro: "",
+      br0_parceiro: "",
+      equipe: "",
+      servico: "",
+      placa_veiculo: "",
+    });
+  }, []);
 
   // Opções para os campos de seleção
   const supervisorOptions = [
@@ -219,11 +248,12 @@ function App() {
   };
 
   // Função para lidar com o logout
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setLoginData({ matricula: "", senha: "" });
-    toast.info("Logout realizado com sucesso!");
-  };
+const handleLogout = () => {
+  setIsLoggedIn(false);
+  localStorage.removeItem("isLoggedIn"); // 🔹 Agora remove do localStorage
+  setLoginData({ matricula: "", senha: "" });
+  toast.info("Logout realizado com sucesso!");
+};
 
   const fetchEquipesPorData = async (data) => {
     try {
