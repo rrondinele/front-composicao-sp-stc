@@ -30,7 +30,7 @@ function App() {
 
   // Mapeamento de matrícula para nome do supervisor
   const supervisorMapping = {
-    "11101": "11101 - RONDINELE ARAUJO CARVALJO",
+    "11101": "11101 - RONDINELE ARAUJO CARVALHO",
     "16032": "016032 - WAGNER AUGUSTO DA SILVA MAURO",
     "16032": "6061 - JULIO CESAR PEREIRA DA SILVA",
     "16032": "15540 - EDER JORDELINO GONCALVES CAETANO",
@@ -40,6 +40,7 @@ function App() {
 
   // Efeito para verificar se o usuário está logado
   useEffect(() => {
+    // Verifica se o usuário está logado no localStorage
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(loggedIn);
   
@@ -55,7 +56,7 @@ function App() {
         }));
       }
     }
-  }, []);
+  }, []); // Array de dependências vazio para executar apenas uma vez
 
   // Efeito para persistir o estado de login
   useEffect(() => {
@@ -737,31 +738,31 @@ function App() {
           </h1>
           <form onSubmit={handleLogin} className="space-y-6">          
             <div>
-              <label htmlFor="matricula" className="block text-sm font-medium text-gray-300">
-                {/* Matrícula */}
+              <label htmlFor="username" className="block text-sm font-medium text-gray-300">
+                Matrícula
               </label>
               <input
                 type="text"
-                id="matricula"
-                name="matricula"
+                id="username"
+                name="username"
                 placeholder="Digite sua matrícula"
-                value={loginData.matricula}
-                onChange={(e) => setLoginData({ ...loginData, matricula: e.target.value })}
+                value={loginData.username}
+                onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
                 required
                 className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label htmlFor="senha" className="block text-sm font-medium text-gray-300">
-                {/* Senha */}
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                Senha
               </label>
               <input
                 type="password"
-                id="senha"
-                name="senha"
+                id="password"
+                name="password"
                 placeholder="Digite sua senha"
-                value={loginData.senha}
-                onChange={(e) => setLoginData({ ...loginData, senha: e.target.value })}
+                value={loginData.password}
+                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                 required
                 className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
