@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "false";
+    return localStorage.getItem("isLoggedIn") === "true";
   });
 
   const [loginData, setLoginData] = useState({ username: "", password: "" });
@@ -35,8 +35,8 @@ function App() {
 
   
   useEffect(() => {
-    localStorage.setItem("isLoggedIn", isLoggedIn);
-  }, [isLoggedIn]);  
+    localStorage.setItem("isLoggedIn", isLoggedIn.toString());
+  }, [isLoggedIn]); 
 
 
    useEffect(() => {
@@ -53,6 +53,23 @@ function App() {
       placa_veiculo: "",
     });
   }, []);
+
+    // Função para lidar com o login
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      try {
+        const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
+        if (response.data.message === "Login bem-sucedido") {
+          setIsLoggedIn(true);
+          toast.success("Login bem-sucedido!");
+        }
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Erro ao fazer login");
+      } finally {
+        setLoading(false);
+      }
+    };
 
     // Função para lidar com o logout
     const handleLogout = () => {
@@ -102,13 +119,7 @@ function App() {
 
   const [eletricistasCompletos, setEletricistasCompletos] = useState([
     
-      { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" },
-
-        
-
-
-
-
+      { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" }, 
       { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
       { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
       { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },
@@ -472,22 +483,6 @@ function App() {
     }
   };
 
-  // Função para lidar com o login
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
-      if (response.data.message === "Login bem-sucedido") {
-        setIsLoggedIn(true);
-        toast.success("Login bem-sucedido!");
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Erro ao fazer login");
-    } finally {
-      setLoading(false);
-    }
-  };
 
 
 
