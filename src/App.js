@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true";
+    return localStorage.getItem("isLoggedIn") === "false";
   });
 
   const [loginData, setLoginData] = useState({ username: "", password: "" });
