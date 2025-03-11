@@ -279,16 +279,21 @@ function App() {
     }); // Dados do formulário
   
     // 2. Limpar o localStorage
-    localStorage.removeItem("isLoggedIn"); // Remove o estado de login
-    localStorage.removeItem("formData"); // Se houver dados do formulário salvos
-    localStorage.removeItem("loginData"); // Se houver dados de login salvos
-  
-    // 3. Exibir mensagem de sucesso
-    toast.info("Logout realizado com sucesso!");
-  
-    // 4. Redirecionar para a tela de login (opcional)
-    // Se você estiver usando React Router, pode redirecionar assim:
-    // navigate("/login"); // Substitua "/login" pela rota da sua tela de login
+    localStorage.clear(); // Remove tudo do localStorage
+  };
+
+  const fetchEquipesPorData = async (data) => {
+    try {
+      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", {
+        params: {
+          data: data, // Filtra as equipes pela data
+        },
+      });
+      return response.data; // Retorna as equipes cadastradas na data
+    } catch (error) {
+      console.error("Erro ao buscar equipes:", error);
+      return []; // Retorna um array vazio em caso de erro
+    }
   };
 
   const atualizarListasDeSelecao = (equipesCadastradas) => {
