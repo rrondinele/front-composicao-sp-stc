@@ -35,12 +35,16 @@ function App() {
     { value: "2222-ANA", label: "2222-ANA" },
   ];
 
-  const eletricistasCompletos = [
+  const [eletricistasCompletos, setEletricistasCompletos] = useState([
     { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" },
     { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
     { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
     { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },
-  ];
+    // Adicione outros eletricistas aqui
+  ]);
+  
+  const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
+  const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);
 
   const br0Mapping = {
     "015644 - ADEILDO JOSE DE LIMA JUNIOR": "BR0320023558",
@@ -57,13 +61,8 @@ function App() {
     { value: "CCE002", label: "CCE002" },
     { value: "CCE003", label: "CCE003" },
     { value: "CCE004", label: "CCE004" },
-    { value: "CCE005", label: "CCE005" },
-  ]);
-  
+    { value: "CCE005", label: "CCE005" },  ]);  
   const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta);
-  
-  const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
-  const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);
 
   const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState([
     { value: "EWF2J53", label: "EWF2J53" },
@@ -236,8 +235,10 @@ function App() {
     const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
     const placasUtilizadas = equipesCadastradas.map((equipe) => equipe.placa_veiculo);
   
-    // Reseta a lista de equipes para o estado original
+    // Reseta as listas para o estado original
     setEquipeOptions(equipeOptionsCompleta);
+    setEletricistaMotoristaOptions(eletricistasCompletos);
+    setEletricistaParceiroOptions(eletricistasCompletos);
   
     // Filtra as opções disponíveis
     const equipesDisponiveis = equipeOptionsCompleta.filter(
@@ -259,7 +260,6 @@ function App() {
     setEletricistaParceiroOptions(parceirosDisponiveis);
     setPlacaVeiculoOptions(placasDisponiveis);
   };
-
 
   // Função para buscar equipes
   const fetchTeams = async () => {
