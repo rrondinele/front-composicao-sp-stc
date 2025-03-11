@@ -368,11 +368,18 @@ function App() {
 
   const handleEdit = (team) => {
     setFormData({
-      ...team,
+      data_atividade: team.data_atividade,
+      supervisor: team.supervisor,
+      status: team.status,
+      eletricista_motorista: team.eletricista_motorista,
       br0_motorista: br0Mapping[team.eletricista_motorista] || "", // Preenche BR0 Motorista
+      eletricista_parceiro: team.eletricista_parceiro,
       br0_parceiro: br0Mapping[team.eletricista_parceiro] || "", // Preenche BR0 Parceiro
+      equipe: team.equipe,
+      servico: team.servico,
+      placa_veiculo: team.placa_veiculo,
     });
-    setEditId(team.id);
+    setEditId(team.id); // Define o ID da equipe que está sendo editada
   };
 
   // Função para excluir uma equipe
