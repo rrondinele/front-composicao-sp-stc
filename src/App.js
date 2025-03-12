@@ -555,13 +555,14 @@ function App() {
   
       const params = {
         data: formData.data_atividade, // Filtra pela data selecionada
+        role: userRole, // Envia o papel do usuário
       };
   
       // Se o usuário for supervisor, adiciona o filtro de supervisor
       if (userRole === "supervisor" && supervisorMapping[matricula]) {
-        params.supervisor = supervisorMapping[matricula];
+        params.supervisor = supervisorMapping[matricula]; // Envia o nome do supervisor
       }
-  
+        
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
   
       if (response.data && Array.isArray(response.data)) {
