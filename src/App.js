@@ -553,7 +553,6 @@ function App() {
     try {
       const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
       const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
-      console.log("Matrícula no localStorage:", matricula, typeof matricula); // Verifica o valor e o tipo
   
       // Validação da data
       if (!formData.data_atividade) {
