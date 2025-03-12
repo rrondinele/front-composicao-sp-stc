@@ -32,7 +32,7 @@ function App() {
   const supervisorMapping = {
     "11101": "11101 - RONDINELE ARAUJO CARVALHO",
     "16032": "016032 - WAGNER AUGUSTO DA SILVA MAURO",
-    "6061": "006061 - JULIO CESAR PEREIRA DA SILVA", // Adicionado aqui
+    "6061": "006061 - JULIO CESAR PEREIRA DA SILVA",
     "15540": "015540 - EDER JORDELINO GONCALVES CAETANO",
     "18505": "018505 - DIEGO RAFAEL DE MELO SILVA",
     // Adicione outros supervisores aqui
@@ -553,6 +553,7 @@ function App() {
     try {
       const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
       const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
+      console.log("Matrícula no localStorage:", matricula, typeof matricula); // Verifica o valor e o tipo
   
       // Validação da data
       if (!formData.data_atividade) {
@@ -566,8 +567,8 @@ function App() {
       };
   
       // Se o usuário for supervisor, adiciona o filtro de supervisor
-      if (userRole === "supervisor" && supervisorMapping[matricula]) {
-        params.supervisor = supervisorMapping[matricula]; // Envia o valor completo do supervisor
+      if (userRole === "supervisor" && supervisorMapping[matricula.toString()]) {
+        params.supervisor = supervisorMapping[matricula.toString()]; // Envia o valor completo do supervisor
       }
   
       console.log("Parâmetros enviados:", params); // Log dos parâmetros
@@ -597,6 +598,7 @@ function App() {
     try {
       const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
       const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
+      console.log("Matrícula no localStorage:", matricula, typeof matricula); // Verifica o valor e o tipo
   
       // Validação da data
       if (!formData.data_atividade) {
