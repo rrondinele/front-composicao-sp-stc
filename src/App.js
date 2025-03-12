@@ -546,36 +546,48 @@ function App() {
     setEletricistaParceiroOptions(parceirosDisponiveis);
     setPlacaVeiculoOptions(placasDisponiveis);
   };
-  // Função para buscar equipes
+
+  // Função para buscar equipes não finalizadas ou pendentes
   const fetchTeams = async () => {
-    setLoading(true); // Ativa o estado de carregamento
+    setLoading(true);
     try {
-      const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
-      const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
+      const userRole = localStorage.getItem("userRole");
+      const matricula = localStorage.getItem("matricula");
+  
+      // Validação da data
+      if (!formData.data_atividade) {
+        toast.error("Por favor, selecione uma data.");
+        return;
+      }
   
       const params = {
-        data: formData.data_atividade, // Filtra pela data selecionada
-        role: userRole, // Envia o papel do usuário
+        data: formData.data_atividade,
+        role: userRole,
       };
   
-      // Se o usuário for supervisor, adiciona o filtro de supervisor
-      if (userRole === "supervisor" && supervisorMapping[matricula]) {
-        params.supervisor = supervisorMapping[matricula]; // Envia o nome do supervisor
+      // Envia apenas o número da matrícula para o backend
+      if (userRole === "supervisor" && matricula) {
+        params.supervisor = matricula; // Apenas o número da matrícula (ex: "16032")
       }
-        
+  
+      console.log("Parâmetros enviados:", params); // Log dos parâmetros
+  
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
   
       if (response.data && Array.isArray(response.data)) {
-        setTeams(response.data); // Atualiza a lista de equipes
+        setTeams(response.data);
       } else {
-        setTeams([]); // Se não houver dados, define teams como um array vazio
+        setTeams([]);
         toast.warning("Nenhuma equipe encontrada.");
       }
     } catch (error) {
       toast.error("Erro ao buscar equipes.");
       console.error("Erro ao buscar equipes:", error);
+      if (error.response) {
+        console.error("Detalhes do erro:", error.response.data);
+      }
     } finally {
-      setLoading(false); // Desativa o estado de carregamento
+      setLoading(false);
     }
   };
 
@@ -586,19 +598,32 @@ function App() {
       const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
       const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
   
+      // Validação da data
+      if (!formData.data_atividade) {
+        toast.error("Por favor, selecione uma data.");
+        return;
+      }
+  
       const params = {
         data: formData.data_atividade, // Filtra pela data selecionada
+        role: userRole, // Envia o papel do usuário
       };
   
       // Se o usuário for supervisor, adiciona o filtro de supervisor
-      if (userRole === "supervisor" && supervisorMapping[matricula]) {
-        params.supervisor = supervisorMapping[matricula];
+      if (userRole === "supervisor" && matricula) {
+        params.supervisor = matricula; // Envia apenas o número da matrícula (ex: "16032")
       }
+  
+      console.log("Parâmetros enviados:", params); // Log dos parâmetros
   
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams/finalizadas", { params });
       setTeams(response.data); // Atualiza a lista de equipes
     } catch (error) {
       toast.error("Erro ao buscar equipes finalizadas.");
+      console.error("Erro ao buscar equipes finalizadas:", error);
+      if (error.response) {
+        console.error("Detalhes do erro:", error.response.data);
+      }
     } finally {
       setLoading(false);
     }
