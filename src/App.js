@@ -32,9 +32,9 @@ function App() {
   const supervisorMapping = {
     "11101": "11101 - RONDINELE ARAUJO CARVALHO",
     "16032": "016032 - WAGNER AUGUSTO DA SILVA MAURO",
-    "6061": "6061 - JULIO CESAR PEREIRA DA SILVA",
-    "15540": "15540 - EDER JORDELINO GONCALVES CAETANO",
-    "18505": "18505 - DIEGO RAFAEL DE MELO SILVA",
+    "6061": "006061 - JULIO CESAR PEREIRA DA SILVA", // Adicionado aqui
+    "15540": "015540 - EDER JORDELINO GONCALVES CAETANO",
+    "18505": "018505 - DIEGO RAFAEL DE MELO SILVA",
     // Adicione outros supervisores aqui
   };
 
@@ -497,19 +497,29 @@ function App() {
       }
     }
   };
+
   const fetchEquipesPorData = async (data) => {
     try {
-      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", {
-        params: {
-          data: data, // Filtra as equipes pela data
-        },
-      });
+      const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
+      const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
+  
+      const params = {
+        data: data, // Filtra pela data selecionada
+      };
+  
+      // Se o usuário for supervisor, adiciona o filtro de supervisor
+      if (userRole === "supervisor" && supervisorMapping[matricula]) {
+        params.supervisor = supervisorMapping[matricula];
+      }
+  
+      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
       return response.data; // Retorna as equipes cadastradas na data
     } catch (error) {
       console.error("Erro ao buscar equipes:", error);
       return []; // Retorna um array vazio em caso de erro
     }
   };
+
   const atualizarListasDeSelecao = (equipesCadastradas) => {
     // Extrai os valores já utilizados
     const equipesUtilizadas = equipesCadastradas.map((equipe) => equipe.equipe);
@@ -540,12 +550,14 @@ function App() {
   const fetchTeams = async () => {
     setLoading(true); // Ativa o estado de carregamento
     try {
-      const params = { data: formData.data_atividade };
+      const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
+      const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
   
-      const userRole = localStorage.getItem("userRole");
-      const matricula = localStorage.getItem("matricula");
+      const params = {
+        data: formData.data_atividade, // Filtra pela data selecionada
+      };
   
-      // Se o usuário for supervisor, filtra os registros pelo supervisor
+      // Se o usuário for supervisor, adiciona o filtro de supervisor
       if (userRole === "supervisor" && supervisorMapping[matricula]) {
         params.supervisor = supervisorMapping[matricula];
       }
@@ -553,14 +565,12 @@ function App() {
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
   
       if (response.data && Array.isArray(response.data)) {
-        setTeams(response.data);
+        setTeams(response.data); // Atualiza a lista de equipes
       } else {
-        // Se response.data não for um array, define teams como um array vazio
-        setTeams([]);
+        setTeams([]); // Se não houver dados, define teams como um array vazio
         toast.warning("Nenhuma equipe encontrada.");
       }
     } catch (error) {
-      // Exibe uma mensagem de erro em caso de falha na requisição
       toast.error("Erro ao buscar equipes.");
       console.error("Erro ao buscar equipes:", error);
     } finally {
@@ -572,18 +582,27 @@ function App() {
   const fetchFinalizedTeams = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams/finalizadas", {
-        params: {
-          data: formData.data_atividade,
-        },
-      });
-      setTeams(response.data);
+      const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
+      const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
+  
+      const params = {
+        data: formData.data_atividade, // Filtra pela data selecionada
+      };
+  
+      // Se o usuário for supervisor, adiciona o filtro de supervisor
+      if (userRole === "supervisor" && supervisorMapping[matricula]) {
+        params.supervisor = supervisorMapping[matricula];
+      }
+  
+      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams/finalizadas", { params });
+      setTeams(response.data); // Atualiza a lista de equipes
     } catch (error) {
       toast.error("Erro ao buscar equipes finalizadas.");
     } finally {
       setLoading(false);
     }
   };
+
   // Função para enviar o formulário de cadastro/edição
   const handleSubmit = async (e) => {
     e.preventDefault();
