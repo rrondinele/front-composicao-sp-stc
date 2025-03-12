@@ -551,8 +551,8 @@ function App() {
   const fetchTeams = async () => {
     setLoading(true);
     try {
-      const userRole = localStorage.getItem("userRole");
-      const matricula = localStorage.getItem("matricula");
+      const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
+      const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
   
       // Validação da data
       if (!formData.data_atividade) {
@@ -561,13 +561,13 @@ function App() {
       }
   
       const params = {
-        data: formData.data_atividade,
-        role: userRole,
+        data: formData.data_atividade, // Filtra pela data selecionada
+        role: userRole, // Envia o papel do usuário
       };
   
-      // Envia apenas o número da matrícula para o backend
-      if (userRole === "supervisor" && matricula) {
-        params.supervisor = matricula; // Apenas o número da matrícula (ex: "16032")
+      // Se o usuário for supervisor, adiciona o filtro de supervisor
+      if (userRole === "supervisor" && supervisorMapping[matricula]) {
+        params.supervisor = supervisorMapping[matricula]; // Envia o valor completo do supervisor
       }
   
       console.log("Parâmetros enviados:", params); // Log dos parâmetros
@@ -610,8 +610,8 @@ function App() {
       };
   
       // Se o usuário for supervisor, adiciona o filtro de supervisor
-      if (userRole === "supervisor" && matricula) {
-        params.supervisor = matricula; // Envia apenas o número da matrícula (ex: "16032")
+      if (userRole === "supervisor" && supervisorMapping[matricula]) {
+        params.supervisor = supervisorMapping[matricula]; // Envia o valor completo do supervisor
       }
   
       console.log("Parâmetros enviados:", params); // Log dos parâmetros
