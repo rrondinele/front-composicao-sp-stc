@@ -567,10 +567,10 @@ function App() {
       };
   
       // Se o usuário for supervisor, adiciona o filtro de supervisor
-      if (userRole === "supervisor" && supervisorMapping[matricula.toString()]) {
-        params.supervisor = supervisorMapping[matricula.toString()]; // Envia o valor completo do supervisor
+      if (userRole === "supervisor" && supervisorMapping[matricula]) {
+        console.log("Valor no supervisorMapping:", supervisorMapping[matricula]);
+        params.supervisor = supervisorMapping[matricula]; // Envia o valor completo do supervisor
       }
-  
       console.log("Parâmetros enviados:", params); // Log dos parâmetros
   
       const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
