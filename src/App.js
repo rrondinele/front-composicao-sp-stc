@@ -145,75 +145,7 @@ function App() {
       { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" }, 
       { value: "017968 - ADILSON NUNES DA SILVA", label: "017968 - ADILSON NUNES DA SILVA" },
       { value: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA", label: "015646 - ALBERTO MIRANDA SCUOTEGUAZZA" },
-      { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },
-      { value: "015521 - ALEX GOMES PINHEIRO", label: "015521 - ALEX GOMES PINHEIRO" },
-      { value: "011689 - ALEX MUNIZ SANTANA", label: "011689 - ALEX MUNIZ SANTANA" },
-      { value: "017400 - ALEXANDRO DOS SANTOS PEREIRA", label: "017400 - ALEXANDRO DOS SANTOS PEREIRA" },
-      { value: "016054 - ANDCLER FERNANDES DE SOUZA", label: "016054 - ANDCLER FERNANDES DE SOUZA" },
-      { value: "009050 - ANDERSON BATISTA SANTOS", label: "009050 - ANDERSON BATISTA SANTOS" },
-      { value: "015285 - ANDERSON BRAZ SOARES DE FREITAS ", label: "015285 - ANDERSON BRAZ SOARES DE FREITAS " },
-      { value: "009893 - ANDERSON CLEITON MUNIZ SANTANA", label: "009893 - ANDERSON CLEITON MUNIZ SANTANA" },
-      { value: "017949 - BRENO SOUZA DA SILVA", label: "017949 - BRENO SOUZA DA SILVA" },
-      { value: "015645 - CAIO ROSCHEL DOS SANTOS", label: "015645 - CAIO ROSCHEL DOS SANTOS" },
-      { value: "015245 - CLAUDINEI DIAS DA SILVA", label: "015245 - CLAUDINEI DIAS DA SILVA" },
-      { value: "017763 - CRISTYAN LORRAN DOS SANTOS COSTA", label: "017763 - CRISTYAN LORRAN DOS SANTOS COSTA" },
-      { value: "017327 - DANIEL MORAES DOS SANTOS", label: "017327 - DANIEL MORAES DOS SANTOS" },
-      { value: "017900 - DAWID NERY VIEIRA", label: "017900 - DAWID NERY VIEIRA" },
-      { value: "017895 - DENILSON EVANGELISTA DOS SANTOS", label: "017895 - DENILSON EVANGELISTA DOS SANTOS" },
-      { value: "016051 - DOUGLAS APARECIDO DE ASSIS", label: "016051 - DOUGLAS APARECIDO DE ASSIS" },
-      { value: "009083 - EDENILSON DE PAULA LANA", label: "009083 - EDENILSON DE PAULA LANA" },
-      { value: "017899 - EDUARDO DE OLIVEIRA MOREIRA", label: "017899 - EDUARDO DE OLIVEIRA MOREIRA" },
-      { value: "017896 - EDUARDO LOPES DA SILVA", label: "017896 - EDUARDO LOPES DA SILVA" },
-      { value: "017395 - EDSON CIPRIANO MEIRELES DA SILVA", label: "017395 - EDSON CIPRIANO MEIRELES DA SILVA" },
-      { value: "013113 - ELSON DOUGLAS DOS ANJOS BARRETO", label: "013113 - ELSON DOUGLAS DOS ANJOS BARRETO" },
-      { value: "008606 - EMERSON SOARES RODRIGUES", label: "008606 - EMERSON SOARES RODRIGUES" },
-      { value: "015105 - FABIO FERREIRA ALVES", label: "015105 - FABIO FERREIRA ALVES" },
-      { value: "015932 - FABIO HOLANDA", label: "015932 - FABIO HOLANDA" },
-      { value: "015104 - FABIO ROBERTO DA SILVA MORAIS", label: "015104 - FABIO ROBERTO DA SILVA MORAIS" },
-      { value: "017967 - FELIPE GOMES CONCEICAO", label: "017967 - FELIPE GOMES CONCEICAO" },
-      { value: "008671 - FERNANDO DOS SANTOS LIMA", label: "008671 - FERNANDO DOS SANTOS LIMA" },
-      { value: "017897 - FERNANDO SANTOS ASSUNCAO", label: "017897 - FERNANDO SANTOS ASSUNCAO" },
-      { value: "015286 - GERIVALDO CAVALCANTE DA SILVA", label: "015286 - GERIVALDO CAVALCANTE DA SILVA" },
-      { value: "011621 - GIVANILDO ROSA FERNANDES", label: "011621 - GIVANILDO ROSA FERNANDES" },
-      { value: "016050 - HENRIQUE DE SOUZA AZEVEDO", label: "016050 - HENRIQUE DE SOUZA AZEVEDO" },
-      { value: "008580 - HERBE MANOEL DE OLIVEIRA", label: "008580 - HERBE MANOEL DE OLIVEIRA" },
-      { value: "011675 - ISAC GOMES PEREIRA", label: "011675 - ISAC GOMES PEREIRA" },
-      { value: "015648 - JANDISON ROGERIO DA SILVA", label: "015648 - JANDISON ROGERIO DA SILVA" },
-      { value: "017973 - JOAO VITOR PERES BARBOSA", label: "017973 - JOAO VITOR PERES BARBOSA" },
-      { value: "016049 - JONATAS CARDOSO SILVA SANTOS", label: "016049 - JONATAS CARDOSO SILVA SANTOS" },
-      { value: "015520 - JOSE ADRIANO RODRIGUES DA SILVA", label: "015520 - JOSE ADRIANO RODRIGUES DA SILVA" },
-      { value: "009047 - JOSE MAITON MEIRELES DE SOUSA", label: "009047 - JOSE MAITON MEIRELES DE SOUSA" },
-      { value: "017402 - JULIANO RODRIGO DA SILVA", label: "017402 - JULIANO RODRIGO DA SILVA" },
-      { value: "017898 - JULIO DE SOUSA GARDINO", label: "017898 - JULIO DE SOUSA GARDINO" },
-      { value: "017764 - LEANDRO DIAS DOS SANTOS", label: "017764 - LEANDRO DIAS DOS SANTOS" },
-      { value: "008601 - LEANDRO VICENTE MOREIRA DA SILVA", label: "008601 - LEANDRO VICENTE MOREIRA DA SILVA" },
-      { value: "015934 - LOURISMAR DA SILVA VILAS BOAS", label: "015934 - LOURISMAR DA SILVA VILAS BOAS" },
-      { value: "017396 - LOURIVALDO MENEZES NASCIMENTO", label: "017396 - LOURIVALDO MENEZES NASCIMENTO" },
-      { value: "017466 - LUAN VITOR EUGENIO DE LIMA MOR", label: "017466 - LUAN VITOR EUGENIO DE LIMA MOR" },
-      { value: "011800 - LUCAS DO NASCIMENTO ARAUJO", label: "011800 - LUCAS DO NASCIMENTO ARAUJO" },
-      { value: "017397 - LUCIANO OLIVEIRA DA SILVA NETO", label: "017397 - LUCIANO OLIVEIRA DA SILVA NETO" },
-      { value: "008686 - MAICON FERREIRA ALVES", label: "008686 - MAICON FERREIRA ALVES" },
-      { value: "015642 - MARCELO VITOR FEITOZA", label: "015642 - MARCELO VITOR FEITOZA" },
-      { value: "016058 - NATALIA DE MELO LOCHIDIO GOMES", label: "016058 - NATALIA DE MELO LOCHIDIO GOMES" },
-      { value: "008727 - NILSON SANTOS DE SOUZA", label: "008727 - NILSON SANTOS DE SOUZA" },
-      { value: "017762 - OLIVIE NSINGI FELIX DOMINGOS", label: "017762 - OLIVIE NSINGI FELIX DOMINGOS" },
-      { value: "015116 - RAPHAEL PRADO DOS REIS", label: "015116 - RAPHAEL PRADO DOS REIS" },
-      { value: "017976 - RAFAEL CARVALHO SOUSA LIMA", label: "017976 - RAFAEL CARVALHO SOUSA LIMA" },
-      { value: "017398 - RAFAEL DA CONCEICAO SOUZA", label: "017398 - RAFAEL DA CONCEICAO SOUZA" },
-      { value: "015103 - RENAN MARTINS DOS SANTOS", label: "015103 - RENAN MARTINS DOS SANTOS" },
-      { value: "008720 - RENAN SOUZA MAIA", label: "008720 - RENAN SOUZA MAIA" },
-      { value: "008612 - RICARDO APARECIDO GOMES FERREIRA", label: "008612 - RICARDO APARECIDO GOMES FERREIRA" },
-      { value: "017765 - ROBERT PELLIZARI", label: "017765 - ROBERT PELLIZARI" },
-      { value: "017972 - ROGERIO DIAS DA SILVA", label: "017972 - ROGERIO DIAS DA SILVA" },
-      { value: "008657 - RUBENS DOS SANTOS BISPO", label: "008657 - RUBENS DOS SANTOS BISPO" },
-      { value: "016057 - VENICIUS DA CONCEICAO SILVA", label: "016057 - VENICIUS DA CONCEICAO SILVA" },
-      { value: "017966 - VICTOR GABRIEL GONÇALVES DOS SANTOS", label: "017966 - VICTOR GABRIEL GONÇALVES DOS SANTOS" },
-      { value: "017965 - VITOR HUGO EMIDIO DOS SANTOS", label: "017965 - VITOR HUGO EMIDIO DOS SANTOS" },
-      { value: "016056 - VINICIUS GOMES MAIA RIBEIRO", label: "016056 - VINICIUS GOMES MAIA RIBEIRO" },
-      { value: "008721 - WAGNER DE JESUS CAVALCANTE", label: "008721 - WAGNER DE JESUS CAVALCANTE" },
-      { value: "017325 - WEBSTER ESTEVES SANTIAGO", label: "017325 - WEBSTER ESTEVES SANTIAGO" },
-      { value: "008594 - WILLIAM OLIVEIRA DOS SANTOS", label: "008594 - WILLIAM OLIVEIRA DOS SANTOS" },
-      { value: "016059 - WILLIAN CARLOS DA SILVA", label: "016059 - WILLIAN CARLOS DA SILVA" },  
+      { value: "008811 - ALESSANDRO LUIZ DA SILVA", label: "008811 - ALESSANDRO LUIZ DA SILVA" },      
     // Adicione outros eletricistas aqui
   ]);  
   const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
@@ -222,113 +154,14 @@ function App() {
     "015644 - ADEILDO JOSE DE LIMA JUNIOR": "BR0320023558",
     "017968 - ADILSON NUNES DA SILVA": "BR0298512908",
     "015646 - ALBERTO MIRANDA SCUOTEGUAZZA": "BR0286139398",
-    "008811 - ALESSANDRO LUIZ DA SILVA": "BR0225606358",
-    "015521 - ALEX GOMES PINHEIRO": "BR0490393838",
-    "011689 - ALEX MUNIZ SANTANA": "BR0427895538",
-    "016054 - ANDCLER FERNANDES DE SOUZA": "BR0358198148",
-    "009050 - ANDERSON BATISTA SANTOS": "BR0340133908",
-    "015285 - ANDERSON BRAZ SOARES DE FREITAS ": "BR0425211488",
-    "009893 - ANDERSON CLEITON MUNIZ SANTANA": "BR0329440448",
-    "017949 - BRENO SOUZA DA SILVA": "BR0433513408",
-    "015645 - CAIO ROSCHEL DOS SANTOS": "BR0263691668",
-    "015245 - CLAUDINEI DIAS DA SILVA": "BR0438512618",
-    "017327 - DANIEL MORAES DOS SANTOS": "BR0334460808",
-    "008718 - DAVID PETRI DO VALE ARAUJO": "BR0265183588",
-    "017900 - DAWID NERY VIEIRA": "BR0258223928",
-    "017895 - DENILSON EVANGELISTA DOS SANTOS": "BR0414916718",
-    "016051 - DOUGLAS APARECIDO DE ASSIS": "BR0362651168",
-    "009083 - EDENILSON DE PAULA LANA": "BR0363965218",
-    "017896 - EDUARDO LOPES DA SILVA": "BR0362195078",
-    "017395 - EDSON CIPRIANO MEIRELES DA SILVA": "BR0427670368",
-    "013113 - ELSON DOUGLAS DOS ANJOS BARRETO": "BR0385658088",
-    "008606 - EMERSON SOARES RODRIGUES": "BR0329427068",
-    "015105 - FABIO FERREIRA ALVES": "BR0326863988",
-    "015932 - FABIO HOLANDA": "BR0427206638",
-    "015104 - FABIO ROBERTO DA SILVA MORAIS": "BR0303654548",
-    "017967 - FELIPE GOMES CONCEICAO": "BR0351879418",
-    "008671 - FERNANDO DOS SANTOS LIMA": "BR0354825498",
-    "017897 - FERNANDO SANTOS ASSUNCAO": "BR0332709188",
-    "015286 - GERIVALDO CAVALCANTE DA SILVA": "BR0340133908",
-    "011621 - GIVANILDO ROSA FERNANDES": "BR0478608378",
-    "016050 - HENRIQUE DE SOUZA AZEVEDO": "BR0153681188",
-    "008580 - HERBE MANOEL DE OLIVEIRA": "BR0219600188",
-    "011675 - ISAC GOMES PEREIRA": "BR0435135858",
-    "015648 - JANDISON ROGERIO DA SILVA": "BR0286139398",
-    "017973 - JOAO VITOR PERES BARBOSA": "BR0403437648",
-    "016049 - JONATAS CARDOSO SILVA SANTOS": "BR0405285688",
-    "015520 - JOSE ADRIANO RODRIGUES DA SILVA": "BR0060692695",
-    "009047 - JOSE MAITON MEIRELES DE SOUSA": "BR0216554658",
-    "017402 - JULIANO RODRIGO DA SILVA": "BR0294069428",
-    "017898 - JULIO DE SOUSA GARDINO": "BR0315303078",
-    "017764 - LEANDRO DIAS DOS SANTOS": "BR0226041058",
-    "008601 - LEANDRO VICENTE MOREIRA DA SILVA": "BR0493944358",
-    "015934 - LOURISMAR DA SILVA VILAS BOAS": "BR0320615988",
-    "017396 - LOURIVALDO MENEZES NASCIMENTO": "BR0393745658",
-    "017466 - LUAN VITOR EUGENIO DE LIMA MOR": "BR0463377738",
-    "011800 - LUCAS DO NASCIMENTO ARAUJO": "BR0395209568",
-    "017397 - LUCIANO OLIVEIRA DA SILVA NETO": "BR0352562938",
-    "008686 - MAICON FERREIRA ALVES": "BR0342381488",
-    "015642 - MARCELO VITOR FEITOZA": "BR0424278058",
-    "016058 - NATALIA DE MELO LOCHIDIO GOMES": "BR0251987478",
-    "008727 - NILSON SANTOS DE SOUZA": "BR0476745758",
-    "017762 - OLIVIE NSINGI FELIX DOMINGOS": "BR0435840538",
-    "015116 - RAPHAEL PRADO DOS REIS": "BR0326863988",
-    "017976 - RAFAEL CARVALHO SOUSA LIMA": "BR0447433028",
-    "017398 - RAFAEL DA CONCEICAO SOUZA": "BR0448708998",
-    "017765 - ROBERT PELLIZARI": "BR0216756398",
-    "017972 - ROGERIO DIAS DA SILVA": "BR0053171544",
-    "015103 - RENAN MARTINS DOS SANTOS": "BR0309447338",
-    "008720 - RENAN SOUZA MAIA": "BR0383217878",
-    "008612 - RICARDO APARECIDO GOMES FERREIRA": "BR0320638618",
-    "008657 - RUBENS DOS SANTOS BISPO": "BR0225911378",
-    "017966 - VICTOR GABRIEL GONÇALVES DOS SANTOS": "BR0470936298",
-    "017965 - VITOR HUGO EMIDIO DOS SANTOS": "BR0455006708",
-    "016056 - VINICIUS GOMES MAIA RIBEIRO": "BR0323831788",
-    "008721 - WAGNER DE JESUS CAVALCANTE": "BR0308705298",
-    "017325 - WEBSTER ESTEVES SANTIAGO": "BR0459132728",
-    "008594 - WILLIAM OLIVEIRA DOS SANTOS": "BR0466630348",
-    "016059 - WILLIAN CARLOS DA SILVA": "BR0130153638",
+    "008811 - ALESSANDRO LUIZ DA SILVA": "BR0225606358",    
     // Adicione mais mapeamentos conforme necessário
   };
   const [equipeOptionsCompleta, setEquipeOptionsCompleta] = useState([
     { value: "CCE001", label: "CCE001" },
     { value: "CCE002", label: "CCE002" },
     { value: "CCE003", label: "CCE003" },
-    { value: "CCE004", label: "CCE004" },
-    { value: "CCE005", label: "CCE005" },
-    { value: "CCE009", label: "CCE009" },
-    { value: "CCE010", label: "CCE010" },
-    { value: "CCE011", label: "CCE011" },
-    { value: "CCE012", label: "CCE012" },
-    { value: "CCE014", label: "CCE014" },
-    { value: "CCE015", label: "CCE015" },
-    { value: "CCE017", label: "CCE017" },
-    { value: "CCE020", label: "CCE020" },
-    { value: "CCE021", label: "CCE021" },
-    { value: "CCE022", label: "CCE022" },
-    { value: "CCE025", label: "CCE025" },
-    { value: "CCE027", label: "CCE027" },
-    { value: "CCE029", label: "CCE029" },
-    { value: "CCE035", label: "CCE035" },
-    { value: "CCE041", label: "CCE041" },
-    { value: "CCE043", label: "CCE043" },
-    { value: "CCE050", label: "CCE050" },
-    { value: "CCE055", label: "CCE055" },
-    { value: "CCE056", label: "CCE056" },
-    { value: "CCE058", label: "CCE058" },
-    { value: "CCE065", label: "CCE065" },
-    { value: "CCE085", label: "CCE085" },
-    { value: "CCE088", label: "CCE088" },
-    { value: "CCE099", label: "CCE099" },
-    { value: "CCE0201", label: "CCE201" },
-    { value: "CCE0202", label: "CCE202" },
-    { value: "CCE0203", label: "CCE203" },
-    { value: "CCE0204", label: "CCE204" },
-    { value: "CCE0205", label: "CCE205" },
-    { value: "CCE0206", label: "CCE206" },
-    { value: "CCE0207", label: "CCE207" },
-    { value: "CCE0208", label: "CCE208" },
-    { value: "CCE0209", label: "CCE209" },  
+    { value: "CCE004", label: "CCE004" }, 
   ]);  
   const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta);
   const [placaVeiculoOptionsCompleta, setPlacaVeiculoOptionsCompleta] = useState([
@@ -336,41 +169,6 @@ function App() {
     { value: "EXS4G32", label: "EXS4G32" },
     { value: "FCY0E42", label: "FCY0E42" },
     { value: "FGA8E51", label: "FGA8E51" },
-    { value: "FJH0F61", label: "FJH0F61" },
-    { value: "FME0C92", label: "FME0C92" },
-    { value: "FPH1F62", label: "FPH1F62" },
-    { value: "FPT8I03", label: "FPT8I03" },
-    { value: "FRB3C91", label: "FRB3C91" },
-    { value: "GAI5I64", label: "GAI5I64" },
-    { value: "GAU3H62", label: "GAU3H62" },
-    { value: "GJD4A61", label: "GJD4A61" },
-    { value: "PNS5J93", label: "PNS5J93" },
-    { value: "RFS3I62", label: "RFS3I62" },
-    { value: "RIC4C46", label: "RIC4C46" },
-    { value: "RMI6F95", label: "RMI6F95" },
-    { value: "SRX4H55", label: "SRX4H55" },
-    { value: "SRX5J18", label: "SRX5J18" },
-    { value: "SSR2C57", label: "SSR2C57" },
-    { value: "SSR3D48", label: "SSR3D48" },
-    { value: "SST1A89", label: "SST1A89" },
-    { value: "SST2E41", label: "SST2E41" },
-    { value: "SSU3H12", label: "SSU3H12" },
-    { value: "SSV2H32", label: "SSV2H32" },
-    { value: "SSW3I63", label: "SSW3I63" },
-    { value: "SSY3C73", label: "SSY3C73" },
-    { value: "STA3H11", label: "STA3H11" },
-    { value: "STE1I67", label: "STE1I67" },
-    { value: "STH8G37", label: "STH8G37" },
-    { value: "STH9B92", label: "STH9B92" },
-    { value: "STV9F52", label: "STV9F52" },
-    { value: "SUY2B81", label: "SUY2B81" },
-    { value: "SVC6G32", label: "SVC6G32" },
-    { value: "SVH0F64", label: "SVH0F64" },
-    { value: "SWN9I72", label: "SWN9I72" },
-    { value: "SWS9I71", label: "SWS9I71" },
-    { value: "RMI6F35", label: "RMI6F35" },
-    { value: "RMG6106", label: "RMG6106" },
-    { value: "TIT3D32", label: "TIT3D32" },
   ]);
   const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState(placaVeiculoOptionsCompleta);
   const statusOptions = [
@@ -378,15 +176,6 @@ function App() {
     { value: "ATESTADO", label: "ATESTADO" },
     { value: "BASE", label: "BASE" },
     { value: "CAMPO", label: "CAMPO" },
-    { value: "DESLIGADO", label: "DESLIGADO" },
-    { value: "FALTA", label: "FALTA" },
-    { value: "FERIAS", label: "FERIAS" },
-    { value: "FOLGA", label: "FOLGA" },
-    { value: "LICENCA MATERNIDADE", label: "LICENCA MATERNIDADE" },
-    { value: "LICENCA PATERNIDADE", label: "LICENCA PATERNIDADE" },
-    { value: "PERIODICO", label: "PERIODICO" },
-    { value: "SUSPENSAO", label: "SUSPENSAO" },
-    { value: "TREINAMENTO", label: "TREINAMENTO" },
   ];
   const servicoOptions = [
     { value: "AFERICAO", label: "AFERICAO" },
@@ -630,56 +419,7 @@ function App() {
       setLoading(false);
     }
   };
-
-  // Função para enviar o formulário de cadastro/edição
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
   
-    setLoading(true);
-    try {
-      const url = editId 
-        ? `https://composicao-sp-soc.onrender.com/teams/${editId}` 
-        : "https://composicao-sp-soc.onrender.com/teams";
-      const method = editId ? "put" : "post";
-  
-      const response = await axios[method](url, formData);
-  
-      if (response.status === 201 || response.status === 200) {
-        toast.success(editId ? "Equipe atualizada com sucesso!" : "Equipe cadastrada com sucesso!");
-        setEditId(null);
-  
-        // Busca as equipes cadastradas na mesma data
-        const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
-  
-        // Atualiza as listas de seleção com base nas equipes cadastradas
-        atualizarListasDeSelecao(equipesCadastradas);
-  
-        // Limpa apenas os campos que devem ser resetados
-        setFormData((prevFormData) => ({
-          ...prevFormData, // Mantém os campos que não devem ser limpos
-          eletricista_motorista: "", // Reseta o eletricista motorista
-          br0_motorista: "", // Reseta o BR0 motorista
-          eletricista_parceiro: "", // Reseta o eletricista parceiro
-          br0_parceiro: "", // Reseta o BR0 parceiro
-          equipe: "", // Reseta a equipe
-          placa_veiculo: "", // Reseta a placa do veículo
-        }));
-  
-        // Atualiza a lista de equipes
-        fetchTeams();
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("Erro ao cadastrar/atualizar equipe.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleEdit = (team) => {
     setFormData({
       data_atividade: team.data_atividade, // Data da atividade
@@ -695,54 +435,6 @@ function App() {
     });
     setEditId(team.id); // Define o ID da equipe que está sendo editada
   };
-
-  // Função para excluir uma equipe
-  const handleDelete = async (id) => {
-    if (window.confirm("Tem certeza que deseja excluir este registro?")) {
-      setLoading(true);
-      try {
-        await axios.delete(`https://composicao-sp-soc.onrender.com/teams/${id}`);
-        toast.success("Equipe excluída com sucesso!");
-        fetchTeams();
-      } catch (error) {
-        toast.error("Erro ao excluir equipe.");
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-  // Função para finalizar registros
-  const handleFinalizar = async () => {
-    if (window.confirm("Confirma que todos os registros estão revisados? Isso limpará a tela.")) {
-      setLoading(true);
-      try {
-        await axios.put("https://composicao-sp-soc.onrender.com/teams/finalizar");
-
-        // Resetar todos os campos do formulário
-        setFormData({
-          data_atividade: "",
-          supervisor: "",
-          status: "",
-          eletricista_motorista: "",
-          br0_motorista: "",
-          eletricista_parceiro: "",
-          br0_parceiro: "",
-          equipe: "",
-          servico: "",
-          placa_veiculo: "",
-          finalizado: false,
-        });
-
-        setTeams([]); // Limpa a lista de equipes
-        toast.success("Registros finalizados com sucesso!");
-      } catch (error) {
-        toast.error("Erro ao finalizar registros.");
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
   // Função para exportar a tabela para Excel
   const exportToExcel = () => {
     // Mapeia apenas as colunas visíveis e formata a data
@@ -758,87 +450,7 @@ function App() {
       team.servico,
       team.placa_veiculo,
     ]);
-
-    // Adiciona cabeçalhos personalizados
-    const header = [
-      "Data Atividade",
-      "Supervisor",
-      "Status",
-      "Eletricista Motorista",
-      "BR0 Motorista",
-      "Eletricista Parceiro",
-      "BR0 Parceiro",
-      "Equipe",
-      "Serviço",
-      "Placa Veículo",
-    ];
-
-    // Cria a planilha com cabeçalhos personalizados
-    const worksheet = XLSX.utils.aoa_to_sheet([header, ...visibleColumns]);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Equipes Cadastradas");
-    XLSX.writeFile(workbook, "equipes_cadastradas.xlsx");
-    toast.success("Tabela exportada para Excel com sucesso!");
   };
-
-  // Se o usuário não estiver logado, exibe a tela de login
-  if (!isLoggedIn) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900">
-        <div className="p-8 max-w-md w-full bg-gray-800 shadow-lg rounded-lg mt-[-350px]">
-          <h1 className="text-3xl font-semibold text-white text-center mb-6">
-            Login
-          </h1>
-          <form onSubmit={handleLogin} className="space-y-6">          
-            <div>
-              <label htmlFor="matricula" className="block text-sm font-medium text-gray-300">
-                Matrícula
-              </label>
-              <input
-                type="text"
-                id="matricula"
-                name="matricula"
-                placeholder="Digite sua matrícula"
-                value={loginData.matricula}
-                onChange={(e) => setLoginData({ ...loginData, matricula: e.target.value })}
-                required
-                className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="senha" className="block text-sm font-medium text-gray-300">
-                Senha
-              </label>
-              <input
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Digite sua senha"
-                value={loginData.senha}
-                onChange={(e) => setLoginData({ ...loginData, senha: e.target.value })}
-                required
-                className="mt-1 block w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                disabled={loading}
-              >
-                {loading ? "Carregando..." : "Entrar"}
-              </button>
-            </div>
-          </form>
-          <p className="text-gray-400 text-sm text-center mt-4">
-            Esqueceu a senha? 
-            <a href="#" className="text-blue-400 hover:underline"> Pergunte ao Pavão</a>
-          </p>
-          <ToastContainer />
-        </div>
-      </div>
-    );
-  }
   // Se o usuário estiver logado, exibe a tela de cadastro
   return (
     <div className="p-6 max-w-6xl mx-auto bg-white shadow-lg rounded-lg mt-10">
