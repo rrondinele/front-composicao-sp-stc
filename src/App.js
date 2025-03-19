@@ -202,6 +202,9 @@ function App() {
     }
     return true;
   };
+
+
+  
   
   const handleSelectChange = async (selectedOption, fieldName) => {
     // Atualiza o formData com o valor selecionado
@@ -210,12 +213,12 @@ function App() {
     // Se o campo "status" for alterado e for diferente de "CAMPO", definir valores como "N/A"
     if (fieldName === "status" && selectedOption.value !== "CAMPO") {
       updatedFormData = {
-        ...updatedFormData,
+        ...updatedFormData, // Mantém os valores existentes
         eletricista_motorista: "N/A", // Preenche "Eletricista_Motorista" com "N/A"
         equipe: "N/A", // Preenche "Equipe" com "N/A"
         servico: "N/A", // Preenche "Servico" com "N/A"
         placa_veiculo: "N/A", // Preenche "Placa" com "N/A"
-        br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A" (derivado de Eletricista_Motorista)
+        br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A"
       };
     }
   
