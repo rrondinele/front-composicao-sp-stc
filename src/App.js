@@ -217,12 +217,12 @@ function App() {
     // Se o campo "Status" for alterado e o valor for diferente de "CAMPO", preenche os campos com "N/A"
     if (fieldName === "status" && selectedOption.value !== "CAMPO") {
       updatedFormData = {
-        ...updatedFormData,
+        ...updatedFormData, // Mantém os valores existentes
         equipe: "N/A", // Preenche "Equipe" com "N/A"
         eletricista_motorista: "N/A", // Preenche "Eletricista_Motorista" com "N/A"
         servico: "N/A", // Preenche "Servico" com "N/A"
         placa_veiculo: "N/A", // Preenche "Placa" com "N/A"
-        br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A" (derivado de Eletricista_Motorista)
+        br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A"
       };
     }
   
@@ -259,6 +259,7 @@ function App() {
       }
     }
   };
+
 
   const fetchEquipesPorData = async (data) => {
     try {
