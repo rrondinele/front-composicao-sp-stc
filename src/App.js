@@ -248,6 +248,7 @@ function App() {
     }
   };
 
+
   const fetchEquipesPorData = async (data) => {
     try {
       const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
