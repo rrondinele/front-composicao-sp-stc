@@ -15,7 +15,6 @@ import { placaVeiculoOptionsCompleta } from "./components/PlacasVeiculos";
 import { statusOptions } from "./components/status";
 import { servicoOptions } from "./components/servicos";
 
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Estado inicial como false
   const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
@@ -206,13 +205,25 @@ function App() {
 
   const handleSelectChange = async (selectedOption, fieldName) => {
     // Atualiza o formData com o valor selecionado
-    const updatedFormData = { ...formData, [fieldName]: selectedOption.value };
+    let updatedFormData = { ...formData, [fieldName]: selectedOption.value };
   
     // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
     if (fieldName === "eletricista_motorista") {
       updatedFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
     } else if (fieldName === "eletricista_parceiro") {
       updatedFormData.br0_parceiro = br0Mapping[selectedOption.value] || "";
+    }
+  
+    // Se o campo "Status" for alterado e o valor for diferente de "CAMPO", preenche os campos com "N/A"
+    if (fieldName === "status" && selectedOption.value !== "CAMPO") {
+      updatedFormData = {
+        ...updatedFormData,
+        equipe: "N/A", // Preenche "Equipe" com "N/A"
+        eletricista_motorista: "N/A", // Preenche "Eletricista_Motorista" com "N/A"
+        servico: "N/A", // Preenche "Servico" com "N/A"
+        placa_veiculo: "N/A", // Preenche "Placa" com "N/A"
+        br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A" (derivado de Eletricista_Motorista)
+      };
     }
   
     // Atualiza o estado do formData
