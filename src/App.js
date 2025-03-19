@@ -8,7 +8,7 @@ import clearIcon from "./clear.png"; // Importando o ícone Clear
 import excelIcon from "./excel.png"; // Importando o ícone excel
 import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
-import { supervisorOptions } from "./components/supervisors";
+import { supervisorOptions } from "./components/supervisor";
 
 
 
