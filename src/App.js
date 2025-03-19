@@ -205,14 +205,18 @@ function App() {
   
   const handleSelectChange = async (selectedOption, fieldName) => {
     // Atualiza o formData com o valor selecionado
-    const updatedFormData = { ...formData, [fieldName]: selectedOption.value };
+    let updatedFormData = { ...formData, [fieldName]: selectedOption.value };
   
     // Se o campo "status" for alterado e for diferente de "CAMPO", definir valores como "N/A"
     if (fieldName === "status" && selectedOption.value !== "CAMPO") {
-      updatedFormData.eletricista_motorista = "N/A";
-      updatedFormData.equipe = "N/A";
-      updatedFormData.servico = "N/A";
-      updatedFormData.placa_veiculo = "N/A";
+      updatedFormData = {
+        ...updatedFormData,
+        eletricista_motorista: "N/A", // Preenche "Eletricista_Motorista" com "N/A"
+        equipe: "N/A", // Preenche "Equipe" com "N/A"
+        servico: "N/A", // Preenche "Servico" com "N/A"
+        placa_veiculo: "N/A", // Preenche "Placa" com "N/A"
+        br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A" (derivado de Eletricista_Motorista)
+      };
     }
   
     // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
