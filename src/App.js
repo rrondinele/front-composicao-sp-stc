@@ -8,6 +8,7 @@ import clearIcon from "./clear.png"; // Importando o ícone Clear
 import excelIcon from "./excel.png"; // Importando o ícone excel
 import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
+import { supervisorOptions } from "./data/supervisors";
 
 
 
@@ -32,11 +33,11 @@ function App() {
 
   // Mapeamento de matrícula para nome do supervisor
   const supervisorMapping = {
-    "11101": "11101 - RONDINELE ARAUJO CARVALHO",
-    "16032": "016032 - WAGNER AUGUSTO DA SILVA MAURO",
-    "6061": "006061 - JULIO CESAR PEREIRA DA SILVA",
-    "15540": "015540 - EDER JORDELINO GONCALVES CAETANO",
-    "18505": "018505 - DIEGO RAFAEL DE MELO SILVA",
+    "11101" : "11101 - RONDINELE ARAUJO CARVALHO",
+    "16032" : "016032 - WAGNER AUGUSTO DA SILVA MAURO",
+    "6061"  : "006061 - JULIO CESAR PEREIRA DA SILVA",
+    "15540" : "015540 - EDER JORDELINO GONCALVES CAETANO",
+    "18505" : "018505 - DIEGO RAFAEL DE MELO SILVA",
     // Adicione outros supervisores aqui
   };
 
@@ -125,7 +126,7 @@ function App() {
   const handleClearForm = () => {
     setFormData({
       data_atividade: "",
-      supervisor: "",
+      //supervisor: "",
       status: "",
       eletricista_motorista: "",
       br0_motorista: "",
@@ -137,12 +138,14 @@ function App() {
     });
   };
   // Opções para os campos de seleção
+  /*
   const supervisorOptions = [
     { value: "018505 - DIEGO RAFAEL DE MELO SILVA", label: "018505 - DIEGO RAFAEL DE MELO SILVA" },
     { value: "015540 - EDER JORDELINO GONCALVES CAETANO", label: "015540 - EDER JORDELINO GONCALVES CAETANO"},
     { value: "006061 - JULIO CESAR PEREIRA DA SILVA", label: "006061 - JULIO CESAR PEREIRA DA SILVA" },
     { value: "016032 - WAGNER AUGUSTO DA SILVA MAURO", label: "016032 - WAGNER AUGUSTO DA SILVA MAURO" },
   ];
+*/
 
   const [eletricistasCompletos, setEletricistasCompletos] = useState([    
       { value: "015644 - ADEILDO JOSE DE LIMA JUNIOR", label: "015644 - ADEILDO JOSE DE LIMA JUNIOR" }, 
