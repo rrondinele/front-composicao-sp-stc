@@ -207,6 +207,14 @@ function App() {
     // Atualiza o formData com o valor selecionado
     const updatedFormData = { ...formData, [fieldName]: selectedOption.value };
   
+    // Se o campo "status" for alterado e for diferente de "CAMPO", definir valores como "N/A"
+    if (fieldName === "status" && selectedOption.value !== "CAMPO") {
+      updatedFormData.eletricista_motorista = "N/A";
+      updatedFormData.equipe = "N/A";
+      updatedFormData.servico = "N/A";
+      updatedFormData.placa_veiculo = "N/A";
+    }
+  
     // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
     if (fieldName === "eletricista_motorista") {
       updatedFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
@@ -247,6 +255,7 @@ function App() {
       }
     }
   };
+  
 
 
   const fetchEquipesPorData = async (data) => {
