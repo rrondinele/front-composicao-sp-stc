@@ -205,7 +205,7 @@ function App() {
 
   const handleSelectChange = async (selectedOption, fieldName) => {
     // Atualiza o formData com o valor selecionado
-    let updatedFormData = { ...formData, [fieldName]: selectedOption.value };
+    const updatedFormData = { ...formData, [fieldName]: selectedOption.value };
   
     // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
     if (fieldName === "eletricista_motorista") {
@@ -214,17 +214,6 @@ function App() {
       updatedFormData.br0_parceiro = br0Mapping[selectedOption.value] || "";
     }
   
-    // Se o campo "Status" for alterado e o valor for diferente de "CAMPO", preenche os campos com "N/A"
-    if (fieldName === "status" && selectedOption.value !== "CAMPO") {
-      updatedFormData = {
-        ...updatedFormData, // Mantém os valores existentes
-        equipe: "N/A", // Preenche "Equipe" com "N/A"
-        eletricista_motorista: "N/A", // Preenche "Eletricista_Motorista" com "N/A"
-        servico: "N/A", // Preenche "Servico" com "N/A"
-        placa_veiculo: "N/A", // Preenche "Placa" com "N/A"
-        br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A"
-      };
-    }  
     // Atualiza o estado do formData
     setFormData(updatedFormData);
   
@@ -259,9 +248,6 @@ function App() {
     }
   };
 
-
-
-  
   const fetchEquipesPorData = async (data) => {
     try {
       const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
