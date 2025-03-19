@@ -214,12 +214,14 @@ const handleSelectChange = async (selectedOption, fieldName) => {
   if (fieldName === "status" && selectedOption.value !== "CAMPO") {
     updatedFormData = {
       ...updatedFormData, // Mantém os valores existentes
-      eletricista_motorista: "N/A", // Preenche "Eletricista_Motorista" com "N/A"
-      equipe: "N/A", // Preenche "Equipe" com "N/A"
-      servico: "N/A", // Preenche "Servico" com "N/A"
-      placa_veiculo: "N/A", // Preenche "Placa" com "N/A"
+      eletricista_motorista: { value: "N/A", label: "N/A" }, // Preenche "Eletricista_Motorista" com "N/A"
+      equipe: { value: "N/A", label: "N/A" }, // Preenche "Equipe" com "N/A"
+      servico: { value: "N/A", label: "N/A" }, // Preenche "Servico" com "N/A"
+      placa_veiculo: { value: "N/A", label: "N/A" }, // Preenche "Placa" com "N/A"
       br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A"
     };
+  }
+    console.log("FormData atualizado:", updatedFormData); // Debugging
   }
 
   // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
