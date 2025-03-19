@@ -204,66 +204,63 @@ function App() {
   };
 
 
-
   
-const handleSelectChange = async (selectedOption, fieldName) => {
-  // Atualiza o formData com o valor selecionado
-  let updatedFormData = { ...formData, [fieldName]: selectedOption.value };
-
-  // Se o campo "status" for alterado e for diferente de "CAMPO", definir valores como "N/A"
-  if (fieldName === "status" && selectedOption.value !== "CAMPO") {
-    updatedFormData = {
-      ...updatedFormData, // Mantém os valores existentes
-      eletricista_motorista: { value: "N/A", label: "N/A" }, // Preenche "Eletricista_Motorista" com "N/A"
-      equipe: { value: "N/A", label: "N/A" }, // Preenche "Equipe" com "N/A"
-      servico: { value: "N/A", label: "N/A" }, // Preenche "Servico" com "N/A"
-      placa_veiculo: { value: "N/A", label: "N/A" }, // Preenche "Placa" com "N/A"
-      br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A"
-    };
-  }
-    console.log("FormData atualizado:", updatedFormData); // Debugging
-  }
-
-  // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
-  if (fieldName === "eletricista_motorista") {
-    updatedFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
-  } else if (fieldName === "eletricista_parceiro") {
-    updatedFormData.br0_parceiro = br0Mapping[selectedOption.value] || "";
-  }
-
-  // Atualiza o estado do formData
-  setFormData(updatedFormData);
-
-  // Busca os registros do banco para a data selecionada
-  if (formData.data_atividade) {
-    const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
-
-    // Extrai os eletricistas já cadastrados (motoristas e parceiros)
-    const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
-    const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
-
-    // Filtra as listas de eletricistas com base nos registros do banco e na seleção atual
-    if (fieldName === "eletricista_motorista") {
-      // Remove o motorista selecionado da lista de parceiros
-      const updatedParceiroOptions = eletricistasCompletos.filter(
-        (eletricista) =>
-          eletricista.value !== selectedOption.value && // Remove o motorista selecionado
-          !parceirosUtilizados.includes(eletricista.value) && // Remove os parceiros já cadastrados
-          !motoristasUtilizados.includes(eletricista.value) // Remove os motoristas já cadastrados
-      );
-      setEletricistaParceiroOptions(updatedParceiroOptions);
-    } else if (fieldName === "eletricista_parceiro") {
-      // Remove o parceiro selecionado da lista de motoristas
-      const updatedMotoristaOptions = eletricistasCompletos.filter(
-        (eletricista) =>
-          eletricista.value !== selectedOption.value && // Remove o parceiro selecionado
-          !motoristasUtilizados.includes(eletricista.value) && // Remove os motoristas já cadastrados
-          !parceirosUtilizados.includes(eletricista.value) // Remove os parceiros já cadastrados
-      );
-      setEletricistaMotoristaOptions(updatedMotoristaOptions);
+  
+  const handleSelectChange = async (selectedOption, fieldName) => {
+    // Atualiza o formData com o valor selecionado
+    let updatedFormData = { ...formData, [fieldName]: selectedOption.value };
+  
+    // Se o campo "status" for alterado e for diferente de "CAMPO", definir valores como "N/A"
+    if (fieldName === "status" && selectedOption.value !== "CAMPO") {
+      updatedFormData = {
+        ...updatedFormData, // Mantém os valores existentes
+        eletricista_motorista: "N/A", // Preenche "Eletricista_Motorista" com "N/A"
+        equipe: "N/A", // Preenche "Equipe" com "N/A"
+        servico: "N/A", // Preenche "Servico" com "N/A"
+        placa_veiculo: "N/A", // Preenche "Placa" com "N/A"        
+      };
     }
-  }
-};
+  
+    // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
+    if (fieldName === "eletricista_motorista") {
+      updatedFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
+    } else if (fieldName === "eletricista_parceiro") {
+      updatedFormData.br0_parceiro = br0Mapping[selectedOption.value] || "";
+    }
+  
+    // Atualiza o estado do formData
+    setFormData(updatedFormData);
+  
+    // Busca os registros do banco para a data selecionada
+    if (formData.data_atividade) {
+      const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
+  
+      // Extrai os eletricistas já cadastrados (motoristas e parceiros)
+      const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
+      const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
+  
+      // Filtra as listas de eletricistas com base nos registros do banco e na seleção atual
+      if (fieldName === "eletricista_motorista") {
+        // Remove o motorista selecionado da lista de parceiros
+        const updatedParceiroOptions = eletricistasCompletos.filter(
+          (eletricista) =>
+            eletricista.value !== selectedOption.value && // Remove o motorista selecionado
+            !parceirosUtilizados.includes(eletricista.value) && // Remove os parceiros já cadastrados
+            !motoristasUtilizados.includes(eletricista.value) // Remove os motoristas já cadastrados
+        );
+        setEletricistaParceiroOptions(updatedParceiroOptions);
+      } else if (fieldName === "eletricista_parceiro") {
+        // Remove o parceiro selecionado da lista de motoristas
+        const updatedMotoristaOptions = eletricistasCompletos.filter(
+          (eletricista) =>
+            eletricista.value !== selectedOption.value && // Remove o parceiro selecionado
+            !motoristasUtilizados.includes(eletricista.value) && // Remove os motoristas já cadastrados
+            !parceirosUtilizados.includes(eletricista.value) // Remove os parceiros já cadastrados
+        );
+        setEletricistaMotoristaOptions(updatedMotoristaOptions);
+      }
+    }
+  };
   
 
 
