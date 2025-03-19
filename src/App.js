@@ -124,9 +124,9 @@ function App() {
   
   // Função para limpar o formulário
   const handleClearForm = () => {
-    setFormData({
+    setFormData((prevFormData) => ({
+      ...prevFormData, // Mantém o valor do supervisor
       data_atividade: "",
-      //supervisor: "",
       status: "",
       eletricista_motorista: "",
       br0_motorista: "",
@@ -135,7 +135,7 @@ function App() {
       equipe: "",
       servico: "",
       placa_veiculo: "",
-    });
+    }));
   };
   // Opções para os campos de seleção
   /*
