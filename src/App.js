@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
 import * as XLSX from "xlsx";
@@ -171,8 +171,7 @@ function App() {
       border: "1px solid #e5e7eb",
     }),
   };
-
-  // Função para buscar as equipes cadastradas para a data selecionada
+  // Funcao Buscar as equipes cadastradas para a data selecionada. + Atualizar as listas de seleção com base nas equipes cadastradas.
   const handleDateChange = async (e) => {
     const dataSelecionada = e.target.value;
     setFormData({ ...formData, data_atividade: dataSelecionada });
@@ -182,7 +181,6 @@ function App() {
       atualizarListasDeSelecao(equipesCadastradas);
     }
   };
-
   // Função para validar se todos os campos estão preenchidos
   const validateForm = () => {
     const requiredFields = [
@@ -204,7 +202,7 @@ function App() {
     }
     return true;
   };
-
+  
   const handleSelectChange = async (selectedOption, fieldName) => {
     // Atualiza o formData com o valor selecionado
     const updatedFormData = { ...formData, [fieldName]: selectedOption.value };
@@ -249,6 +247,7 @@ function App() {
       }
     }
   };
+
 
   const fetchEquipesPorData = async (data) => {
     try {
@@ -300,48 +299,48 @@ function App() {
   };
 
   // Função para buscar equipes não finalizadas ou pendentes
-  const fetchTeams = async () => {
-    setLoading(true);
-    try {
-      const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
-      const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
+const fetchTeams = async () => {
+  setLoading(true);
+  try {
+    const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
+    const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
 
-      // Validação da data
-      if (!formData.data_atividade) {
-        toast.error("Por favor, selecione uma data.");
-        return;
-      }
-
-      const params = {
-        data: formData.data_atividade, // Filtra pela data selecionada
-        role: userRole, // Envia o papel do usuário
-      };
-
-      // Se o usuário for supervisor, adiciona o filtro de supervisor
-      if (userRole === "supervisor" && supervisorMapping[matricula]) {
-        params.supervisor = supervisorMapping[matricula]; // Usa o mapeamento para enviar o valor completo
-      }
-
-      console.log("Parâmetros enviados:", params); // Log dos parâmetros
-
-      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
-
-      if (response.data && Array.isArray(response.data)) {
-        setTeams(response.data);
-      } else {
-        setTeams([]);
-        toast.warning("Nenhuma equipe encontrada.");
-      }
-    } catch (error) {
-      toast.error("Erro ao buscar equipes.");
-      console.error("Erro ao buscar equipes:", error);
-      if (error.response) {
-        console.error("Detalhes do erro:", error.response.data);
-      }
-    } finally {
-      setLoading(false);
+    // Validação da data
+    if (!formData.data_atividade) {
+      toast.error("Por favor, selecione uma data.");
+      return;
     }
-  };
+
+    const params = {
+      data: formData.data_atividade, // Filtra pela data selecionada
+      role: userRole, // Envia o papel do usuário
+    };
+
+    // Se o usuário for supervisor, adiciona o filtro de supervisor
+    if (userRole === "supervisor" && supervisorMapping[matricula]) {
+      params.supervisor = supervisorMapping[matricula]; // Usa o mapeamento para enviar o valor completo
+    }
+
+    console.log("Parâmetros enviados:", params); // Log dos parâmetros
+
+    const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
+
+    if (response.data && Array.isArray(response.data)) {
+      setTeams(response.data);
+    } else {
+      setTeams([]);
+      toast.warning("Nenhuma equipe encontrada.");
+    }
+  } catch (error) {
+    toast.error("Erro ao buscar equipes.");
+    console.error("Erro ao buscar equipes:", error);
+    if (error.response) {
+      console.error("Detalhes do erro:", error.response.data);
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Função para buscar equipes finalizadas
   const fetchFinalizedTeams = async () => {
@@ -462,7 +461,6 @@ function App() {
       }
     }
   };
-
   // Função para finalizar registros
   const handleFinalizar = async () => {
     if (window.confirm("Confirma que todos os registros estão revisados? Isso limpará a tela.")) {
