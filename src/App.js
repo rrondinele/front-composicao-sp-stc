@@ -224,8 +224,7 @@ function App() {
         placa_veiculo: "N/A", // Preenche "Placa" com "N/A"
         br0_motorista: "N/A", // Preenche "BR0 Motorista" com "N/A"
       };
-    }
-  
+    }  
     // Atualiza o estado do formData
     setFormData(updatedFormData);
   
@@ -261,6 +260,8 @@ function App() {
   };
 
 
+
+  
   const fetchEquipesPorData = async (data) => {
     try {
       const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
