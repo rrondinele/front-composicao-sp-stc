@@ -171,16 +171,8 @@ function App() {
       border: "1px solid #e5e7eb",
     }),
   };
-  // Funcao Buscar as equipes cadastradas para a data selecionada. + Atualizar as listas de seleção com base nas equipes cadastradas.
-  const handleDateChange = async (e) => {
-    const dataSelecionada = e.target.value;
-    setFormData({ ...formData, data_atividade: dataSelecionada });
-  
-    if (dataSelecionada) {
-      const equipesCadastradas = await fetchEquipesPorData(dataSelecionada);
-      atualizarListasDeSelecao(equipesCadastradas);
-    }
-  };
+
+
   // Função para validar se todos os campos estão preenchidos
   const validateForm = () => {
     const requiredFields = [
@@ -261,8 +253,6 @@ function App() {
       }
     }
   };
-  
-
 
   const fetchEquipesPorData = async (data) => {
     try {
@@ -305,12 +295,27 @@ function App() {
     );
     const placasDisponiveis = placaVeiculoOptionsCompleta.filter(
       (placa) => !placasUtilizadas.includes(placa.value)
-    );  
-    // Atualiza os estados das listas de seleção
-    setEquipeOptions(equipesDisponiveis);
-    setEletricistaMotoristaOptions(motoristasDisponiveis);
-    setEletricistaParceiroOptions(parceirosDisponiveis);
-    setPlacaVeiculoOptions(placasDisponiveis);
+    );
+
+  // Atualiza os estados das listas de seleção
+  setEquipeOptions(equipesDisponiveis);
+  setEletricistaMotoristaOptions(motoristasDisponiveis);
+  setEletricistaParceiroOptions(parceirosDisponiveis);
+  setPlacaVeiculoOptions(placasDisponiveis);
+};
+
+  // Funcao Buscar as equipes cadastradas para a data selecionada. + Atualizar as listas de seleção com base nas equipes cadastradas.
+  const handleDateChange = async (e) => {
+    const dataSelecionada = e.target.value;
+    setFormData({ ...formData, data_atividade: dataSelecionada });
+  
+    if (dataSelecionada) {
+      // Busca as equipes cadastradas na data selecionada
+      const equipesCadastradas = await fetchEquipesPorData(dataSelecionada);
+  
+      // Atualiza as listas de seleção com base nas equipes cadastradas
+      atualizarListasDeSelecao(equipesCadastradas);
+    }
   };
 
   // Função para buscar equipes não finalizadas ou pendentes
