@@ -254,6 +254,8 @@ function App() {
     }
   };
 
+  /*
+
   const fetchEquipesPorData = async (data) => {
     try {
       const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
@@ -276,26 +278,47 @@ function App() {
     }
   };
 
-  const atualizarListasDeSelecao = (equipesCadastradas) => {
-    // Extrai os valores já utilizados
-    const equipesUtilizadas = equipesCadastradas.map((equipe) => equipe.equipe);
-    const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
-    const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
-    const placasUtilizadas = equipesCadastradas.map((equipe) => equipe.placa_veiculo);
+  */
   
-    // Filtra as opções disponíveis
-    const equipesDisponiveis = equipeOptionsCompleta.filter(
-      (equipe) => !equipesUtilizadas.includes(equipe.value)
-    );
-    const motoristasDisponiveis = eletricistasCompletos.filter(
-      (motorista) => !motoristasUtilizados.includes(motorista.value) && !parceirosUtilizados.includes(motorista.value)
-    );
-    const parceirosDisponiveis = eletricistasCompletos.filter(
-      (parceiro) => !parceirosUtilizados.includes(parceiro.value) && !motoristasUtilizados.includes(parceiro.value)
-    );
-    const placasDisponiveis = placaVeiculoOptionsCompleta.filter(
-      (placa) => !placasUtilizadas.includes(placa.value)
-    );
+
+  const fetchEquipesPorData = async (data) => {
+  try {
+    const params = {
+      data: data, // Filtra apenas pela data selecionada
+    };
+
+    const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
+    return response.data; // Retorna as equipes cadastradas na data
+  } catch (error) {
+    console.error("Erro ao buscar equipes:", error);
+    return []; // Retorna um array vazio em caso de erro
+  }
+};
+
+const atualizarListasDeSelecao = (equipesCadastradas) => {
+  // Extrai os valores já utilizados
+  const equipesUtilizadas = equipesCadastradas.map((equipe) => equipe.equipe);
+  const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
+  const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
+  const placasUtilizadas = equipesCadastradas.map((equipe) => equipe.placa_veiculo);
+
+  // Filtra as opções disponíveis
+  const equipesDisponiveis = equipeOptionsCompleta.filter(
+    (equipe) => !equipesUtilizadas.includes(equipe.value)
+  );
+  const motoristasDisponiveis = eletricistasCompletos.filter(
+    (motorista) =>
+      !motoristasUtilizados.includes(motorista.value) &&
+      !parceirosUtilizados.includes(motorista.value)
+  );
+  const parceirosDisponiveis = eletricistasCompletos.filter(
+    (parceiro) =>
+      !parceirosUtilizados.includes(parceiro.value) &&
+      !motoristasUtilizados.includes(parceiro.value)
+  );
+  const placasDisponiveis = placaVeiculoOptionsCompleta.filter(
+    (placa) => !placasUtilizadas.includes(placa.value)
+  );
 
   // Atualiza os estados das listas de seleção
   setEquipeOptions(equipesDisponiveis);
