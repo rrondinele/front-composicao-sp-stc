@@ -622,7 +622,14 @@ const fetchTeams = async () => {
           </form>
           <p className="text-gray-400 text-sm text-center mt-4">
             Esqueceu a senha? 
-            <a href="#" className="text-blue-400 hover:underline"> Pergunte ao Pavão</a>
+            <a 
+            href="https://wa.me/5586999606108"
+            className="text-blue-400 hover:underline"
+            target="_blank" 
+            rel="noopener noreferrer"
+            >
+              Pergunte ao Pavão
+            </a>
           </p>
           <ToastContainer />
         </div>
