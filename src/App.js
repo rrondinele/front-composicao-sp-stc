@@ -193,10 +193,7 @@ function App() {
       }
     }
     return true;
-  };
-
-
-  
+  };  
   
   const handleSelectChange = async (selectedOption, fieldName) => {
     // Atualiza o formData com o valor selecionado
@@ -252,6 +249,11 @@ function App() {
         setEletricistaMotoristaOptions(updatedMotoristaOptions);
       }
     }
+  };
+
+  // Adicione esta função para verificar se os campos devem estar desabilitados
+  const shouldDisableFields = () => {
+    return formData.status && formData.status !== "CAMPO";
   };
 
   /*
@@ -691,6 +693,7 @@ const fetchTeams = async () => {
         value={equipeOptions.find(option => option.value === formData.equipe) || null}
         styles={minimalStyles}
         className="w-full"
+        isDisabled={shouldDisableFields() || loading}
       />
 
       {/* Campo: Eletricista Motorista */}
@@ -701,6 +704,7 @@ const fetchTeams = async () => {
         value={eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista) || null}
         styles={minimalStyles}
         className="w-full"
+        isDisabled={shouldDisableFields() || loading}
       />
 
       {/* Campo: BR0 Motorista */}
@@ -741,6 +745,7 @@ const fetchTeams = async () => {
         value={servicoOptions.find(option => option.value === formData.servico) || null}
         styles={minimalStyles}
         className="w-full"
+        isDisabled={shouldDisableFields() || loading}
       />
 
       {/* Campo: Placa do Veículo */}
@@ -751,6 +756,7 @@ const fetchTeams = async () => {
         value={placaVeiculoOptions.find(option => option.value === formData.placa_veiculo) || null}
         styles={minimalStyles}
         className="w-full"
+        isDisabled={shouldDisableFields() || loading}
           />
         </div>
         <button
