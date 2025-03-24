@@ -511,7 +511,7 @@ const fetchTeams = async () => {
         // Resetar todos os campos do formulário
         setFormData({
           data_atividade: "",
-          supervisor: "",
+          //supervisor: "",
           status: "",
           eletricista_motorista: "",
           br0_motorista: "",
