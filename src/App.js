@@ -501,37 +501,37 @@ const fetchTeams = async () => {
       }
     }
   };
-  // Função para finalizar registros
-  const handleFinalizar = async () => {
-    if (window.confirm("Confirma que todos os registros estão revisados? Isso limpará a tela.")) {
-      setLoading(true);
-      try {
-        await axios.put("https://composicao-sp-soc.onrender.com/teams/finalizar");
+// Função para finalizar registros
+const handleFinalizar = async () => {
+  if (window.confirm("Confirma que todos os registros estão revisados? Isso limpará a tela.")) {
+    setLoading(true);
+    try {
+      await axios.put("https://composicao-sp-soc.onrender.com/teams/finalizar");
 
-        // Resetar todos os campos do formulário
-        setFormData({
-          data_atividade: "",
-          //supervisor: "",
-          status: "",
-          eletricista_motorista: "",
-          br0_motorista: "",
-          eletricista_parceiro: "",
-          br0_parceiro: "",
-          equipe: "",
-          servico: "",
-          placa_veiculo: "",
-          finalizado: false,
-        });
+      // Resetar os campos do formulário, mantendo o supervisor
+      setFormData((prevFormData) => ({
+        ...prevFormData, // Mantém todos os valores anteriores
+        data_atividade: "",
+        status: "",
+        eletricista_motorista: "",
+        br0_motorista: "",
+        eletricista_parceiro: "",
+        br0_parceiro: "",
+        equipe: "",
+        servico: "",
+        placa_veiculo: "",
+        finalizado: false,
+      }));
 
-        setTeams([]); // Limpa a lista de equipes
-        toast.success("Registros finalizados com sucesso!");
-      } catch (error) {
-        toast.error("Erro ao finalizar registros.");
-      } finally {
-        setLoading(false);
-      }
+      setTeams([]); // Limpa a lista de equipes
+      toast.success("Registros finalizados com sucesso!");
+    } catch (error) {
+      toast.error("Erro ao finalizar registros.");
+    } finally {
+      setLoading(false);
     }
-  };
+  }
+};
 
   // Função para exportar a tabela para Excel
   const exportToExcel = () => {
