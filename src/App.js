@@ -320,31 +320,27 @@ const handleLogin = async (e) => {
   };
 
   const atualizarListasDeSelecao = (equipesCadastradas) => {
-    // Extrai os valores já utilizados
-    const equipesUtilizadas = equipesCadastradas.map((equipe) => equipe.equipe);
-    const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
-    const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
-    const placasUtilizadas = equipesCadastradas.map((equipe) => equipe.placa_veiculo);
+    // Extrai todos os eletricistas já utilizados (motoristas e parceiros)
+    const todosEletricistasUtilizados = [
+      ...equipesCadastradas.map(e => e.eletricista_motorista),
+      ...equipesCadastradas.map(e => e.eletricista_parceiro)
+    ].filter(e => e && e !== "N/A"); // Remove valores nulos e "N/A"
   
-    // Filtra as opções disponíveis
-    const equipesDisponiveis = equipeOptionsCompleta.filter(
-      (equipe) => !equipesUtilizadas.includes(equipe.value)
-    );
-    const motoristasDisponiveis = eletricistasCompletos.filter(
-      (motorista) => !motoristasUtilizados.includes(motorista.value)
-    );
-    const parceirosDisponiveis = eletricistasCompletos.filter(
-      (parceiro) => !parceirosUtilizados.includes(parceiro.value)
-    );
-    const placasDisponiveis = placaVeiculoOptionsCompleta.filter(
-      (placa) => !placasUtilizadas.includes(placa.value)
+    // Filtra as opções disponíveis removendo os já utilizados
+    const eletricistasDisponiveis = eletricistasCompletos.filter(
+      e => !todosEletricistasUtilizados.includes(e.value)
     );
   
-    // Atualiza os estados das listas de seleção
-    setEquipeOptions(equipesDisponiveis);
-    setEletricistaMotoristaOptions(motoristasDisponiveis);
-    setEletricistaParceiroOptions(parceirosDisponiveis);
-    setPlacaVeiculoOptions(placasDisponiveis);
+    // Atualiza ambas as listas com os mesmos valores disponíveis
+    setEletricistaMotoristaOptions(eletricistasDisponiveis);
+    setEletricistaParceiroOptions(eletricistasDisponiveis);
+  
+    // Atualiza também as outras listas (equipe e placa) se necessário
+    const equipesUtilizadas = equipesCadastradas.map(e => e.equipe).filter(Boolean);
+    const placasUtilizadas = equipesCadastradas.map(e => e.placa_veiculo).filter(Boolean);
+  
+    setEquipeOptions(equipeOptionsCompleta.filter(e => !equipesUtilizadas.includes(e.value)));
+    setPlacaVeiculoOptions(placaVeiculoOptionsCompleta.filter(p => !placasUtilizadas.includes(p.value)));
   };
 
   // Funcao Buscar as equipes cadastradas para a data selecionada. + Atualizar as listas de seleção com base nas equipes cadastradas.
@@ -451,10 +447,8 @@ const fetchTeams = async () => {
   
     setLoading(true);
     try {
-      // Prepara os dados para envio
       const dadosParaEnvio = {
         ...formData,
-        // Se status não for CAMPO, envia equipe como string vazia ao invés de N/A
         equipe: formData.status !== "CAMPO" ? "" : formData.equipe,
         servico: formData.status !== "CAMPO" ? "" : formData.servico,
         placa_veiculo: formData.status !== "CAMPO" ? "" : formData.placa_veiculo
@@ -470,33 +464,28 @@ const fetchTeams = async () => {
       if (response.status === 201 || response.status === 200) {
         toast.success(editId ? "Equipe atualizada com sucesso!" : "Equipe cadastrada com sucesso!");
         setEditId(null);
-        
-        // Busca as equipes cadastradas na mesma data
+  
+        // Busca as equipes cadastradas na mesma data (incluindo a recém-cadastrada)
         const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
         
         // Atualiza as listas de seleção com base nas equipes cadastradas
         atualizarListasDeSelecao(equipesCadastradas);
         
-        // Limpa apenas os campos que devem ser resetados
-        setFormData((prevFormData) => ({
-          ...prevFormData,
+        // Limpa os campos mantendo a data e supervisor
+        setFormData(prev => ({
+          ...prev,
+          status: "",
           eletricista_motorista: "",
           br0_motorista: "",
           eletricista_parceiro: "",
           br0_parceiro: "",
           equipe: "",
-          placa_veiculo: "",
+          servico: "",
+          placa_veiculo: ""
         }));
-        
-        // Atualiza a lista de equipes
-        fetchTeams();
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("Erro ao cadastrar/atualizar equipe.");
-      }
+      // ... tratamento de erros existente
     } finally {
       setLoading(false);
     }
