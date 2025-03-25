@@ -907,7 +907,7 @@ const handleFinalizar = async () => {
       <div className="flex justify-start gap-4 mt-4">
         <button
           data-tooltip-id="clear-tooltip"
-          data-tooltip-content="Sair"
+          data-tooltip-content="Exportar em Excel"
           onClick={exportToExcel}
           className="bg-white-600 text-white px-4 py-2 rounded-md hover:bg-white-700 flex items-center"
           //title="Exportar em Excel"
