@@ -14,6 +14,7 @@ import { equipeOptionsCompleta } from "./components/equipes";
 import { placaVeiculoOptionsCompleta } from "./components/PlacasVeiculos";
 import { statusOptions } from "./components/status";
 import { servicoOptions } from "./components/servicos";
+import { Tooltip } from 'react-tooltip';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Estado inicial como false
@@ -677,12 +678,15 @@ const handleFinalizar = async () => {
       <div className="flex justify-between mt-4 mb-6">
   {/* Botão Limpar (extremo esquerdo) */}
   <button
+    data-tooltip-id="clear-tooltip"
+    data-tooltip-content="Limpar formulário"
     onClick={handleClearForm}
     className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
-    title="Limpar formulário"
+    //title="Limpar formulário"
   >
     <img src={clearIcon} alt="Limpar" className="w-12 h-12 mr-2" />
   </button>
+  <Tooltip id="clear-tooltip" />
 
   {/* Botão Sair (extremo direito) */}
   <button
