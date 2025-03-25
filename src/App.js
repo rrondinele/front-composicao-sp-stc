@@ -450,34 +450,43 @@ const fetchTeams = async () => {
   
     setLoading(true);
     try {
+      // Prepara os dados para envio
+      const dadosParaEnvio = {
+        ...formData,
+        // Se status não for CAMPO, envia equipe como string vazia ao invés de N/A
+        equipe: formData.status !== "CAMPO" ? "" : formData.equipe,
+        servico: formData.status !== "CAMPO" ? "" : formData.servico,
+        placa_veiculo: formData.status !== "CAMPO" ? "" : formData.placa_veiculo
+      };
+  
       const url = editId 
         ? `https://composicao-sp-soc.onrender.com/teams/${editId}` 
         : "https://composicao-sp-soc.onrender.com/teams";
       const method = editId ? "put" : "post";
   
-      const response = await axios[method](url, formData);
+      const response = await axios[method](url, dadosParaEnvio);
   
       if (response.status === 201 || response.status === 200) {
         toast.success(editId ? "Equipe atualizada com sucesso!" : "Equipe cadastrada com sucesso!");
         setEditId(null);
-  
+        
         // Busca as equipes cadastradas na mesma data
         const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
-  
+        
         // Atualiza as listas de seleção com base nas equipes cadastradas
         atualizarListasDeSelecao(equipesCadastradas);
-  
+        
         // Limpa apenas os campos que devem ser resetados
         setFormData((prevFormData) => ({
-          ...prevFormData, // Mantém os campos que não devem ser limpos
-          eletricista_motorista: "", // Reseta o eletricista motorista
-          br0_motorista: "", // Reseta o BR0 motorista
-          eletricista_parceiro: "", // Reseta o eletricista parceiro
-          br0_parceiro: "", // Reseta o BR0 parceiro
-          equipe: "", // Reseta a equipe
-          placa_veiculo: "", // Reseta a placa do veículo
+          ...prevFormData,
+          eletricista_motorista: "",
+          br0_motorista: "",
+          eletricista_parceiro: "",
+          br0_parceiro: "",
+          equipe: "",
+          placa_veiculo: "",
         }));
-  
+        
         // Atualiza a lista de equipes
         fetchTeams();
       }
