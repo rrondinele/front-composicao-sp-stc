@@ -496,21 +496,46 @@ const fetchTeams = async () => {
   };
 
 
-  const handleEdit = (team) => {
+  const handleEdit = async (team) => {
+    // 1. Cria objetos de opção para os valores atuais
+    const currentOptions = {
+      equipe: { value: team.equipe, label: team.equipe },
+      motorista: { value: team.eletricista_motorista, label: team.eletricista_motorista },
+      parceiro: { value: team.eletricista_parceiro, label: team.eletricista_parceiro },
+      placa: { value: team.placa_veiculo, label: team.placa_veiculo }
+    };
+  
+    // 2. Atualiza as opções incluindo os valores atuais
+    setEquipeOptions(prev => [
+      currentOptions.equipe,
+      ...prev.filter(o => o.value !== team.equipe)
+    ]);
+  
+    setEletricistaMotoristaOptions(prev => [
+      currentOptions.motorista,
+      ...prev.filter(o => o.value !== team.eletricista_motorista)
+    ]);
+  
+    setEletricistaParceiroOptions(prev => [
+      currentOptions.parceiro,
+      ...prev.filter(o => o.value !== team.eletricista_parceiro)
+    ]);
+  
+    setPlacaVeiculoOptions(prev => [
+      currentOptions.placa,
+      ...prev.filter(o => o.value !== team.placa_veiculo)
+    ]);
+  
+    // 3. Atualiza o formData
     setFormData({
-      data_atividade: team.data_atividade, // Data da atividade
-      supervisor: team.supervisor, // Supervisor
-      status: team.status, // Status
-      eletricista_motorista: team.eletricista_motorista, // Eletricista Motorista
-      br0_motorista: br0Mapping[team.eletricista_motorista] || "", // BR0 Motorista
-      eletricista_parceiro: team.eletricista_parceiro, // Eletricista Parceiro
-      br0_parceiro: br0Mapping[team.eletricista_parceiro] || "", // BR0 Parceiro
-      equipe: team.equipe, // Equipe
-      servico: team.servico, // Serviço
-      placa_veiculo: team.placa_veiculo, // Placa do Veículo
+      ...team,
+      br0_motorista: br0Mapping[team.eletricista_motorista] || "",
+      br0_parceiro: br0Mapping[team.eletricista_parceiro] || ""
     });
-    setEditId(team.id); // Define o ID da equipe que está sendo editada
+  
+    setEditId(team.id);
   };
+
 
   // Função para excluir uma equipe
   const handleDelete = async (id) => {
