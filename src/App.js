@@ -690,12 +690,15 @@ const handleFinalizar = async () => {
 
   {/* Botão Sair (extremo direito) */}
   <button
+    data-tooltip-id="clear-tooltip"
+    data-tooltip-content="Sair"
     onClick={handleLogout}
     className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
-    title="Sair"
+    //title="Sair"
   >
     <img src={exitIcon} alt="Sair" className="w-12 h-12 mr-2" />
   </button>
+  <Tooltip id="clear-tooltip" />
 </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
@@ -903,12 +906,15 @@ const handleFinalizar = async () => {
       </button>
       <div className="flex justify-start gap-4 mt-4">
         <button
+          data-tooltip-id="clear-tooltip"
+          data-tooltip-content="Sair"
           onClick={exportToExcel}
           className="bg-white-600 text-white px-4 py-2 rounded-md hover:bg-white-700 flex items-center"
-          title="Exportar em Excel"
+          //title="Exportar em Excel"
         >
           <img src={excelIcon} alt="Excel" className="w-12 h-12 mr-2" />
         </button>
+        <Tooltip id="clear-tooltip" />
       </div>
       <ToastContainer />
     </div>
