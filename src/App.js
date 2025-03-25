@@ -69,39 +69,61 @@ function App() {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
   }, [isLoggedIn]);
 
-  // Função para lidar com o login
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
-      if (response.data.message === "Login bem-sucedido") {
-        setIsLoggedIn(true);
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userRole", response.data.user.role); // Salva o papel do usuário
-        localStorage.setItem("matricula", String(loginData.matricula)); // Salva a matrícula do usuário
-  
-        // Se o usuário for supervisor, salva o nome do supervisor no localStorage
-        if (response.data.user.role === "supervisor" && supervisorMapping[loginData.matricula]) {
-          localStorage.setItem("supervisorName", supervisorMapping[loginData.matricula]);
-        }
-  
-        toast.success("Login bem-sucedido!");
-  
-        // Se o usuário for supervisor, preenche o campo supervisor automaticamente
-        if (response.data.user.role === "supervisor" && supervisorMapping[loginData.matricula]) {
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            supervisor: supervisorMapping[loginData.matricula],
-          }));
-        }
+// Função para lidar com o login
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const response = await axios.post("https://composicao-sp-soc.onrender.com/login", loginData);
+    if (response.data.message === "Login bem-sucedido") {
+      setIsLoggedIn(true);
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userRole", response.data.user.role);
+      localStorage.setItem("matricula", String(loginData.matricula));
+
+      // Limpa a lista de equipes visíveis
+      setTeams([]);
+      
+      // Reseta o estado de edição
+      setEditId(null);
+
+      // Se o usuário for supervisor, salva o nome do supervisor
+      const supervisorName = response.data.user.role === "supervisor" && supervisorMapping[loginData.matricula] 
+        ? supervisorMapping[loginData.matricula] 
+        : "";
+
+      if (supervisorName) {
+        localStorage.setItem("supervisorName", supervisorName);
       }
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Erro ao fazer login");
-    } finally {
-      setLoading(false);
+
+      toast.success("Login bem-sucedido!");
+
+      // Limpa todos os campos, mantendo apenas o supervisor se aplicável
+      setFormData({
+        data_atividade: "",
+        supervisor: supervisorName, // Mantém apenas se for supervisor
+        status: "",
+        eletricista_motorista: "",
+        br0_motorista: "",
+        eletricista_parceiro: "",
+        br0_parceiro: "",
+        equipe: "",
+        servico: "",
+        placa_veiculo: "",
+      });
+
+      // Reseta as opções de seleção para os valores padrão
+      setEletricistaMotoristaOptions(eletricistasCompletos);
+      setEletricistaParceiroOptions(eletricistasCompletos);
+      setEquipeOptions(equipeOptionsCompleta);
+      setPlacaVeiculoOptions(placaVeiculoOptionsCompleta);
     }
-  };
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Erro ao fazer login");
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Função para lidar com o logout
   const handleLogout = () => {
