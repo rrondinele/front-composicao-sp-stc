@@ -349,10 +349,7 @@ const handleLogin = async (e) => {
     setFormData({ ...formData, data_atividade: dataSelecionada });
   
     if (dataSelecionada) {
-      // Busca as equipes cadastradas na data selecionada
       const equipesCadastradas = await fetchEquipesPorData(dataSelecionada);
-  
-      // Atualiza as listas de seleção com base nas equipes cadastradas
       atualizarListasDeSelecao(equipesCadastradas);
     }
   };
@@ -447,8 +444,10 @@ const fetchTeams = async () => {
   
     setLoading(true);
     try {
+      // Prepara os dados para envio
       const dadosParaEnvio = {
         ...formData,
+        // Se status não for CAMPO, envia equipe como string vazia ao invés de N/A
         equipe: formData.status !== "CAMPO" ? "" : formData.equipe,
         servico: formData.status !== "CAMPO" ? "" : formData.servico,
         placa_veiculo: formData.status !== "CAMPO" ? "" : formData.placa_veiculo
@@ -464,32 +463,38 @@ const fetchTeams = async () => {
       if (response.status === 201 || response.status === 200) {
         toast.success(editId ? "Equipe atualizada com sucesso!" : "Equipe cadastrada com sucesso!");
         setEditId(null);
-  
-        // Busca as equipes cadastradas na mesma data (incluindo a recém-cadastrada)
+        
+        // Busca as equipes cadastradas na mesma data
         const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
         
         // Atualiza as listas de seleção com base nas equipes cadastradas
         atualizarListasDeSelecao(equipesCadastradas);
         
-        // Limpa os campos mantendo a data e supervisor
-        setFormData(prev => ({
-          ...prev,
-          status: "",
+        // Limpa apenas os campos que devem ser resetados
+        setFormData((prevFormData) => ({
+          ...prevFormData,
           eletricista_motorista: "",
           br0_motorista: "",
           eletricista_parceiro: "",
           br0_parceiro: "",
           equipe: "",
-          servico: "",
-          placa_veiculo: ""
+          placa_veiculo: "",
         }));
+        
+        // Atualiza a lista de equipes
+        fetchTeams();
       }
     } catch (error) {
-      // ... tratamento de erros existente
+      if (error.response && error.response.status === 400) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Erro ao cadastrar/atualizar equipe.");
+      }
     } finally {
       setLoading(false);
     }
   };
+
 
   const handleEdit = (team) => {
     setFormData({
