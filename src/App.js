@@ -679,6 +679,7 @@ const handleFinalizar = async () => {
   <button
     onClick={handleClearForm}
     className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
+    title="Limpar formulário"
   >
     <img src={clearIcon} alt="Limpar" className="w-12 h-12 mr-2" />
   </button>
@@ -687,6 +688,7 @@ const handleFinalizar = async () => {
   <button
     onClick={handleLogout}
     className="bg-white-600 text-white px-2 py-2 rounded-md hover:bg-white-700 flex items-center"
+    title="Sair"
   >
     <img src={exitIcon} alt="Sair" className="w-12 h-12 mr-2" />
   </button>
@@ -899,6 +901,7 @@ const handleFinalizar = async () => {
         <button
           onClick={exportToExcel}
           className="bg-white-600 text-white px-4 py-2 rounded-md hover:bg-white-700 flex items-center"
+          title="Exportar em Excel"
         >
           <img src={excelIcon} alt="Excel" className="w-12 h-12 mr-2" />
         </button>
