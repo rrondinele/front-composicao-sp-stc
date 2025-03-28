@@ -586,19 +586,30 @@ const handleFinalizar = async () => {
 
   // Função para exportar a tabela para Excel
   const exportToExcel = () => {
-    // Mapeia apenas as colunas visíveis e formata a data
-    const visibleColumns = teams.map(team => [
-      new Date(team.data_atividade).toLocaleDateString('pt-BR'), // Formata a data para DD/MM/AAAA
-      team.supervisor,
-      team.status,
-      team.eletricista_motorista,
-      team.br0_motorista,
-      team.eletricista_parceiro,
-      team.br0_parceiro,
-      team.equipe,
-      team.servico,
-      team.placa_veiculo,
-    ]);
+    // Mapeia apenas as colunas visíveis e formata a data corretamente
+    const visibleColumns = teams.map(team => {
+      // Corrige o problema da data adicionando um dia (se necessário)
+      const dataAtividade = new Date(team.data_atividade);
+      
+      // Ajusta para o fuso horário local (Brasil)
+      const dataAjustada = new Date(dataAtividade.getTime() + dataAtividade.getTimezoneOffset() * 60000);
+      
+      // Formata como DD/MM/AAAA
+      const dataFormatada = dataAjustada.toLocaleDateString('pt-BR');
+      
+      return [
+        dataFormatada, // Data já formatada corretamente
+        team.supervisor,
+        team.status,
+        team.eletricista_motorista,
+        team.br0_motorista,
+        team.eletricista_parceiro,
+        team.br0_parceiro,
+        team.equipe,
+        team.servico,
+        team.placa_veiculo,
+      ];
+    });
 
     // Adiciona cabeçalhos personalizados
     const header = [
