@@ -180,6 +180,10 @@ const handleLogin = async (e) => {
   };
   
   // Função para limpar o formulário
+
+  js
+  Copiar
+  Editar
   const handleClearForm = () => {
     const supervisor = formData.supervisor;
     const estado = localStorage.getItem("estado") || "SP";
@@ -187,14 +191,14 @@ const handleLogin = async (e) => {
     setFormData({
       data_atividade: "",
       supervisor: supervisor,
-      status: "",
-      eletricista_motorista: "",
+      status: null,
+      eletricista_motorista: null,
       br0_motorista: "",
-      eletricista_parceiro: "",
+      eletricista_parceiro: null,
       br0_parceiro: "",
-      equipe: "",
-      servico: "",
-      placa_veiculo: "",
+      equipe: null,
+      servico: null,
+      placa_veiculo: null,
     });
   
     setEletricistaMotoristaOptions(eletricistasCompletos[estado]);
