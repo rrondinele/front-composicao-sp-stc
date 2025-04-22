@@ -795,7 +795,11 @@ const handleFinalizar = async () => {
         options={equipeOptions}
         placeholder="Selecione Equipe"
         onChange={(selectedOption) => handleSelectChange(selectedOption, "equipe")}
-        value={equipeOptions.find(option => option.value === formData.equipe) || null}
+        value={
+          Array.isArray(equipeOptions)
+            ? equipeOptions.find(option => option.value === formData.equipe)
+            : null
+        }
         styles={minimalStyles}
         className="w-full"
         isDisabled={shouldDisableFields() || loading}
@@ -806,7 +810,11 @@ const handleFinalizar = async () => {
         options={eletricistaMotoristaOptions}
         placeholder="Selecione Eletricista Motorista"
         onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_motorista")}
-        value={eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista) || null}
+        value={
+          Array.isArray(eletricistaMotoristaOptions)
+            ? eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista)
+            : null
+        }
         styles={minimalStyles}
         className="w-full"
         isDisabled={shouldDisableFields() || loading}
@@ -827,7 +835,11 @@ const handleFinalizar = async () => {
         options={eletricistaParceiroOptions}
         placeholder="Selecione Eletricista Parceiro(a)"
         onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_parceiro")}
-        value={eletricistaParceiroOptions.find(option => option.value === formData.eletricista_parceiro) || null}
+        value={
+          Array.isArray(eletricistaParceiroOptions)
+            ? eletricistaParceiroOptions.find(option => option.value === formData.eletricista_parceiro)
+            : null
+        }
         styles={minimalStyles}
         className="w-full"
       />
@@ -858,7 +870,11 @@ const handleFinalizar = async () => {
         options={placaVeiculoOptions}
         placeholder="Selecione Placa"
         onChange={(selectedOption) => handleSelectChange(selectedOption, "placa_veiculo")}
-        value={placaVeiculoOptions.find(option => option.value === formData.placa_veiculo) || null}
+        value={
+          Array.isArray(placaVeiculoOptions)
+            ? placaVeiculoOptions.find(option => option.value === formData.placa_veiculo)
+            : null
+        }
         styles={minimalStyles}
         className="w-full"
         isDisabled={shouldDisableFields() || loading}
