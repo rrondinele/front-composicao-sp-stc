@@ -181,9 +181,12 @@ const handleLogin = async (e) => {
   
   // Função para limpar o formulário
   const handleClearForm = () => {
-    setFormData((prevFormData) => ({
-      ...prevFormData, // Mantém o valor do supervisor
+    const supervisor = formData.supervisor;
+    const estado = localStorage.getItem("estado") || "SP";
+  
+    setFormData({
       data_atividade: "",
+      supervisor: supervisor, // Mantém o supervisor atual
       status: "",
       eletricista_motorista: "",
       br0_motorista: "",
@@ -192,7 +195,13 @@ const handleLogin = async (e) => {
       equipe: "",
       servico: "",
       placa_veiculo: "",
-    }));
+    });
+  
+    // Recarrega as listas com todas as opções disponíveis para o estado
+    setEletricistaMotoristaOptions(eletricistasCompletos[estado]);
+    setEletricistaParceiroOptions(eletricistasCompletos[estado]);
+    setEquipeOptions(equipeOptionsCompleta[estado]);
+    setPlacaVeiculoOptions(placaVeiculoOptionsCompleta[estado]);
   };
 
   // Estilo minimalista para o react-select
@@ -478,6 +487,13 @@ const fetchTeams = async () => {
           equipe: "",
           placa_veiculo: "",
         }));
+
+        // Recarrega as opções de acordo com o estado atual
+        const estado = localStorage.getItem("estado") || "SP";
+        setEletricistaMotoristaOptions(eletricistasCompletos[estado]);
+        setEletricistaParceiroOptions(eletricistasCompletos[estado]);
+        setEquipeOptions(equipeOptionsCompleta[estado]);
+        setPlacaVeiculoOptions(placaVeiculoOptionsCompleta[estado]);
         
         // Atualiza a lista de equipes
         fetchTeams();
