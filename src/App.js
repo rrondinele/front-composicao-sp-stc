@@ -28,10 +28,10 @@ function App() {
   const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(
     eletricistasCompletos[estadoAtual]
   );
-  const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta[estadoAtual]);
+
+  const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta[estadoAtual] || []);
   const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState(placaVeiculoOptionsCompleta[estadoAtual]);
 
-  // Mapeamento BR0 do estado atual
   const br0Mapping = br0MappingPorEstado[estadoAtual];
 
   const [formData, setFormData] = useState({
@@ -56,11 +56,10 @@ function App() {
     "6061"  : "006061 - JULIO CESAR PEREIRA DA SILVA",
     "15540" : "015540 - EDER JORDELINO GONCALVES CAETANO",
     "18505" : "018505 - DIEGO RAFAEL DE MELO SILVA",
-    "4438"  : "JOSE OSCAR DO NASCIMENTO DE AZEVEDO",
-    "15843"  : "HUGO PACHECO DOS SANTOS", 
-    "17451"  : "WESLEY PEREIRA DE SOUZA GOMES",    
-    "15729"  : "TIAGO DE SOUZA MATTOS"
-    // Adicione outros supervisores aqui
+    "4438"  : "00438 - JOSE OSCAR DO NASCIMENTO DE AZEVEDO",
+    "15843" : "015843 - HUGO PACHECO DOS SANTOS", 
+    "17451" : "017451 - WESLEY PEREIRA DE SOUZA GOMES",    
+    "15729" : "015729 - TIAGO DE SOUZA MATTOS"
   };
 
   // Efeito para verificar se o usuário está logado
@@ -303,32 +302,6 @@ const handleLogin = async (e) => {
     return formData.status && formData.status !== "CAMPO";
   };
 
-  /*
-
-  const fetchEquipesPorData = async (data) => {
-    try {
-      const userRole = localStorage.getItem("userRole"); // Obtém o papel do usuário
-      const matricula = localStorage.getItem("matricula"); // Obtém a matrícula do usuário
-  
-      const params = {
-        data: data, // Filtra pela data selecionada
-      };
-  
-      // Se o usuário for supervisor, adiciona o filtro de supervisor
-      if (userRole === "supervisor" && supervisorMapping[matricula]) {
-        params.supervisor = supervisorMapping[matricula];
-      }
-  
-      const response = await axios.get("https://composicao-sp-soc.onrender.com/teams", { params });
-      return response.data; // Retorna as equipes cadastradas na data
-    } catch (error) {
-      console.error("Erro ao buscar equipes:", error);
-      return []; // Retorna um array vazio em caso de erro
-    }
-  };
-
-  */  
-
   const fetchEquipesPorData = async (data) => {
     try {
       const params = {
@@ -351,7 +324,7 @@ const handleLogin = async (e) => {
     ].filter(e => e && e !== "N/A"); // Remove valores nulos e "N/A"
   
     // Filtra as opções disponíveis removendo os já utilizados
-    const eletricistasDisponiveis = eletricistasCompletos.filter(
+    const eletricistasDisponiveis = eletricistasCompletos[estadoAtual].filter(
       e => !todosEletricistasUtilizados.includes(e.value)
     );
   
@@ -363,8 +336,8 @@ const handleLogin = async (e) => {
     const equipesUtilizadas = equipesCadastradas.map(e => e.equipe).filter(Boolean);
     const placasUtilizadas = equipesCadastradas.map(e => e.placa_veiculo).filter(Boolean);
   
-    setEquipeOptions(equipeOptionsCompleta.filter(e => !equipesUtilizadas.includes(e.value)));
-    setPlacaVeiculoOptions(placaVeiculoOptionsCompleta.filter(p => !placasUtilizadas.includes(p.value)));
+    setEquipeOptions(equipeOptionsCompleta[estadoAtual].filter(e => !equipesUtilizadas.includes(e.value)));
+    setPlacaVeiculoOptions(placaVeiculoOptionsCompleta[estadoAtual].filter(p => !placasUtilizadas.includes(p.value)));
   };
 
   // Funcao Buscar as equipes cadastradas para a data selecionada. + Atualizar as listas de seleção com base nas equipes cadastradas.
@@ -519,7 +492,6 @@ const fetchTeams = async () => {
     }
   };
 
-
   const handleEdit = async (team) => {
     // 1. Cria objetos de opção para os valores atuais
     const currentOptions = {
@@ -530,24 +502,24 @@ const fetchTeams = async () => {
     };
   
     // 2. Atualiza as opções incluindo os valores atuais
-    setEquipeOptions(prev => [
+    setEquipeOptions([
       currentOptions.equipe,
-      ...prev.filter(o => o.value !== team.equipe)
+      ...equipeOptionsCompleta[estado].filter(o => o.value !== team.equipe)
     ]);
   
-    setEletricistaMotoristaOptions(prev => [
+    setEletricistaMotoristaOptions([
       currentOptions.motorista,
-      ...prev.filter(o => o.value !== team.eletricista_motorista)
+      ...eletricistasCompletos[estado].filter(o => o.value !== team.eletricista_motorista)
     ]);
   
-    setEletricistaParceiroOptions(prev => [
+    setEletricistaParceiroOptions([
       currentOptions.parceiro,
-      ...prev.filter(o => o.value !== team.eletricista_parceiro)
+      ...eletricistasCompletos[estado].filter(o => o.value !== team.eletricista_parceiro)
     ]);
   
-    setPlacaVeiculoOptions(prev => [
+    setPlacaVeiculoOptions([
       currentOptions.placa,
-      ...prev.filter(o => o.value !== team.placa_veiculo)
+      ...placaVeiculoOptionsCompleta[estado].filter(o => o.value !== team.placa_veiculo)
     ]);
   
     // 3. Atualiza o formData
@@ -559,7 +531,6 @@ const fetchTeams = async () => {
   
     setEditId(team.id);
   };
-
 
   // Função para excluir uma equipe
   const handleDelete = async (id) => {
