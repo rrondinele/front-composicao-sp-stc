@@ -1,125 +1,139 @@
-import React, { useState, useEffect } from "react";
-import {
-  getTeams,
-  createTeam,
-  updateTeam,
-  deleteTeam,
-  finalizeTeams,
-} from "../services/api"; // Importe as funções do serviço
+import React, { useState } from 'react';
+import { TextField, Button, MenuItem, Grid } from '@mui/material';
+import { eletricistasCompletos } from '../data/eletricistas';
+import { br0MappingPorEstado } from '../data/eletricistas';
+import { equipeOptionsCompleta } from '../data/equipes';
+import { supervisorOptions } from '../data/supervisor';
+import { placasPorEstado } from '../data/PlacasVeiculos';
 
-function CadastroEquipe() {
-  const [teams, setTeams] = useState([]);
-  const [formData, setFormData] = useState({
-    data_atividade: "",
-    supervisor: "",
-    status: "",
-    equipe: "",
-    eletricista_motorista: "",
-    eletricista_parceiro: "",
-    servico: "",
-    placa_veiculo: "",
-  });
+const CadastroEquipe = () => {
+  const estado = localStorage.getItem('estado') || 'SP';
 
-  // Buscar equipes ao carregar o componente
-  useEffect(() => {
-    fetchTeams();
-  }, []);
+  const [supervisor, setSupervisor] = useState('');
+  const [eletricistaMotorista, setEletricistaMotorista] = useState('');
+  const [eletricistaParceiro, setEletricistaParceiro] = useState('');
+  const [br0Motorista, setBr0Motorista] = useState('');
+  const [br0Parceiro, setBr0Parceiro] = useState('');
+  const [equipe, setEquipe] = useState('');
+  const [placaVeiculo, setPlacaVeiculo] = useState('');
 
-  const fetchTeams = async () => {
-    try {
-      const data = await getTeams();
-      setTeams(data);
-    } catch (error) {
-      console.error("Erro ao buscar equipes:", error);
-    }
+  const handleEletricistaMotoristaChange = (value) => {
+    setEletricistaMotorista(value);
+    setBr0Motorista(br0MappingPorEstado[estado][value] || '');
   };
 
-  // Cadastrar uma nova equipe
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await createTeam(formData);
-      alert("Equipe cadastrada com sucesso!");
-      setFormData({
-        data_atividade: "",
-        supervisor: "",
-        status: "",
-        equipe: "",
-        eletricista_motorista: "",
-        eletricista_parceiro: "",
-        servico: "",
-        placa_veiculo: "",
-      });
-      fetchTeams(); // Atualiza a lista de equipes
-    } catch (error) {
-      alert("Erro ao cadastrar equipe.");
-    }
-  };
-
-  // Editar uma equipe
-  const handleEdit = async (id) => {
-    try {
-      await updateTeam(id, formData);
-      alert("Equipe atualizada com sucesso!");
-      fetchTeams(); // Atualiza a lista de equipes
-    } catch (error) {
-      alert("Erro ao editar equipe.");
-    }
-  };
-
-  // Excluir uma equipe
-  const handleDelete = async (id) => {
-    try {
-      await deleteTeam(id);
-      alert("Equipe excluída com sucesso!");
-      fetchTeams(); // Atualiza a lista de equipes
-    } catch (error) {
-      alert("Erro ao excluir equipe.");
-    }
-  };
-
-  // Marcar equipes como finalizadas
-  const handleFinalize = async () => {
-    try {
-      await finalizeTeams();
-      alert("Equipes finalizadas com sucesso!");
-      fetchTeams(); // Atualiza a lista de equipes
-    } catch (error) {
-      alert("Erro ao finalizar equipes.");
-    }
+  const handleEletricistaParceiroChange = (value) => {
+    setEletricistaParceiro(value);
+    setBr0Parceiro(br0MappingPorEstado[estado][value] || '');
   };
 
   return (
-    <div>
-      <h1>Cadastro de Equipes</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Campos do formulário */}
-        <input
-          type="date"
-          name="data_atividade"
-          value={formData.data_atividade}
-          onChange={(e) =>
-            setFormData({ ...formData, data_atividade: e.target.value })
-          }
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          select
+          label="Supervisor"
+          fullWidth
+          value={supervisor}
+          onChange={(e) => setSupervisor(e.target.value)}
+        >
+          {supervisorOptions[estado].map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <TextField
+          select
+          label="Eletricista Motorista"
+          fullWidth
+          value={eletricistaMotorista}
+          onChange={(e) => handleEletricistaMotoristaChange(e.target.value)}
+        >
+          {eletricistasCompletos[estado].map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <TextField
+          label="BR0 Motorista"
+          fullWidth
+          value={br0Motorista}
+          disabled
         />
-        {/* Outros campos */}
-        <button type="submit">Cadastrar</button>
-      </form>
+      </Grid>
 
-      <h2>Equipes Cadastradas</h2>
-      <ul>
-        {teams.map((team) => (
-          <li key={team.id}>
-            {team.equipe} - {team.supervisor}
-            <button onClick={() => handleEdit(team.id)}>Editar</button>
-            <button onClick={() => handleDelete(team.id)}>Excluir</button>
-          </li>
-        ))}
-      </ul>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          select
+          label="Eletricista Parceiro"
+          fullWidth
+          value={eletricistaParceiro}
+          onChange={(e) => handleEletricistaParceiroChange(e.target.value)}
+        >
+          {eletricistasCompletos[estado].map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
 
-      <button onClick={handleFinalize}>Finalizar Equipes</button>
-    </div>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          label="BR0 Parceiro"
+          fullWidth
+          value={br0Parceiro}
+          disabled
+        />
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <TextField
+          select
+          label="Equipe"
+          fullWidth
+          value={equipe}
+          onChange={(e) => setEquipe(e.target.value)}
+        >
+          {equipeOptionsCompleta[estado].map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <TextField
+          select
+          label="Placa Veículo"
+          fullWidth
+          value={placaVeiculo}
+          onChange={(e) => setPlacaVeiculo(e.target.value)}
+        >
+          {placasPorEstado[estado].map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Button variant="contained" color="primary" fullWidth>
+          Salvar
+        </Button>
+      </Grid>
+    </Grid>
   );
-}
+};
 
 export default CadastroEquipe;

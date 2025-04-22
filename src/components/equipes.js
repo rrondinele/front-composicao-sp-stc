@@ -1,4 +1,5 @@
-export const equipeOptionsCompleta = [
+export const equipeOptionsCompleta = {
+  SP: [
     { value: "CCE001", label: "CCE001" },
     { value: "CCE002", label: "CCE002" },
     { value: "CCE003", label: "CCE003" },
@@ -39,5 +40,42 @@ export const equipeOptionsCompleta = [
     { value: "CCE0206", label: "CCE206" },
     { value: "CCE0207", label: "CCE207" },
     { value: "CCE0208", label: "CCE208" },
-    { value: "CCE0209", label: "CCE209" },  
-  ];
+    { value: "CCE0209", label: "CCE209" }  
+  ],
+  RJ: [
+    { value: "MARCOR_01", label: "MARCOR_01" },
+    { value: "MARCOR_02", label: "MARCOR_02" },
+    { value: "MARCOR_03", label: "MARCOR_03" },
+    { value: "MARCOR_04", label: "MARCOR_04" },
+    { value: "MARCOR_05", label: "MARCOR_05" },
+    { value: "MARCOR_06", label: "MARCOR_06" },
+    { value: "MARCOR_07", label: "MARCOR_07" },
+    { value: "MARCOR_08", label: "MARCOR_08" },
+    { value: "MARCOR_09", label: "MARCOR_09" },
+    { value: "MARCOR_10", label: "MARCOR_10" },
+    { value: "MARCOR_11", label: "MARCOR_11" },
+    { value: "MARCOR_12", label: "MARCOR_12" },
+    { value: "MARCOR_13", label: "MARCOR_13" },
+    { value: "MARCOR_14", label: "MARCOR_14" },
+    { value: "MARCOR_15", label: "MARCOR_15" },
+    { value: "MARCOR_16", label: "MARCOR_16" },
+    { value: "MARCOR_17", label: "MARCOR_17" },
+    { value: "MARCOR_18", label: "MARCOR_18" },
+    { value: "MARCOR_19", label: "MARCOR_19" },
+    { value: "MARCOR_20", label: "MARCOR_20" },
+    { value: "MARGEST_01", label: "MARGEST_01" },
+    { value: "MARGEST_02", label: "MARGEST_02" },
+    { value: "MARGEST_03", label: "MARGEST_03" },
+    { value: "MARGEST_04", label: "MARGEST_04" },
+    { value: "MARLV_01", label: "MARLV_01" },
+    { value: "MARLV_02", label: "MARLV_02" },
+    { value: "MARLV_03", label: "MARLV_03" },
+    { value: "MARSKY_01", label: "MARSKY_01" },
+    { value: "MARSKY_02", label: "MARSKY_02" },
+    { value: "MARSKY_03", label: "MARSKY_03" },
+    { value: "MARSKY_04", label: "MARSKY_04" },
+    { value: "MARSKY_05", label: "MARSKY_05" },
+    { value: "MARSKY_06", label: "MARSKY_06" },
+    { value: "MARSKY_07", label: "MARSKY_07" }
+  ]
+};
