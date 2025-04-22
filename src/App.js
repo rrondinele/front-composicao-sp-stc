@@ -186,7 +186,7 @@ const handleLogin = async (e) => {
   
     setFormData({
       data_atividade: "",
-      supervisor: supervisor, // Mantém o supervisor atual
+      supervisor: supervisor,
       status: "",
       eletricista_motorista: "",
       br0_motorista: "",
@@ -197,7 +197,6 @@ const handleLogin = async (e) => {
       placa_veiculo: "",
     });
   
-    // Recarrega as listas com todas as opções disponíveis para o estado
     setEletricistaMotoristaOptions(eletricistasCompletos[estado]);
     setEletricistaParceiroOptions(eletricistasCompletos[estado]);
     setEquipeOptions(equipeOptionsCompleta[estado]);
