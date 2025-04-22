@@ -180,10 +180,6 @@ const handleLogin = async (e) => {
   };
   
   // Função para limpar o formulário
-
-  js
-  Copiar
-  Editar
   const handleClearForm = () => {
     const supervisor = formData.supervisor;
     const estado = localStorage.getItem("estado") || "SP";
