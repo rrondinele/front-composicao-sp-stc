@@ -801,9 +801,7 @@ const handleFinalizar = async () => {
         placeholder="Selecione Eletricista Motorista"
         onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_motorista")}
         value={
-          Array.isArray(eletricistaMotoristaOptions)
-            ? eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista)
-            : null
+          eletricistaMotoristaOptions.find(option => option.value === formData.eletricista_motorista) || null
         }
         styles={minimalStyles}
         className="w-full"
