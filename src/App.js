@@ -479,7 +479,10 @@ const fetchTeams = async () => {
         
         // Limpa apenas os campos que devem ser resetados
         setFormData((prevFormData) => ({
-          ...prevFormData,
+          supervisor: prevFormData.supervisor,
+          status: prevFormData.status,
+          servico: prevFormData.servico,
+          data_atividade: prevFormData.data_atividade,
           eletricista_motorista: "",
           br0_motorista: "",
           eletricista_parceiro: "",
