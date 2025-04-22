@@ -22,14 +22,17 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const estadoAtual = localStorage.getItem("estado") || "SP";
+
   const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(
     eletricistasCompletos[estadoAtual]
   );
+
   const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(
     eletricistasCompletos[estadoAtual]
   );
 
   const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta[estadoAtual] || []);
+
   const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState(placaVeiculoOptionsCompleta[estadoAtual]);
 
   const br0Mapping = br0MappingPorEstado[estadoAtual];
@@ -51,12 +54,12 @@ function App() {
 
   // Mapeamento de matrícula para nome do supervisor
   const supervisorMapping = {
-    "11101" : "11101 - RONDINELE ARAUJO CARVALHO",
+    "11101" : "011101 - RONDINELE ARAUJO CARVALHO",
     "16032" : "016032 - WAGNER AUGUSTO DA SILVA MAURO",
     "6061"  : "006061 - JULIO CESAR PEREIRA DA SILVA",
     "15540" : "015540 - EDER JORDELINO GONCALVES CAETANO",
     "18505" : "018505 - DIEGO RAFAEL DE MELO SILVA",
-    "4438"  : "00438 - JOSE OSCAR DO NASCIMENTO DE AZEVEDO",
+    "4438"  : "004438 - JOSE OSCAR DO NASCIMENTO DE AZEVEDO",
     "15843" : "015843 - HUGO PACHECO DOS SANTOS", 
     "17451" : "017451 - WESLEY PEREIRA DE SOUZA GOMES",    
     "15729" : "015729 - TIAGO DE SOUZA MATTOS"
@@ -90,7 +93,7 @@ function App() {
 
 // Função para mapear matrícula para estado
 const definirEstadoPorSupervisor = (matricula) => {
-  const supervisoresRJ = ["017451", "015843", "004438", "015729"];
+  const supervisoresRJ = ["17451", "15843", "4438", "15729"];
   return supervisoresRJ.includes(matricula) ? "RJ" : "SP";
 };
 
