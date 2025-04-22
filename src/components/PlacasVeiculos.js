@@ -1,4 +1,5 @@
-export const placaVeiculoOptionsCompleta = [
+export const placaVeiculoOptionsCompleta = {
+  SP: [
     { value: "EWF2J53", label: "EWF2J53" },
     { value: "EXS4G32", label: "EXS4G32" },
     { value: "FCY0E42", label: "FCY0E42" },
@@ -38,5 +39,45 @@ export const placaVeiculoOptionsCompleta = [
     { value: "RMI6F35", label: "RMI6F35" },
     { value: "RMG6106", label: "RMG6106" },
     { value: "TIT3D32", label: "TIT3D32" },
-    { value: "TLN1J81", label: "TLN1J81" },
-  ];
+    { value: "TLN1J81", label: "TLN1J81" }
+  ],
+  RJ: [
+    { value: "EQC2I61", label: "EQC2I61" },
+    { value: "FHO9C81", label: "FHO9C81" },
+    { value: "FHT9A91", label: "FHT9A91" },
+    { value: "GEY0E52", label: "GEY0E52" },
+    { value: "GHZ2E11", label: "GHZ2E11" },
+    { value: "GGR5H21", label: "GGR5H21" },
+    { value: "GR05H21", label: "GR05H21" },
+    { value: "RIC4C46", label: "RIC4C46" },
+    { value: "RJG5G79", label: "RJG5G79" },
+    { value: "RJU5G24", label: "RJU5G24" },
+    { value: "RJU5G79", label: "RJU5G79" },
+    { value: "RJW2E42", label: "RJW2E42" },
+    { value: "RKR5J37", label: "RKR5J37" },
+    { value: "RPP1A44", label: "RPP1A44" },
+    { value: "RPP6C30", label: "RPP6C30" },
+    { value: "RPP7F03", label: "RPP7F03" },
+    { value: "RPP9C10", label: "RPP9C10" },
+    { value: "SJI1J83", label: "SJI1J83" },
+    { value: "SJI1J84", label: "SJI1J84" },
+    { value: "SJI1J85", label: "SJI1J85" },
+    { value: "SJI2A04", label: "SJI2A04" },
+    { value: "SLV2D32", label: "SLV2D32" },
+    { value: "SSR9C32", label: "SSR9C32" },
+    { value: "STA4G82", label: "STA4G82" },
+    { value: "STG4H82", label: "STG4H82" },
+    { value: "SUF2C22", label: "SUF2C22" },
+    { value: "SUF5102", label: "SUF5102" },
+    { value: "SUF5I02", label: "SUF5I02" },
+    { value: "SUP7G73", label: "SUP7G73" },
+    { value: "SVB3B22", label: "SVB3B22" },
+    { value: "SVB4C51", label: "SVB4C51" },
+    { value: "SVK0G61", label: "SVK0G61" },
+    { value: "SVL2D32", label: "SVL2D32" },
+    { value: "SVN8G81", label: "SVN8G81" },
+    { value: "SUZ7E81", label: "SUZ7E81" },
+    { value: "TJD6D90", label: "TJD6D90" },
+    { value: "TJD6G90", label: "TJD6G90" }
+  ]
+};
