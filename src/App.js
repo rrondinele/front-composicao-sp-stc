@@ -765,13 +765,19 @@ const handleFinalizar = async () => {
 
       {/* Campo: Supervisor */}
       <Select
-        options={supervisorOptions}
+        options={supervisorOptions[estadoAtual]}
         placeholder="Selecione o(a) Supervisor(a)"
-        onChange={(selectedOption) => handleSelectChange(selectedOption, "supervisor")}
-        value={supervisorOptions.find(option => option.value === formData.supervisor) || null}
+        onChange={(selectedOption) =>
+          handleSelectChange(selectedOption, "supervisor")
+        }
+        value={
+          (supervisorOptions[estadoAtual] || []).find(
+            (option) => option.value === formData.supervisor
+          ) || null
+        }
         styles={minimalStyles}
         className="w-full"
-        isDisabled={true} // Torna o campo somente leitura
+        isDisabled={true}
       />
 
       {/* Campo: Status */}
