@@ -784,9 +784,11 @@ const handleFinalizar = async () => {
       <Select
         options={equipeOptions}
         placeholder="Selecione Equipe"
-        onChange={(selectedOption) => handleSelectChange(selectedOption, "equipe")}
+        onChange={(selectedOption) =>
+          handleSelectChange(selectedOption, "equipe")
+        }
         value={
-          Array.isArray(equipeOptions)
+          formData.equipe
             ? equipeOptions.find(option => option.value === formData.equipe)
             : null
         }
@@ -822,9 +824,11 @@ const handleFinalizar = async () => {
       <Select
         options={eletricistaParceiroOptions}
         placeholder="Selecione Eletricista Parceiro(a)"
-        onChange={(selectedOption) => handleSelectChange(selectedOption, "eletricista_parceiro")}
+        onChange={(selectedOption) =>
+          handleSelectChange(selectedOption, "eletricista_parceiro")
+        }
         value={
-          Array.isArray(eletricistaParceiroOptions)
+          formData.eletricista_parceiro
             ? eletricistaParceiroOptions.find(option => option.value === formData.eletricista_parceiro)
             : null
         }
@@ -846,8 +850,14 @@ const handleFinalizar = async () => {
       <Select
         options={servicoOptions}
         placeholder="Selecione Serviço"
-        onChange={(selectedOption) => handleSelectChange(selectedOption, "servico")}
-        value={servicoOptions.find(option => option.value === formData.servico) || null}
+        onChange={(selectedOption) =>
+          handleSelectChange(selectedOption, "servico")
+        }
+        value={
+          formData.servico
+            ? servicoOptions.find(option => option.value === formData.servico)
+            : null
+        }
         styles={minimalStyles}
         className="w-full"
         isDisabled={shouldDisableFields() || loading}
@@ -857,9 +867,11 @@ const handleFinalizar = async () => {
       <Select
         options={placaVeiculoOptions}
         placeholder="Selecione Placa"
-        onChange={(selectedOption) => handleSelectChange(selectedOption, "placa_veiculo")}
+        onChange={(selectedOption) =>
+          handleSelectChange(selectedOption, "placa_veiculo")
+        }
         value={
-          Array.isArray(placaVeiculoOptions)
+          formData.placa_veiculo
             ? placaVeiculoOptions.find(option => option.value === formData.placa_veiculo)
             : null
         }
