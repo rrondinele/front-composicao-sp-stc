@@ -493,7 +493,8 @@ const fetchTeams = async () => {
   };
 
   const handleEdit = async (team) => {
-    // 1. Cria objetos de opção para os valores atuais
+    const estado = localStorage.getItem("estado") || "SP";
+
     const currentOptions = {
       equipe: { value: team.equipe, label: team.equipe },
       motorista: { value: team.eletricista_motorista, label: team.eletricista_motorista },
