@@ -9,7 +9,7 @@ import excelIcon from "./excel.png"; // Importando o ícone excel
 import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
 import { supervisorOptions } from "./components/supervisor";
-import { eletricistasCompletos, br0Mapping } from "./components/eletricistas";
+import { eletricistasCompletos, br0MappingPorEstado } from "./components/eletricistas";
 import { equipeOptionsCompleta } from "./components/equipes";
 import { placaVeiculoOptionsCompleta } from "./components/PlacasVeiculos";
 import { statusOptions } from "./components/status";
@@ -20,6 +20,21 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Estado inicial como false
   const [loginData, setLoginData] = useState({ matricula: "", senha: "" });
   const [loading, setLoading] = useState(false);
+
+  const estadoAtual = localStorage.getItem("estado") || "SP";
+  const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(
+    eletricistasCompletos[estadoAtual]
+  );
+  const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(
+    eletricistasCompletos[estadoAtual]
+  );
+  const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta[estadoAtual]);
+  const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState(placaVeiculoOptionsCompleta[estadoAtual]);
+
+  // Mapeamento BR0 do estado atual
+  const br0Mapping = br0MappingPorEstado[estadoAtual];
+
+
   const [formData, setFormData] = useState({
     data_atividade: "",
     supervisor: "",
@@ -70,7 +85,15 @@ function App() {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
   }, [isLoggedIn]);
 
-// Função para lidar com o login
+
+// Função para mapear matrícula para estado
+const definirEstadoPorSupervisor = (matricula) => {
+  const supervisoresRJ = ["017451", "015843", "004438", "015729"];
+  return supervisoresRJ.includes(matricula) ? "RJ" : "SP";
+};
+
+
+  // Função para lidar com o login
 const handleLogin = async (e) => {
   e.preventDefault();
   setLoading(true);
@@ -81,6 +104,10 @@ const handleLogin = async (e) => {
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("userRole", response.data.user.role);
       localStorage.setItem("matricula", String(loginData.matricula));
+
+      // 🟡 AQUI: salva o estado (SP ou RJ) com base na matrícula
+      const estado = definirEstadoPorSupervisor(loginData.matricula);
+      localStorage.setItem("estado", estado);
 
       // Limpa a lista de equipes visíveis
       setTeams([]);
@@ -163,11 +190,6 @@ const handleLogin = async (e) => {
       placa_veiculo: "",
     }));
   };
-
-  const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos);
-  const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos);  
-  const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta);  
-  const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState(placaVeiculoOptionsCompleta);
 
   // Estilo minimalista para o react-select
   const minimalStyles = {

@@ -76,7 +76,7 @@ export const eletricistasCompletos = {
       { value: "017325 - WEBSTER ESTEVES SANTIAGO", label: "017325 - WEBSTER ESTEVES SANTIAGO" },
       { value: "008594 - WILLIAM OLIVEIRA DOS SANTOS", label: "008594 - WILLIAM OLIVEIRA DOS SANTOS" },
       { value: "016059 - WILLIAN CARLOS DA SILVA", label: "016059 - WILLIAN CARLOS DA SILVA" },  
-    // Adicione outros eletricistas aqui
+
   ],
   RJ: [
       { value: "015761 - ALEX SANDRO NASCIMENTO DE CASTRO", label: "015761 - ALEX SANDRO NASCIMENTO DE CASTRO" },
@@ -237,7 +237,6 @@ export const br0MappingPorEstado = {
     "017325 - WEBSTER ESTEVES SANTIAGO": "BR0459132728",
     "008594 - WILLIAM OLIVEIRA DOS SANTOS": "BR0466630348",
     "016059 - WILLIAN CARLOS DA SILVA": "BR0130153638"
-    // Adicione mais mapeamentos conforme necessário
   },
   RJ: {
     "007247 - ANDERSON ANTUNES SOARES": "BR0028551442",
