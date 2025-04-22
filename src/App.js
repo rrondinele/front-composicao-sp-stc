@@ -279,21 +279,19 @@ const handleLogin = async (e) => {
   
       // Filtra as listas de eletricistas com base nos registros do banco e na seleção atual
       if (fieldName === "eletricista_motorista") {
-        // Remove o motorista selecionado da lista de parceiros
-        const updatedParceiroOptions = eletricistasCompletos.filter(
+        const updatedParceiroOptions = eletricistasCompletos[estadoAtual].filter(
           (eletricista) =>
-            eletricista.value !== selectedOption.value && // Remove o motorista selecionado
-            !parceirosUtilizados.includes(eletricista.value) && // Remove os parceiros já cadastrados
-            !motoristasUtilizados.includes(eletricista.value) // Remove os motoristas já cadastrados
+            eletricista.value !== selectedOption.value &&
+            !parceirosUtilizados.includes(eletricista.value) &&
+            !motoristasUtilizados.includes(eletricista.value)
         );
         setEletricistaParceiroOptions(updatedParceiroOptions);
       } else if (fieldName === "eletricista_parceiro") {
-        // Remove o parceiro selecionado da lista de motoristas
-        const updatedMotoristaOptions = eletricistasCompletos.filter(
+        const updatedMotoristaOptions = eletricistasCompletos[estadoAtual].filter(
           (eletricista) =>
-            eletricista.value !== selectedOption.value && // Remove o parceiro selecionado
-            !motoristasUtilizados.includes(eletricista.value) && // Remove os motoristas já cadastrados
-            !parceirosUtilizados.includes(eletricista.value) // Remove os parceiros já cadastrados
+            eletricista.value !== selectedOption.value &&
+            !motoristasUtilizados.includes(eletricista.value) &&
+            !parceirosUtilizados.includes(eletricista.value)
         );
         setEletricistaMotoristaOptions(updatedMotoristaOptions);
       }
