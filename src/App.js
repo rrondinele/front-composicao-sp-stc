@@ -34,7 +34,6 @@ function App() {
   // Mapeamento BR0 do estado atual
   const br0Mapping = br0MappingPorEstado[estadoAtual];
 
-
   const [formData, setFormData] = useState({
     data_atividade: "",
     supervisor: "",
@@ -92,7 +91,6 @@ const definirEstadoPorSupervisor = (matricula) => {
   return supervisoresRJ.includes(matricula) ? "RJ" : "SP";
 };
 
-
   // Função para lidar com o login
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -141,10 +139,10 @@ const handleLogin = async (e) => {
       });
 
       // Reseta as opções de seleção para os valores padrão
-      setEletricistaMotoristaOptions(eletricistasCompletos);
-      setEletricistaParceiroOptions(eletricistasCompletos);
-      setEquipeOptions(equipeOptionsCompleta);
-      setPlacaVeiculoOptions(placaVeiculoOptionsCompleta);
+      setEletricistaMotoristaOptions(eletricistasCompletos[estado] || []);
+      setEletricistaParceiroOptions(eletricistasCompletos[estado] || []);
+      setEquipeOptions(equipeOptionsCompleta[estado] || []);
+      setPlacaVeiculoOptions(placaVeiculoOptionsCompleta[estado] || []);
     }
   } catch (error) {
     toast.error(error.response?.data?.message || "Erro ao fazer login");
