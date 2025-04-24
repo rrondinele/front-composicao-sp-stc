@@ -75,11 +75,14 @@ export const eletricistasCompletos = {
       { value: "008721 - WAGNER DE JESUS CAVALCANTE", label: "008721 - WAGNER DE JESUS CAVALCANTE" },
       { value: "017325 - WEBSTER ESTEVES SANTIAGO", label: "017325 - WEBSTER ESTEVES SANTIAGO" },
       { value: "008594 - WILLIAM OLIVEIRA DOS SANTOS", label: "008594 - WILLIAM OLIVEIRA DOS SANTOS" },
-      { value: "016059 - WILLIAN CARLOS DA SILVA", label: "016059 - WILLIAN CARLOS DA SILVA" },  
+      { value: "016059 - WILLIAN CARLOS DA SILVA", label: "016059 - WILLIAN CARLOS DA SILVA" }, 
 
   ],
   RJ: [
-      { value: "N/A", label: "N/A" },
+      { value: "N/A.A", label: "N/A.A" },
+      { value: "N/A.B", label: "N/A.B" },
+      { value: "N/A.C", label: "N/A.C" },
+      { value: "N/A.A", label: "N/A.D" },
       { value: "018871 - ALEX VICTORIANO ROSA", label: "018871 - ALEX VICTORIANO ROSA" },
       { value: "007247 - ANDERSON ANTUNES SOARES", label: "007247 - ANDERSON ANTUNES SOARES" },
       { value: "015763 - ANDERSON LUIZ AZEREDO DE OLIVEIRA", label: "015763 - ANDERSON LUIZ AZEREDO DE OLIVEIRA" },
