@@ -63,6 +63,9 @@ export const equipeOptionsCompleta = {
     { value: "MARCOR_18", label: "MARCOR_18" },
     { value: "MARCOR_19", label: "MARCOR_19" },
     { value: "MARCOR_20", label: "MARCOR_20" },
+    { value: "MARCOR_21", label: "MARCOR_21" },
+    { value: "MARCOR_22", label: "MARCOR_22" },
+    { value: "MARCOR_23", label: "MARCOR_23" },
     { value: "MARGEST_01", label: "MARGEST_01" },
     { value: "MARGEST_02", label: "MARGEST_02" },
     { value: "MARGEST_03", label: "MARGEST_03" },
@@ -70,12 +73,15 @@ export const equipeOptionsCompleta = {
     { value: "MARLV_01", label: "MARLV_01" },
     { value: "MARLV_02", label: "MARLV_02" },
     { value: "MARLV_03", label: "MARLV_03" },
+    { value: "MARLV_04", label: "MARLV_04" },
     { value: "MARSKY_01", label: "MARSKY_01" },
     { value: "MARSKY_02", label: "MARSKY_02" },
     { value: "MARSKY_03", label: "MARSKY_03" },
     { value: "MARSKY_04", label: "MARSKY_04" },
     { value: "MARSKY_05", label: "MARSKY_05" },
     { value: "MARSKY_06", label: "MARSKY_06" },
-    { value: "MARSKY_07", label: "MARSKY_07" }
+    { value: "MARSKY_07", label: "MARSKY_07" },
+    { value: "MARSKY_08", label: "MARSKY_08" },
+    { value: "MARSKY_09", label: "MARSKY_09" }
   ]
 };

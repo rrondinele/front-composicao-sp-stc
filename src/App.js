@@ -97,7 +97,7 @@ const definirEstadoPorSupervisor = (matricula) => {
   return supervisoresRJ.includes(matricula) ? "RJ" : "SP";
 };
 
-  // Função para lidar com o login
+// Função para lidar com o login
 const handleLogin = async (e) => {
   e.preventDefault();
   setLoading(true);
