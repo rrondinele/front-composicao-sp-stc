@@ -82,7 +82,7 @@ export const eletricistasCompletos = {
       { value: "N/A.A", label: "N/A.A" },
       { value: "N/A.B", label: "N/A.B" },
       { value: "N/A.C", label: "N/A.C" },
-      { value: "N/A.A", label: "N/A.D" },
+      { value: "N/A.D", label: "N/A.D" },
       { value: "018871 - ALEX VICTORIANO ROSA", label: "018871 - ALEX VICTORIANO ROSA" },
       { value: "007247 - ANDERSON ANTUNES SOARES", label: "007247 - ANDERSON ANTUNES SOARES" },
       { value: "015763 - ANDERSON LUIZ AZEREDO DE OLIVEIRA", label: "015763 - ANDERSON LUIZ AZEREDO DE OLIVEIRA" },
