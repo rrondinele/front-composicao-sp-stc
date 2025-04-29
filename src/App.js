@@ -52,6 +52,14 @@ function App() {
   const [teams, setTeams] = useState([]);
   const [editId, setEditId] = useState(null);
 
+  const isDataAtividadeExpirada = (dataString) => {
+    if (!dataString) return false;
+    const hoje = new Date();
+    const dataAtividade = new Date(dataString);
+    const diffEmDias = (hoje - dataAtividade) / (1000 * 60 * 60 * 24);
+    return diffEmDias > 2;
+  };
+
   // Mapeamento de matrícula para nome do supervisor
   const supervisorMapping = {
     "11101" : "011101 - RONDINELE ARAUJO CARVALHO",
@@ -883,7 +891,8 @@ const handleFinalizar = async () => {
         <button
           type="submit"
           className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
-          disabled={loading}
+          //disabled={loading}
+          disabled={loading || isDataAtividadeExpirada(formData.data_atividade)}
         >
           {loading ? "Carregando..." : editId ? "Atualizar" : "Cadastrar"}
         </button>
@@ -943,7 +952,8 @@ const handleFinalizar = async () => {
                 <button
                   onClick={() => handleEdit(team)}
                   className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-xs"
-                  disabled={loading}
+                  //disabled={loading}
+                  disabled={loading || isDataAtividadeExpirada(team.data_atividade)}
                   aria-label={`Editar equipe ${team.equipe}`}
                 >
                   Editar
@@ -951,7 +961,8 @@ const handleFinalizar = async () => {
                 <button
                   onClick={() => handleDelete(team.id)}
                   className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-xs"
-                  disabled={loading}
+                  //disabled={loading}
+                  disabled={loading || isDataAtividadeExpirada(team.data_atividade)}
                   aria-label={`Excluir equipe ${team.equipe}`}
                 >
                   Excluir
