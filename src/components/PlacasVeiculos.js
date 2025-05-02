@@ -73,10 +73,12 @@ export const placaVeiculoOptionsCompleta = {
     { value: "SVB4C51", label: "SVB4C51" },
     { value: "SVK0G61", label: "SVK0G61" },
     { value: "SVL2D32", label: "SVL2D32" },
+    { value: "SVK7B63", label: "SVK7B63" },
     { value: "SVN8G81", label: "SVN8G81" },
     { value: "UAI1C96", label: "UAI1C96" },
     { value: "TIS4C58", label: "TIS4C58" },
     { value: "TJD6G90", label: "TJD6G90" },
+    { value: "TKR5A94", label: "TKR5A94" },
     { value: "TUS4C58", label: "TUS4C58" }    
   ]
 };
