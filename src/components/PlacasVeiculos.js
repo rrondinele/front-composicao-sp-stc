@@ -79,6 +79,7 @@ export const placaVeiculoOptionsCompleta = {
     { value: "UAI1C96", label: "UAI1C96" },
     { value: "TIS4C58", label: "TIS4C58" },
     { value: "TJD6G90", label: "TJD6G90" },
+    { value: "TJI5B09", label: "TJI5B09" },
     { value: "TUS4C58", label: "TUS4C58" }    
   ]
 };
