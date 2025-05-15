@@ -57,7 +57,7 @@ function App() {
     const hoje = new Date();
     const dataAtividade = new Date(dataString);
     const diffEmDias = (hoje - dataAtividade) / (1000 * 60 * 60 * 24);
-    return diffEmDias > 2;
+    return diffEmDias > 200;
   };
 
   // Mapeamento de matrícula para nome do supervisor
