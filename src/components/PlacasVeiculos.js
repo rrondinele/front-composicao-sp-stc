@@ -62,6 +62,7 @@ export const placaVeiculoOptionsCompleta = {
     { value: "SJI1J83", label: "SJI1J83" },
     { value: "SJI1J84", label: "SJI1J84" },
     { value: "SJI1J85", label: "SJI1J85" },
+    { value: "SJI2A04", label: "SJI2A04" },
     { value: "SRW6J23", label: "SRW6J23" },  
     { value: "SRW6J25", label: "SRW6J25" }, 
     { value: "SSR9C32", label: "SSR9C32" },
@@ -77,9 +78,12 @@ export const placaVeiculoOptionsCompleta = {
     { value: "SVL2D32", label: "SVL2D32" },
     { value: "SVN8G81", label: "SVN8G81" },
     { value: "UAI1C96", label: "UAI1C96" },
+    { value: "TCW0C97", label: "TCW0C97" },
+    { value: "TCU5D82", label: "TCU5D82" },
     { value: "TIS4C58", label: "TIS4C58" },
     { value: "TJD6G90", label: "TJD6G90" },
     { value: "TJI5B09", label: "TJI5B09" },
-    { value: "TUS4C58", label: "TUS4C58" }    
+    { value: "TUS4C58", label: "TUS4C58" },  
+    { value: "TUX1E08", label: "TUX1E08" }  
   ]
 };
