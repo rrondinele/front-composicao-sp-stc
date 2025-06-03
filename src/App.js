@@ -13,7 +13,7 @@ import { eletricistasCompletos, br0MappingPorEstado } from "./components/eletric
 import { equipeOptionsCompleta } from "./components/equipes";
 import { placaVeiculoOptionsCompleta } from "./components/PlacasVeiculos";
 import { statusOptions } from "./components/status";
-import { servicoOptions } from "./components/servicos";
+import { servicoOptionsPorEstado } from "./components/servicos";
 import { Tooltip } from 'react-tooltip';
 
 function App() {
@@ -22,20 +22,22 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const estadoAtual = localStorage.getItem("estado") || "SP";
-
   const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(
     eletricistasCompletos[estadoAtual]
   );
-
   const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(
     eletricistasCompletos[estadoAtual]
   );
-
   const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta[estadoAtual] || []);
-
   const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState(placaVeiculoOptionsCompleta[estadoAtual]);
-
   const br0Mapping = br0MappingPorEstado[estadoAtual];
+
+
+  const getServicosDisponiveis = () => {
+  const estado = localStorage.getItem("estado") || "SP";
+  return servicoOptionsPorEstado[estado] || [];
+};
+
 
   const [formData, setFormData] = useState({
     data_atividade: "",
@@ -70,41 +72,74 @@ function App() {
     "4438"  : "004438 - JOSE OSCAR DO NASCIMENTO DE AZEVEDO",
     "15843" : "015843 - HUGO PACHECO DOS SANTOS", 
     "17451" : "017451 - WESLEY PEREIRA DE SOUZA GOMES",    
-    "15729" : "015729 - TIAGO DE SOUZA MATTOS"
+    "15729" : "015729 - TIAGO DE SOUZA MATTOS",
+    "18089" : "018089 - SILVIA HELENA MARIOTINI DE ALCANTARA",
+    "18273" : "018273 - JALISON NAVEGA",
+    "18274" : "018274 - MARLON SILVA PINTO",
+    "18275" : "018275 - FELIPE NATAL DIAS",
+    "18276" : "018276 - RODOLPHO GOMES MOCAIBER",
+    "18412" : "018412 - ADISON DOS SANTOS",
+    "18466" : "018466 - JOAO BATISTA FRANCISCO",
+    "18468" : "018468 - DANIEL PEIXOTO AREAS",
+    "18761" : "018761 - GELSON ERIS MOREIRA PASSOS",
+    "18575" : "018575 - MARCO ANTONIO DE NOVAES OLIVEIRA",
+    "19231" : "019231 - RAFAEL BATISTA PIASSA",
+    "19412" : "019412 - ROBSON JOSE DE QUEIROZ GUIMARAES",
+    "19485" : "019485 - RENATO SANTIAGO SILVA",
+    "19704" : "019704 - JORGE MICHAEL DE CASTRO PIRES",
+    "20116" : "020116 - WANDERSON FERREIRA DA CONCEICAO"
   };
 
   // Efeito para verificar se o usuário está logado
-  useEffect(() => {
-    // Verifica se o usuário está logado no localStorage
-    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-    setIsLoggedIn(loggedIn);
-  
-    // Se o usuário estiver logado, preencha o supervisor automaticamente
-    if (loggedIn) {
-      const userRole = localStorage.getItem("userRole");
-      const matricula = localStorage.getItem("matricula");
-  
-      if (userRole === "supervisor" && supervisorMapping[matricula]) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          supervisor: supervisorMapping[matricula],
-        }));
-      }
+useEffect(() => {
+  const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+  setIsLoggedIn(loggedIn);
+
+  if (loggedIn) {
+    const userRole = localStorage.getItem("userRole");
+    const matricula = localStorage.getItem("matricula");
+
+    if (userRole === "supervisor" && supervisorMapping[matricula]) {
+      // Define o estado baseado na matrícula do supervisor
+      const estado = definirEstadoPorSupervisor(matricula);
+      localStorage.setItem("estado", estado);
+      
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        supervisor: supervisorMapping[matricula],
+      }));
+
+      // Atualiza as opções baseadas no estado
+      setEletricistaMotoristaOptions(eletricistasCompletos[estado] || []);
+      setEletricistaParceiroOptions(eletricistasCompletos[estado] || []);
+      setEquipeOptions(equipeOptionsCompleta[estado] || []);
+      setPlacaVeiculoOptions(placaVeiculoOptionsCompleta[estado] || []);
     }
-  }, []); // Array de dependências vazio para executar apenas uma vez
+  }
+}, []);
 
   // Efeito para persistir o estado de login
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
   }, [isLoggedIn]);
 
-
 // Função para mapear matrícula para estado
 const definirEstadoPorSupervisor = (matricula) => {
   const supervisoresRJ = ["17451", "15843", "4438", "15729"];
-  return supervisoresRJ.includes(matricula) ? "RJ" : "SP";
+  const supervisoresRJB = [
+    "18089", "18273", "18274", "18275", "18276", 
+    "18412", "18466", "18468", "18761", "18575",
+    "19231", "19412", "19485", "19704", "20116"
+  ];
+  
+  if (supervisoresRJ.includes(matricula)) {
+    return "RJ";
+  } else if (supervisoresRJB.includes(matricula)) {
+    return "RJB";
+  } else {
+    return "SP";
+  }
 };
-
 // Função para lidar com o login
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -236,8 +271,6 @@ const handleLogin = async (e) => {
       border: "1px solid #e5e7eb",
     }),
   };
-
-
   // Função para validar se todos os campos estão preenchidos
   const validateForm = () => {
     const requiredFields = [
@@ -273,22 +306,18 @@ const handleLogin = async (e) => {
         servico: "N/A", // Preenche "Servico" com "N/A"
         placa_veiculo: "N/A", // Preenche "Placa" com "N/A"        
       };
-    }
-  
+    }  
     // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
     if (fieldName === "eletricista_motorista") {
       updatedFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
     } else if (fieldName === "eletricista_parceiro") {
       updatedFormData.br0_parceiro = br0Mapping[selectedOption.value] || "";
-    }
-  
+    }  
     // Atualiza o estado do formData
-    setFormData(updatedFormData);
-  
+    setFormData(updatedFormData);  
     // Busca os registros do banco para a data selecionada
     if (formData.data_atividade) {
-      const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
-  
+      const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);  
       // Extrai os eletricistas já cadastrados (motoristas e parceiros)
       const motoristasUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_motorista);
       const parceirosUtilizados = equipesCadastradas.map((equipe) => equipe.eletricista_parceiro);
@@ -313,7 +342,6 @@ const handleLogin = async (e) => {
       }
     }
   };
-
   // Adicione esta função para verificar se os campos devem estar desabilitados
   const shouldDisableFields = () => {
     return formData.status && formData.status !== "CAMPO";
@@ -856,14 +884,12 @@ const handleFinalizar = async () => {
 
       {/* Campo: Serviço */}
       <Select
-        options={servicoOptions}
+        options={getServicosDisponiveis()}
         placeholder="Selecione Serviço"
-        onChange={(selectedOption) =>
-          handleSelectChange(selectedOption, "servico")
-        }
+        onChange={(selectedOption) => handleSelectChange(selectedOption, "servico")}
         value={
           formData.servico
-            ? servicoOptions.find(option => option.value === formData.servico)
+            ? getServicosDisponiveis().find(option => option.value === formData.servico)
             : null
         }
         styles={minimalStyles}
