@@ -9,6 +9,7 @@ export const servicoOptionsPorEstado = {
   ],
   RJ: [
     { value: "AFERICAO", label: "AFERICAO" },
+    { value: "CORTE", label: "CORTE" },
     { value: "EMERGENCIA", label: "EMERGENCIA" },
     { value: "LIGACAO NOVA", label: "LIGACAO NOVA" },
     { value: "PRE-VENDA", label: "PRE-VENDA" },
