@@ -665,9 +665,9 @@ const handleFinalizar = async () => {
       "Supervisor",
       "Status",
       "Eletricista Motorista",
-      "BR0 Motorista",
+      "Matricula Distribuidora Motorista",
       "Eletricista Parceiro",
-      "BR0 Parceiro",
+      "Matricula Distribuidora Parceiro",
       "Equipe",
       "Serviço",
       "Placa Veículo",
@@ -791,11 +791,9 @@ const handleFinalizar = async () => {
 
       {/* Campo: Supervisor */}
       <Select
-        options={supervisorOptions[estadoAtual]}
+        options={supervisorOptions[estadoAtual] || []}
         placeholder="Selecione o(a) Supervisor(a)"
-        onChange={(selectedOption) =>
-          handleSelectChange(selectedOption, "supervisor")
-        }
+        onChange={(selectedOption) => handleSelectChange(selectedOption, "supervisor")}
         value={
           (supervisorOptions[estadoAtual] || []).find(
             (option) => option.value === formData.supervisor
@@ -850,7 +848,7 @@ const handleFinalizar = async () => {
       <input
         type="text"
         name="br0_motorista"
-        placeholder="BR0 Motorista"
+        placeholder="Matricula Distribuidora Motorista"
         value={formData.br0_motorista}
         readOnly
         className="w-full p-2 border rounded-md bg-gray-100"
@@ -876,7 +874,7 @@ const handleFinalizar = async () => {
       <input
         type="text"
         name="br0_parceiro"
-        placeholder="BR0 Parceiro"
+        placeholder="Matricula Distribuidora Parceiro"
         value={formData.br0_parceiro}
         readOnly
         className="w-full p-2 border rounded-md bg-gray-100"
