@@ -83,5 +83,9 @@ export const equipeOptionsCompleta = {
     { value: "MARSKY_07", label: "MARSKY_07" },
     { value: "MARSKY_08", label: "MARSKY_08" },
     { value: "MARSKY_09", label: "MARSKY_09" }
+  ],
+  RJB: [
+    { value: "CENBP", label: "CENBP" },
+    { value: "CENVR", label: "CENVR" }
   ]
 };
