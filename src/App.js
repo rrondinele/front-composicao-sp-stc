@@ -667,7 +667,7 @@ const handleFinalizar = async () => {
       "Eletricista Motorista",
       "Matricula Distribuidora Motorista",
       "Eletricista Parceiro",
-      "Matricula Distribuidora Parceiro",
+      "Matricula Distribuidora Parceiro(a)",
       "Equipe",
       "Serviço",
       "Placa Veículo",
@@ -844,7 +844,7 @@ const handleFinalizar = async () => {
       <input
         type="text"
         name="br0_motorista"
-        placeholder="Matricula Distrib. Motorista"
+        placeholder="Matricula Distribuidora Motorista"
         value={formData.br0_motorista}
         readOnly
         className="w-full p-2 border rounded-md bg-gray-100"
@@ -868,7 +868,7 @@ const handleFinalizar = async () => {
       <input
         type="text"
         name="br0_parceiro"
-        placeholder="Matricula Distrib. Parceiro(a)"
+        placeholder="Matricula Distribuidora Parceiro(a)"
         value={formData.br0_parceiro}
         readOnly
         className="w-full p-2 border rounded-md bg-gray-100"
