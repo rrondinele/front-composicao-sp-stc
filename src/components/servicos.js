@@ -16,9 +16,9 @@ export const servicoOptionsPorEstado = {
 
   ],
   RJB: [
-    { value: "AFERICAO", label: "AFERICAO" },
     { value: "CORTE", label: "CORTE" },
     { value: "LIDE", label: "LIDE" },
-    { value: "RELIGA", label: "RELIGA" }
+    { value: "RELIGA", label: "RELIGA" },
+    { value: "REN", label: "REN" }
   ]
 };
