@@ -788,7 +788,6 @@ const handleFinalizar = async () => {
         required
         className="w-full p-2 border rounded-md"
       />
-
       {/* Campo: Supervisor */}
       <Select
         options={supervisorOptions[estadoAtual] || []}
@@ -803,7 +802,6 @@ const handleFinalizar = async () => {
         className="w-full"
         isDisabled={true}
       />
-
       {/* Campo: Status */}
       <Select
         options={statusOptions}
@@ -813,7 +811,6 @@ const handleFinalizar = async () => {
         styles={minimalStyles}
         className="w-full"
       />
-
       {/* Campo: Equipe */}
       <Select
         options={equipeOptions}
@@ -843,17 +840,15 @@ const handleFinalizar = async () => {
         className="w-full"
         isDisabled={shouldDisableFields() || loading}
       />
-
       {/* Campo: BR0 Motorista */}
       <input
         type="text"
         name="br0_motorista"
-        placeholder="Matricula Distribuidora Motorista"
+        placeholder="Matricula Distrib. Motorista"
         value={formData.br0_motorista}
         readOnly
         className="w-full p-2 border rounded-md bg-gray-100"
       />
-
       {/* Campo: Eletricista Parceiro */}
       <Select
         options={eletricistaParceiroOptions}
@@ -869,17 +864,15 @@ const handleFinalizar = async () => {
         styles={minimalStyles}
         className="w-full"
       />
-
       {/* Campo: BR0 Parceiro */}
       <input
         type="text"
         name="br0_parceiro"
-        placeholder="Matricula Distribuidora Parceiro"
+        placeholder="Matricula Distrib. Parceiro(a)"
         value={formData.br0_parceiro}
         readOnly
         className="w-full p-2 border rounded-md bg-gray-100"
       />
-
       {/* Campo: Serviço */}
       <Select
         options={getServicosDisponiveis()}
