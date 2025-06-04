@@ -153,6 +153,7 @@ export const equipeOptionsCompleta = {
     { value: "VRCGDL002", label: "VRCGDL002" },
     { value: "VRCGDL003", label: "VRCGDL003" },
     { value: "VRCGDL004", label: "VRCGDL004" },
+    { value: "VRCGDL005", label: "VRCGDL005" },
     { value: "VRCGDL006", label: "VRCGDL006" },
     { value: "VRCGDL008", label: "VRCGDL008" },
     { value: "VRCGDL009", label: "VRCGDL009" },
