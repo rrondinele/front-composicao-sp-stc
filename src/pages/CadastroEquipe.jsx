@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
-
 // Dentro do JSX
 <Link to="/painel" className="text-blue-600 underline text-sm ml-2">
   Ir para o Painel de Absenteísmo
 </Link>
-
-
-
-
 
 import React, { useState,useEffect } from "react";
 import axios from "axios";
