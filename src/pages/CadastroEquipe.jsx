@@ -752,6 +752,15 @@ const handleFinalizar = async () => {
               Clique Aqui
             </a>
           </p>
+           {/* 🔗 Link público para o painel */}
+          <p className="text-center mt-4">
+            <Link
+              to="/painel"
+              className="text-blue-400 hover:underline text-sm"
+            >
+              Ir para o Painel de Absenteísmo (sem login)
+            </Link>
+          </p>
           <ToastContainer />
         </div>
       </div>
