@@ -774,9 +774,11 @@ const handleFinalizar = async () => {
         Composição de Equipes
       </h1>
       <div className="flex justify-between mt-4 mb-6">
+      {/*
       <Link to="/painel" className="text-blue-600 underline text-sm mb-4 inline-block">
         Ir para o Painel de Absenteísmo
       </Link>
+      */}
       
   {/* Botão Limpar (extremo esquerdo) */}
   <button
