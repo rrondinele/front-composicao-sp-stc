@@ -18,12 +18,18 @@ import clearIcon from "../clear.png";
 import excelIcon from "../excel.png";
 import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
-import { supervisorOptions } from "./components/supervisor";
-import { eletricistasCompletos, br0MappingPorEstado } from "./components/eletricistas";
-import { equipeOptionsCompleta } from "./components/equipes";
-import { placaVeiculoOptionsCompleta } from "./components/PlacasVeiculos";
-import { statusOptions } from "./components/status";
-import { servicoOptionsPorEstado } from "./components/servicos";
+//import { supervisorOptions } from "./components/supervisor";
+import { supervisorOptions } from "../components/supervisor";
+//import { eletricistasCompletos, br0MappingPorEstado } from "./components/eletricistas";
+import { eletricistasCompletos, br0MappingPorEstado } from "../components/eletricistas";
+//import { equipeOptionsCompleta } from "./components/equipes";
+import { equipeOptionsCompleta } from "../components/equipes";
+//import { placaVeiculoOptionsCompleta } from "./components/PlacasVeiculos";
+import { placaVeiculoOptionsCompleta } from "../components/PlacasVeiculos";
+//import { statusOptions } from "./components/status";
+import { statusOptions } from "../components/status";
+//import { servicoOptionsPorEstado } from "./components/servicos";
+import { servicoOptionsPorEstado } from "../components/servicos";
 import { Tooltip } from 'react-tooltip';
 
 function App() {
