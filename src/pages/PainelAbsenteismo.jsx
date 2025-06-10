@@ -22,7 +22,7 @@ export default function PainelAbsenteismo() {
   useEffect(() => {
     async function fetchDados() {
       try {
-        const res = await fetch(`${BASE_URL}/teams?data=${data}`);
+        const res = await fetch(`${BASE_URL}/teams/finalizados?data=${data}`);
         const json = await res.json();
         setDados(json);
       } catch (err) {
