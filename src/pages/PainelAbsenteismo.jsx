@@ -1,8 +1,4 @@
-<Link to="/" className="text-blue-600 underline text-sm mb-4 inline-block">
-  ← Voltar para Cadastro
-</Link>
-
-
+// Corrigido: todos os imports no topo
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
