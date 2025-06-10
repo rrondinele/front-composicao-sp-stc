@@ -1,9 +1,4 @@
 import { Link } from "react-router-dom";
-// Dentro do JSX
-<Link to="/painel" className="text-blue-600 underline text-sm ml-2">
-  Ir para o Painel de Absenteísmo
-</Link>
-
 import React, { useState,useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
@@ -770,6 +765,10 @@ const handleFinalizar = async () => {
         Composição de Equipes
       </h1>
       <div className="flex justify-between mt-4 mb-6">
+        <Link to="/painel" className="text-blue-600 underline text-sm mb-4 inline-block">
+        Ir para o Painel de Absenteísmo
+      </Link>
+      
   {/* Botão Limpar (extremo esquerdo) */}
   <button
     data-tooltip-id="clear-tooltip"
