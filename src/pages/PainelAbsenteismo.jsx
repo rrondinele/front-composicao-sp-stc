@@ -120,12 +120,13 @@ export default function PainelAbsenteismo() {
             ) : (
               dados.map((item, index) => (
                 <tr key={index}>
-                  <td className="border px-2 py-1">{item.supervisor}</td>
+                  {/*<td className="border px-2 py-1">{item.supervisor}</td>*/}
+                  <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.supervisor}</td>
                   <td className="border px-2 py-1">{item.equipe}</td>
                   {/*<td className="border px-2 py-1">{item.eletricista_motorista}</td>*/}
-                  <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
-                  {item.eletricista_motorista}</td>
-                  <td className="border px-2 py-1">{item.eletricista_parceiro}</td>
+                  <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_motorista}</td>
+                  <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_parceiro}</td>
+                  {/*<td className="border px-2 py-1">{item.eletricista_parceiro}</td>*/}
                   <td className="border px-2 py-1">{item.servico}</td>
                   <td className="border px-2 py-1">{item.placa_veiculo}</td>
                   <td className={`border px-2 py-1 text-left font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
