@@ -101,10 +101,10 @@ export default function PainelAbsenteismo() {
         <table className="min-w-[1500px] bg-white border rounded-lg">
           <thead>
             <tr className="bg-gray-200 text-gray-700 text-xs">
-              <th className="p-2 border whitespace-nowrap text-left">Supervisor(a)</th>
+              <th className="p-2 border whitespace-nowrap text-left">Supervisor (a)</th>
               <th className="p-2 border whitespace-nowrap text-left">Equipe</th>
               <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th>
-              <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro(a)</th>
+              <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro (a)</th>
               <th className="p-2 border whitespace-nowrap text-left">Serviço</th>
               <th className="p-2 border whitespace-nowrap text-left">Placa</th>
               <th className="p-2 border whitespace-nowrap text-left">Status</th>
@@ -122,11 +122,13 @@ export default function PainelAbsenteismo() {
                 <tr key={index}>
                   <td className="border px-2 py-1">{item.supervisor}</td>
                   <td className="border px-2 py-1">{item.equipe}</td>
-                  <td className="border px-2 py-1">{item.eletricista_motorista}</td>
+                  {/*<td className="border px-2 py-1">{item.eletricista_motorista}</td>*/}
+                  <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
+                  {item.eletricista_motorista}</td>
                   <td className="border px-2 py-1">{item.eletricista_parceiro}</td>
                   <td className="border px-2 py-1">{item.servico}</td>
                   <td className="border px-2 py-1">{item.placa_veiculo}</td>
-                  <td className={`border px-2 py-1 text-center font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
+                  <td className={`border px-2 py-1 text-left font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
                     {item.status}
                   </td>
                 </tr>
