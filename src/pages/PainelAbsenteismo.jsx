@@ -97,11 +97,11 @@ export default function PainelAbsenteismo() {
         </motion.div>
       </div>
 
-      <div className="overflow-x-auto mt-3">
-        <div className="max-h-[500px] overflow-y-auto"></div>
-          <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
+      <div className="mt-3 w-full max-w-[1800px] mx-auto">
+        <div className="overflow-x-auto shadow-sm border rounded-lg">
+          <table className="min-w-full bg-white">
             <thead>
-              <tr className="bg-gray-200 text-gray-700 text-xs sticky top-0">
+              <tr className="bg-gray-200 text-gray-700 text-xs sticky top-0 z-10">
                 <th className="p-2 border whitespace-nowrap text-left">Supervisor (a)</th>
                 <th className="p-2 border whitespace-nowrap text-left">Equipe</th>
                 <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th>
@@ -111,31 +111,34 @@ export default function PainelAbsenteismo() {
                 <th className="p-2 border whitespace-nowrap text-left">Status</th>
               </tr>
             </thead>
-            <tbody className="text-xs">
-              {dados.length === 0 ? (
-                <tr>
-                  <td colSpan="7" className="text-center py-4 text-gray-500">
-                    Nenhuma equipe encontrada.
-                  </td>
-                </tr>
-              ) : (
-                dados.map((item, index) => (
-                  <tr key={index}>
-                    <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.supervisor}</td>
-                    <td className="p-2 border whitespace-nowrap">{item.equipe}</td>
-                    <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_motorista}</td>
-                    <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_parceiro}</td>
-                    <td className="p-2 border whitespace-nowrap">{item.servico}</td>
-                    <td className="p-2 border whitespace-nowrap">{item.placa_veiculo}</td>
-                    <td className={`border px-2 py-1 text-left font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
-                      {item.status}
+            <div className="block max-h-[500px] overflow-y-auto"> {/* Scroll vertical aqui */}
+              <tbody className="text-xs block"> {/* Adicione block para funcionar com a div pai */}
+                {dados.length === 0 ? (
+                  <tr className="block">
+                    <td colSpan="7" className="text-center py-4 text-gray-500 block">
+                      Nenhuma equipe encontrada.
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
+                ) : (
+                  dados.map((item, index) => (
+                    <tr key={index} className="block">
+                      <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px] block">{item.supervisor}</td>
+                      <td className="p-2 border whitespace-nowrap block">{item.equipe}</td>
+                      <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px] block">{item.eletricista_motorista}</td>
+                      <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px] block">{item.eletricista_parceiro}</td>
+                      <td className="p-2 border whitespace-nowrap block">{item.servico}</td>
+                      <td className="p-2 border whitespace-nowrap block">{item.placa_veiculo}</td>
+                      <td className={`p-2 border whitespace-nowrap text-left font-semibold rounded block ${statusColors[item.status] || statusColors.OUTRO}`}>
+                        {item.status}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </div>
           </table>
         </div>
+      </div>
 
       <button
         onClick={handleDownload}
