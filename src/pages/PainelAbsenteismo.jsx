@@ -99,7 +99,7 @@ export default function PainelAbsenteismo() {
 
       <div className="mt-3 w-full max-w-[1800px] mx-auto">
         <div className="overflow-x-auto shadow-sm border rounded-lg">
-          <div className="max-h-[600px] overflow-y-auto"> {/* Scroll vertical externo */}
+          <div className="max-h-[650px] overflow-y-auto"> {/* Scroll vertical externo */}
             <table className="min-w-full bg-white">
               <thead className="sticky top-0 z-10"> {/* Cabeçalho fixo */}
                 <tr className="bg-gray-200 text-gray-700 text-xs">
