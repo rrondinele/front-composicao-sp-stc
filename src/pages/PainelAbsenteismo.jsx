@@ -97,49 +97,45 @@ export default function PainelAbsenteismo() {
         </motion.div>
       </div>
 
-      {/*<div className="mt-3 w-full max-w-[1800px] mx-auto overflow-x-auto">*/}
       <div className="overflow-x-auto mt-3">
-        {/*<table className="min-w-[1500px] bg-white border rounded-lg">*/}
-        <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
-          <thead>
-            <tr className="bg-gray-200 text-gray-700 text-xs">
-              <th className="p-2 border whitespace-nowrap text-left">Supervisor (a)</th>
-              <th className="p-2 border whitespace-nowrap text-left">Equipe</th>
-              <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th>
-              <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro (a)</th>
-              <th className="p-2 border whitespace-nowrap text-left">Serviço</th>
-              <th className="p-2 border whitespace-nowrap text-left">Placa</th>
-              <th className="p-2 border whitespace-nowrap text-left">Status</th>
-            </tr>
-          </thead>
-          <tbody className="text-xs">
-            {dados.length === 0 ? (
-              <tr>
-                <td colSpan="7" className="text-center py-4 text-gray-500">
-                  Nenhuma equipe encontrada.
-                </td>
+        <div className="max-h-[500px] overflow-y-auto"></div>
+          <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
+            <thead>
+              <tr className="bg-gray-200 text-gray-700 text-xs sticky top-0">
+                <th className="p-2 border whitespace-nowrap text-left">Supervisor (a)</th>
+                <th className="p-2 border whitespace-nowrap text-left">Equipe</th>
+                <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th>
+                <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro (a)</th>
+                <th className="p-2 border whitespace-nowrap text-left">Serviço</th>
+                <th className="p-2 border whitespace-nowrap text-left">Placa</th>
+                <th className="p-2 border whitespace-nowrap text-left">Status</th>
               </tr>
-            ) : (
-              dados.map((item, index) => (
-                <tr key={index}>
-                  <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.supervisor}</td>
-                  {/*<td className="border px-2 py-1">{item.equipe}</td>*/}
-                  <td className="p-2 border whitespace-nowrap">{item.equipe}</td>
-                  <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_motorista}</td>
-                  <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_parceiro}</td>
-                  {/*<td className="border px-2 py-1">{item.servico}</td>*/}
-                  <td className="p-2 border whitespace-nowrap">{item.servico}</td>
-                  {/*<td className="border px-2 py-1">{item.placa_veiculo}</td>*/}
-                  <td className="p-2 border whitespace-nowrap">{item.placa_veiculo}</td>
-                  <td className={`border px-2 py-1 text-left font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
-                    {item.status}
+            </thead>
+            <tbody className="text-xs">
+              {dados.length === 0 ? (
+                <tr>
+                  <td colSpan="7" className="text-center py-4 text-gray-500">
+                    Nenhuma equipe encontrada.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              ) : (
+                dados.map((item, index) => (
+                  <tr key={index}>
+                    <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.supervisor}</td>
+                    <td className="p-2 border whitespace-nowrap">{item.equipe}</td>
+                    <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_motorista}</td>
+                    <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_parceiro}</td>
+                    <td className="p-2 border whitespace-nowrap">{item.servico}</td>
+                    <td className="p-2 border whitespace-nowrap">{item.placa_veiculo}</td>
+                    <td className={`border px-2 py-1 text-left font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
+                      {item.status}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
       <button
         onClick={handleDownload}
