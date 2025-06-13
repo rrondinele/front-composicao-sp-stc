@@ -97,8 +97,10 @@ export default function PainelAbsenteismo() {
         </motion.div>
       </div>
 
-      <div className="mt-3 w-full max-w-[1800px] mx-auto overflow-x-auto">
-        <table className="min-w-[1500px] bg-white border rounded-lg">
+      {/*<div className="mt-3 w-full max-w-[1800px] mx-auto overflow-x-auto">*/}
+      <div className="overflow-x-auto mt-3">
+        {/*<table className="min-w-[1500px] bg-white border rounded-lg">*/}
+        <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
           <thead>
             <tr className="bg-gray-200 text-gray-700 text-xs">
               <th className="p-2 border whitespace-nowrap text-left">Supervisor (a)</th>
@@ -120,15 +122,15 @@ export default function PainelAbsenteismo() {
             ) : (
               dados.map((item, index) => (
                 <tr key={index}>
-                  {/*<td className="border px-2 py-1">{item.supervisor}</td>*/}
                   <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.supervisor}</td>
-                  <td className="border px-2 py-1">{item.equipe}</td>
-                  {/*<td className="border px-2 py-1">{item.eletricista_motorista}</td>*/}
+                  {/*<td className="border px-2 py-1">{item.equipe}</td>*/}
+                  <td className="p-2 border whitespace-nowrap">{item.equipe}</td>
                   <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_motorista}</td>
                   <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">{item.eletricista_parceiro}</td>
-                  {/*<td className="border px-2 py-1">{item.eletricista_parceiro}</td>*/}
-                  <td className="border px-2 py-1">{item.servico}</td>
-                  <td className="border px-2 py-1">{item.placa_veiculo}</td>
+                  {/*<td className="border px-2 py-1">{item.servico}</td>*/}
+                  <td className="p-2 border whitespace-nowrap">{item.servico}</td>
+                  {/*<td className="border px-2 py-1">{item.placa_veiculo}</td>*/}
+                  <td className="p-2 border whitespace-nowrap">{item.placa_veiculo}</td>
                   <td className={`border px-2 py-1 text-left font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
                     {item.status}
                   </td>
