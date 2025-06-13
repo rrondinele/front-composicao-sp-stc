@@ -123,7 +123,7 @@ export default function PainelAbsenteismo() {
                 ) : (
                   dados.map((item, index) => (
                     <tr key={index}>
-                      <td className="p-2 border whitespace-nowrap">{item.data}</td>
+                      <td className="p-2 border whitespace-nowrap">{item.data_atividade}</td>
                       <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
                         {item.supervisor}
                       </td>
