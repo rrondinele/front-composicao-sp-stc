@@ -97,6 +97,20 @@ export default function PainelAbsenteismo() {
         </motion.div>
       </div>
 
+      <div className="overflow-x-auto mt-3">
+        <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
+          <thead>
+            <tr className="bg-gray-200 text-gray-700 text-xs">
+              <th className="p-2 border whitespace-nowrap text-left">Supervisor(a)</th>
+              <th className="p-2 border whitespace-nowrap text-left">Equipe</th>
+              <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th>
+              <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro(a)</th>
+              <th className="p-2 border whitespace-nowrap text-left">Serviço</th>
+              <th className="p-2 border whitespace-nowrap text-left">Placa</th>
+              <th className="p-2 border whitespace-nowrap text-left">Status</th>
+            </tr>
+          </thead>
+{/*
       <div className="overflow-x-auto mb-4">
         <table className="min-w-full border rounded-lg">
           <thead className="bg-gray-100">
@@ -109,7 +123,7 @@ export default function PainelAbsenteismo() {
               <th className="p-2 border">Placa</th>
               <th className="p-2 border">Status</th>
             </tr>
-          </thead>
+          </thead>*/}
           <tbody className="text-xs">
             {dados.length === 0 ? (
               <tr>
