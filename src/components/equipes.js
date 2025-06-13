@@ -92,6 +92,7 @@ export const equipeOptionsCompleta = {
     { value: "BPCGDC004", label: "BPCGDC004" },
     { value: "BPCGDC005", label: "BPCGDC005" },
     { value: "BPCGDC006", label: "BPCGDC006" },
+    { value: "BPCGDC007", label: "BPCGDC007" },
     { value: "BPCGDC008", label: "BPCGDC008" },
     { value: "BPCGDC009", label: "BPCGDC009" },
     { value: "BPCGDC010", label: "BPCGDC010" },
