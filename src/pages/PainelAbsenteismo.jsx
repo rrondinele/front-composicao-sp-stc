@@ -97,57 +97,45 @@ export default function PainelAbsenteismo() {
         </motion.div>
       </div>
 
-      <div className="overflow-x-auto mt-3">
-        <table className="min-w-full bg-white border rounded-lg" style={{ tableLayout: 'auto' }}>
-          <thead>
-            <tr className="bg-gray-200 text-gray-700 text-xs">
-              <th className="p-2 border whitespace-nowrap text-left">Supervisor(a)</th>
-              <th className="p-2 border whitespace-nowrap text-left">Equipe</th>
-              <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th>
-              <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro(a)</th>
-              <th className="p-2 border whitespace-nowrap text-left">Serviço</th>
-              <th className="p-2 border whitespace-nowrap text-left">Placa</th>
-              <th className="p-2 border whitespace-nowrap text-left">Status</th>
-            </tr>
-          </thead>
-{/*
-      <div className="overflow-x-auto mb-4">
-        <table className="min-w-full border rounded-lg">
-          <thead className="bg-gray-100">
-            <tr className="text-sm text-gray-600">
-              <th className="p-2 border">Supervisor</th>
-              <th className="p-2 border">Equipe</th>
-              <th className="p-2 border">Motorista</th>
-              <th className="p-2 border">Parceiro</th>
-              <th className="p-2 border">Serviço</th>
-              <th className="p-2 border">Placa</th>
-              <th className="p-2 border">Status</th>
-            </tr>
-          </thead>*/}
-          <tbody className="text-xs">
-            {dados.length === 0 ? (
-              <tr>
-                <td colSpan="7" className="text-center py-4 text-gray-500">
-                  Nenhuma equipe encontrada.
-                </td>
+      <div className="mt-3 w-full max-w-[1800px] mx-auto">
+        <div className="overflow-x-auto shadow-sm border rounded-lg">
+          <table className="min-w-[1500px] bg-white">
+            <thead>
+              <tr className="bg-gray-200 text-gray-700 text-sm">
+                <th className="p-3 border whitespace-nowrap text-left">Supervisor(a)</th>
+                <th className="p-3 border whitespace-nowrap text-left">Equipe</th>
+                <th className="p-3 border whitespace-nowrap text-left">Eletricista Motorista</th>
+                <th className="p-3 border whitespace-nowrap text-left">Eletricista Parceiro(a)</th>
+                <th className="p-3 border whitespace-nowrap text-left">Serviço</th>
+                <th className="p-3 border whitespace-nowrap text-left">Placa</th>
+                <th className="p-3 border whitespace-nowrap text-left">Status</th>
               </tr>
-            ) : (
-              dados.map((item, index) => (
-                <tr key={index}>
-                  <td className="border px-2 py-1">{item.supervisor}</td>
-                  <td className="border px-2 py-1">{item.equipe}</td>
-                  <td className="border px-2 py-1">{item.eletricista_motorista}</td>
-                  <td className="border px-2 py-1">{item.eletricista_parceiro}</td>
-                  <td className="border px-2 py-1">{item.servico}</td>
-                  <td className="border px-2 py-1">{item.placa_veiculo}</td>
-                  <td className={`border px-2 py-1 text-center font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
-                    {item.status}
+            </thead>
+            <tbody className="text-sm">
+              {dados.length === 0 ? (
+                <tr>
+                  <td colSpan="7" className="text-center py-4 text-gray-500">
+                    Nenhuma equipe encontrada.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                dados.map((item, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="border p-3">{item.supervisor}</td>
+                    <td className="border p-3">{item.equipe}</td>
+                    <td className="border p-3">{item.eletricista_motorista}</td>
+                    <td className="border p-3">{item.eletricista_parceiro}</td>
+                    <td className="border p-3">{item.servico}</td>
+                    <td className="border p-3">{item.placa_veiculo}</td>
+                    <td className={`border p-3 text-center font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
+                      {item.status}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <button
