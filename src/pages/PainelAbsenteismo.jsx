@@ -91,6 +91,27 @@ export default function PainelAbsenteismo() {
 
       <h1 className="text-3xl font-semibold text-gray-800 text-center mb-6">Painel de Absenteísmo</h1>
 
+      <header className="bg-white shadow mb-6">
+        <div className="w-full max-w-[1700px] mx-auto px-6 py-4 flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+              <Activity className="w-6 h-6 text-yellow-500" />
+              Painel de Absenteísmo
+            </h1>
+            <p className="text-sm text-gray-500">Acompanhamento diário de equipes e ausências</p>
+          </div>
+          <div>
+            <button
+              onClick={handleDownload}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm"
+            >
+              <UserX className="w-4 h-4" />
+              Exportar Excel
+            </button>
+          </div>
+        </div>
+      </header>
+
       <div className="flex justify-between items-center gap-4 mb-6">
         <input
           type="date"
@@ -139,7 +160,7 @@ export default function PainelAbsenteismo() {
         className="overflow-x-auto shadow-md border border-gray-100 rounded bg-gradient-to-br from-white to-gray-50"
       >
         <div className="max-h-[600px] overflow-y-auto">
-          <table className="min-w-full text-[12px] text-gray-800">
+          <table className="min-w-full text-[11.5px] text-gray-800">
             <thead className="sticky top-0 z-10 bg-gray-100 text-gray-600 uppercase text-[11px] tracking-wide">
               <tr>
                 {[
@@ -208,13 +229,15 @@ export default function PainelAbsenteismo() {
           </table>
         </div>
       </motion.div>
-
+      {/*
       <button
         onClick={handleDownload}
         className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
       >
         Exportar Excel
       </button>
+      */}
+
     </div>
   );
 }
