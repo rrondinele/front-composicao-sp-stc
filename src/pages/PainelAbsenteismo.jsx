@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import { MetricCard } from '../components/tMetrics';
+import { Users, UserX, Activity } from 'lucide-react';
 
 const BASE_URL = "https://composicao-sp-soc.onrender.com";
 
@@ -11,11 +13,12 @@ const statusColors = {
   OUTRO: "bg-gray-100 text-gray-800",
 };
 
+
 export default function PainelAbsenteismo() {
   const [data, setData] = useState(format(new Date(), "yyyy-MM-dd"));
   const [dados, setDados] = useState([]);
   const [absenteismo, setAbsenteismo] = useState({ total: 0, completas: 0, ausentes: 0, percentual: "0" });
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
 
   useEffect(() => {
     async function fetchDados() {
@@ -49,28 +52,36 @@ export default function PainelAbsenteismo() {
     link.click();
   };
 
-  const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
     }
     setSortConfig({ key, direction });
   };
 
-  const sortedDados = [...dados].sort((a, b) => {
-    if (!sortConfig.key) return 0;
+  const sortedData = React.useMemo(() => {
+    if (!sortConfig.key) return dados;
 
-    const aValue = a[sortConfig.key] ? a[sortConfig.key].toString().toLowerCase() : "";
-    const bValue = b[sortConfig.key] ? b[sortConfig.key].toString().toLowerCase() : "";
+    return [...dados].sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? -1 : 1;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+  }, [dados, sortConfig]);
 
-    if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
-    if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
-    return 0;
-  });
-
-  const renderSortIcon = (key) => {
+  const getSortIndicator = (key) => {
     if (sortConfig.key !== key) return null;
-    return sortConfig.direction === "asc" ? "▲" : "▼";
+    return sortConfig.direction === 'ascending' ? '↑' : '↓';
+  };
+
+  const getSortClass = (key) => {
+    if (sortConfig.key !== key) return '';
+    return sortConfig.direction === 'ascending' ? 'sort-asc' : 'sort-desc';
   };
 
   return (
@@ -89,34 +100,37 @@ export default function PainelAbsenteismo() {
           className="border rounded-md px-3 py-2 text-sm"
         />
       </div>
+  
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <MetricCard
+          title="Equipes"
+          value={absenteismo.completas}
+          icon={<Users />} // Exemplo com ícone de usuários (substitua pelo ícone adequado)
+          iconBg="bg-green-50"
+          iconColor="text-green-500"
+        >
+          <span className="text-gray-500 text-xs">Equipes completas</span>
+        </MetricCard>
 
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <motion.div
-          className="bg-green-100 p-4 rounded-lg text-center shadow"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <MetricCard
+          title="Ausências"
+          value={absenteismo.ausentes}
+          icon={<UserX />} // Ícone de usuário com X (substitua conforme sua biblioteca)
+          iconBg="bg-red-50"
+          iconColor="text-red-500"
         >
-          <p className="text-sm text-gray-600">Equipes</p>
-          <h2 className="text-2xl font-bold text-green-800">{absenteismo.completas}</h2>
-        </motion.div>
-        <motion.div
-          className="bg-red-100 p-4 rounded-lg text-center shadow"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          <span className="text-gray-500 text-xs">Colaboradores ausentes</span>
+        </MetricCard>
+
+        <MetricCard
+          title="Absenteísmo"
+          value={`${absenteismo.percentual}%`}
+          icon={<Activity />} // Ícone de atividade/gráfico
+          iconBg="bg-yellow-50"
+          iconColor="text-yellow-500"
         >
-          <p className="text-sm text-gray-600">Ausências</p>
-          <h2 className="text-2xl font-bold text-red-800">{absenteismo.ausentes}</h2>
-        </motion.div>
-        <motion.div
-          className="bg-yellow-100 p-4 rounded-lg text-center shadow"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <p className="text-sm text-gray-600">% Absenteísmo</p>
-          <h2 className="text-2xl font-bold text-yellow-800">{absenteismo.percentual}%</h2>
-        </motion.div>
+          <span className="text-gray-500 text-xs">Percentual total</span>
+        </MetricCard>
       </div>
 
       <div className="mt-3 w-full max-w-[1800px] mx-auto">
@@ -125,66 +139,66 @@ export default function PainelAbsenteismo() {
             <table className="min-w-full bg-white">
               <thead className="sticky top-0 z-10">
                 <tr className="bg-gray-200 text-gray-700 text-xs">
-                  <th
-                    onClick={() => handleSort("data_atividade")}
-                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  <th 
+                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('data_atividade')}`}
+                    onClick={() => requestSort('data_atividade')}
                   >
-                    Data {renderSortIcon("data_atividade")}
+                    Data {getSortIndicator('data_atividade')}
                   </th>
-                  <th
-                    onClick={() => handleSort("supervisor")}
-                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  <th 
+                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('supervisor')}`}
+                    onClick={() => requestSort('supervisor')}
                   >
-                    Supervisor (a) {renderSortIcon("supervisor")}
+                    Supervisor (a) {getSortIndicator('supervisor')}
                   </th>
-                  <th
-                    onClick={() => handleSort("equipe")}
-                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  <th 
+                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('equipe')}`}
+                    onClick={() => requestSort('equipe')}
                   >
-                    Equipe {renderSortIcon("equipe")}
+                    Equipe {getSortIndicator('equipe')}
                   </th>
-                  <th
-                    onClick={() => handleSort("eletricista_motorista")}
-                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  <th 
+                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('eletricista_motorista')}`}
+                    onClick={() => requestSort('eletricista_motorista')}
                   >
-                    Eletricista Motorista {renderSortIcon("eletricista_motorista")}
+                    Eletricista Motorista {getSortIndicator('eletricista_motorista')}
                   </th>
-                  <th
-                    onClick={() => handleSort("eletricista_parceiro")}
-                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  <th 
+                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('eletricista_parceiro')}`}
+                    onClick={() => requestSort('eletricista_parceiro')}
                   >
-                    Eletricista Parceiro (a) {renderSortIcon("eletricista_parceiro")}
+                    Eletricista Parceiro (a) {getSortIndicator('eletricista_parceiro')}
                   </th>
-                  <th
-                    onClick={() => handleSort("servico")}
-                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  <th 
+                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('servico')}`}
+                    onClick={() => requestSort('servico')}
                   >
-                    Serviço {renderSortIcon("servico")}
+                    Serviço {getSortIndicator('servico')}
                   </th>
-                  <th
-                    onClick={() => handleSort("placa_veiculo")}
-                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  <th 
+                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('placa_veiculo')}`}
+                    onClick={() => requestSort('placa_veiculo')}
                   >
-                    Placa {renderSortIcon("placa_veiculo")}
+                    Placa {getSortIndicator('placa_veiculo')}
                   </th>
-                  <th
-                    onClick={() => handleSort("status")}
-                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  <th 
+                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('status')}`}
+                    onClick={() => requestSort('status')}
                   >
-                    Status {renderSortIcon("status")}
+                    Status {getSortIndicator('status')}
                   </th>
                 </tr>
               </thead>
               <tbody className="text-xs">
-                {sortedDados.length === 0 ? (
+                {sortedData.length === 0 ? (
                   <tr>
                     <td colSpan="8" className="text-center py-4 text-gray-500">
                       Nenhuma equipe encontrada.
                     </td>
                   </tr>
                 ) : (
-                  sortedDados.map((item, index) => (
-                    <tr key={index}>
+                  sortedData.map((item, index) => (
+                    <tr key={index} className="hover:bg-gray-50">
                       <td className="p-2 border whitespace-nowrap">{item.data_atividade}</td>
                       <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
                         {item.supervisor}
@@ -198,11 +212,7 @@ export default function PainelAbsenteismo() {
                       </td>
                       <td className="p-2 border whitespace-nowrap">{item.servico}</td>
                       <td className="p-2 border whitespace-nowrap">{item.placa_veiculo}</td>
-                      <td
-                        className={`p-2 border whitespace-nowrap text-left font-semibold rounded ${
-                          statusColors[item.status] || statusColors.OUTRO
-                        }`}
-                      >
+                      <td className={`p-2 border whitespace-nowrap text-left font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
                         {item.status}
                       </td>
                     </tr>
@@ -216,10 +226,33 @@ export default function PainelAbsenteismo() {
 
       <button
         onClick={handleDownload}
-        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
       >
         Baixar Excel
       </button>
+
+      <style jsx>{`
+        .sort-asc {
+          background-color: #e5e7eb;
+          position: relative;
+        }
+        .sort-asc::after {
+          content: "↑";
+          margin-left: 5px;
+          position: absolute;
+          right: 8px;
+        }
+        .sort-desc {
+          background-color: #e5e7eb;
+          position: relative;
+        }
+        .sort-desc::after {
+          content: "↓";
+          margin-left: 5px;
+          position: absolute;
+          right: 8px;
+        }
+      `}</style>
     </div>
   );
 }
