@@ -807,12 +807,14 @@ const handleFinalizar = async () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
         <input
-        type="date"
-        name="data_atividade"
-        value={formData.data_atividade}
-        onChange={handleDateChange} 
-        required
-        className="w-full p-2 border rounded-md"
+          type="date"
+          name="data_atividade"
+          value={formData.data_atividade}
+          onChange={handleDateChange}
+          required
+          max={format(new Date(), "yyyy-MM-dd")}
+          onKeyDown={(e) => e.preventDefault()}
+          className="w-full p-2 border rounded-md bg-gray-50 cursor-pointer"
       />
       {/* Campo: Supervisor */}
       <Select
