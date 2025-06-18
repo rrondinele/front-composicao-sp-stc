@@ -13,7 +13,6 @@ const statusColors = {
   OUTRO: "bg-gray-100 text-gray-800",
 };
 
-
 export default function PainelAbsenteismo() {
   const [data, setData] = useState(format(new Date(), "yyyy-MM-dd"));
   const [dados, setDados] = useState([]);
@@ -133,8 +132,6 @@ export default function PainelAbsenteismo() {
         </MetricCard>
       </div>
 
-
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -211,12 +208,6 @@ export default function PainelAbsenteismo() {
           </table>
         </div>
       </motion.div>
-
-
-
-
-
-
 
       <button
         onClick={handleDownload}
