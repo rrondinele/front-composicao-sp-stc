@@ -139,7 +139,7 @@ export default function PainelAbsenteismo() {
         className="overflow-x-auto shadow-md border border-gray-100 rounded bg-gradient-to-br from-white to-gray-50"
       >
         <div className="max-h-[600px] overflow-y-auto">
-          <table className="min-w-full text-[11px] text-gray-800">
+          <table className="min-w-full text-[12px] text-gray-800">
             <thead className="sticky top-0 z-10 bg-gray-100 text-gray-600 uppercase text-[11px] tracking-wide">
               <tr>
                 {[
