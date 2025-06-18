@@ -1,4 +1,3 @@
-// Corrigido: todos os imports no topo
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
@@ -8,8 +7,6 @@ const BASE_URL = "https://composicao-sp-soc.onrender.com";
 
 const statusColors = {
   CAMPO: "bg-green-100 text-green-800",
-  //BASE: "bg-yellow-100 text-yellow-800",
-  //ATESTADO: "bg-red-100 text-red-800",
   FALTA: "bg-red-100 text-red-800",
   OUTRO: "bg-gray-100 text-gray-800",
 };
@@ -18,6 +15,7 @@ export default function PainelAbsenteismo() {
   const [data, setData] = useState(format(new Date(), "yyyy-MM-dd"));
   const [dados, setDados] = useState([]);
   const [absenteismo, setAbsenteismo] = useState({ total: 0, completas: 0, ausentes: 0, percentual: "0" });
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
   useEffect(() => {
     async function fetchDados() {
@@ -49,6 +47,30 @@ export default function PainelAbsenteismo() {
     link.href = `${BASE_URL}/composicao/export?data=${data}`;
     link.download = `composicao_${data}.xlsx`;
     link.click();
+  };
+
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedDados = [...dados].sort((a, b) => {
+    if (!sortConfig.key) return 0;
+
+    const aValue = a[sortConfig.key] ? a[sortConfig.key].toString().toLowerCase() : "";
+    const bValue = b[sortConfig.key] ? b[sortConfig.key].toString().toLowerCase() : "";
+
+    if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+    if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+    return 0;
+  });
+
+  const renderSortIcon = (key) => {
+    if (sortConfig.key !== key) return null;
+    return sortConfig.direction === "asc" ? "▲" : "▼";
   };
 
   return (
@@ -99,29 +121,69 @@ export default function PainelAbsenteismo() {
 
       <div className="mt-3 w-full max-w-[1800px] mx-auto">
         <div className="overflow-x-auto shadow-sm border rounded-lg">
-          <div className="max-h-[600px] overflow-y-auto"> {/* Scroll vertical externo */}
+          <div className="max-h-[600px] overflow-y-auto">
             <table className="min-w-full bg-white">
-              <thead className="sticky top-0 z-10"> {/* Cabeçalho fixo */}
+              <thead className="sticky top-0 z-10">
                 <tr className="bg-gray-200 text-gray-700 text-xs">
-                  <th className="p-2 border whitespace-nowrap text-left">Data</th>
-                  <th className="p-2 border whitespace-nowrap text-left">Supervisor (a)</th>
-                  <th className="p-2 border whitespace-nowrap text-left">Equipe</th>
-                  <th className="p-2 border whitespace-nowrap text-left">Eletricista Motorista</th>
-                  <th className="p-2 border whitespace-nowrap text-left">Eletricista Parceiro (a)</th>
-                  <th className="p-2 border whitespace-nowrap text-left">Serviço</th>
-                  <th className="p-2 border whitespace-nowrap text-left">Placa</th>
-                  <th className="p-2 border whitespace-nowrap text-left">Status</th>
+                  <th
+                    onClick={() => handleSort("data_atividade")}
+                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  >
+                    Data {renderSortIcon("data_atividade")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("supervisor")}
+                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  >
+                    Supervisor (a) {renderSortIcon("supervisor")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("equipe")}
+                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  >
+                    Equipe {renderSortIcon("equipe")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("eletricista_motorista")}
+                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  >
+                    Eletricista Motorista {renderSortIcon("eletricista_motorista")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("eletricista_parceiro")}
+                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  >
+                    Eletricista Parceiro (a) {renderSortIcon("eletricista_parceiro")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("servico")}
+                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  >
+                    Serviço {renderSortIcon("servico")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("placa_veiculo")}
+                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  >
+                    Placa {renderSortIcon("placa_veiculo")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("status")}
+                    className="p-2 border cursor-pointer select-none whitespace-nowrap text-left hover:bg-gray-100"
+                  >
+                    Status {renderSortIcon("status")}
+                  </th>
                 </tr>
               </thead>
               <tbody className="text-xs">
-                {dados.length === 0 ? (
+                {sortedDados.length === 0 ? (
                   <tr>
-                    <td colSpan="7" className="text-center py-4 text-gray-500">
+                    <td colSpan="8" className="text-center py-4 text-gray-500">
                       Nenhuma equipe encontrada.
                     </td>
                   </tr>
                 ) : (
-                  dados.map((item, index) => (
+                  sortedDados.map((item, index) => (
                     <tr key={index}>
                       <td className="p-2 border whitespace-nowrap">{item.data_atividade}</td>
                       <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
@@ -136,7 +198,11 @@ export default function PainelAbsenteismo() {
                       </td>
                       <td className="p-2 border whitespace-nowrap">{item.servico}</td>
                       <td className="p-2 border whitespace-nowrap">{item.placa_veiculo}</td>
-                      <td className={`p-2 border whitespace-nowrap text-left font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
+                      <td
+                        className={`p-2 border whitespace-nowrap text-left font-semibold rounded ${
+                          statusColors[item.status] || statusColors.OUTRO
+                        }`}
+                      >
                         {item.status}
                       </td>
                     </tr>
@@ -157,4 +223,3 @@ export default function PainelAbsenteismo() {
     </div>
   );
 }
-
