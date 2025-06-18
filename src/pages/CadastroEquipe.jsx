@@ -3,31 +3,20 @@ import React, { useState,useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
 import * as XLSX from "xlsx";
-//import cenegedtIcon from "./ceneged.png"; // Importando o ícone ceneged
 import cenegedtIcon from "../ceneged.png";
-//import exitIcon from "./exit.png"; // Importando o ícone logout
 import exitIcon from "../exit.png";
-//import clearIcon from "./clear.png"; // Importando o ícone Clear
 import clearIcon from "../clear.png";
-//import excelIcon from "./excel.png"; // Importando o ícone excel
 import excelIcon from "../excel.png";
 import { toast, ToastContainer } from "react-toastify"; // Para feedback visual
 import "react-toastify/dist/ReactToastify.css"; // Estilos do toast
-//import { supervisorOptions } from "./components/supervisor";
 import { supervisorOptions } from "../components/supervisor";
-//import { eletricistasCompletos, br0MappingPorEstado } from "./components/eletricistas";
 import { eletricistasCompletos, br0MappingPorEstado } from "../components/eletricistas";
-//import { equipeOptionsCompleta } from "./components/equipes";
 import { equipeOptionsCompleta } from "../components/equipes";
-//import { placaVeiculoOptionsCompleta } from "./components/PlacasVeiculos";
 import { placaVeiculoOptionsCompleta } from "../components/PlacasVeiculos";
-//import { statusOptions } from "./components/status";
 import { statusOptions } from "../components/status";
-//import { servicoOptionsPorEstado } from "./components/servicos";
 import { servicoOptionsPorEstado } from "../components/servicos";
 import { Tooltip } from 'react-tooltip';
 import { format } from "date-fns";
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Estado inicial como false
@@ -50,7 +39,6 @@ function App() {
   const estado = localStorage.getItem("estado") || "SP";
   return servicoOptionsPorEstado[estado] || [];
 };
-
 
   const [formData, setFormData] = useState({
     data_atividade: "",
@@ -75,7 +63,6 @@ function App() {
     return diffEmDias > 2;
   };
 
-  // Mapeamento de matrícula para nome do supervisor
   const supervisorMapping = {
     "11101" : "011101 - RONDINELE ARAUJO CARVALHO",
     "16032" : "016032 - WAGNER AUGUSTO DA SILVA MAURO",
@@ -103,7 +90,6 @@ function App() {
     "20116" : "020116 - WANDERSON FERREIRA DA CONCEICAO"
   };
 
-  // Efeito para verificar se o usuário está logado
 useEffect(() => {
   const loggedIn = localStorage.getItem("isLoggedIn") === "true";
   setIsLoggedIn(loggedIn);

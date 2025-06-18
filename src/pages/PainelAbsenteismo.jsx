@@ -15,6 +15,7 @@ const statusColors = {
 
 export default function PainelAbsenteismo() {
   const [data, setData] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [selectedEstado, setSelectedEstado] = useState(estado || 'ALL'); // Se vier da rota, fixa. Se não, dropdown controla.
   const [dados, setDados] = useState([]);
   const [absenteismo, setAbsenteismo] = useState({ total: 0, completas: 0, ausentes: 0, percentual: "0" });
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
@@ -22,7 +23,7 @@ export default function PainelAbsenteismo() {
   useEffect(() => {
     async function fetchDados() {
       try {
-        const res = await fetch(`${BASE_URL}/teams/finalizadas?data=${data}`);
+        const res = await fetch(`${BASE_URL}/teams/finalizadas?data=${data}&estado=${selectedEstado}`);
         const json = await res.json();
         setDados(json);
       } catch (err) {
@@ -32,7 +33,7 @@ export default function PainelAbsenteismo() {
 
     async function fetchAbsenteismo() {
       try {
-        const res = await fetch(`${BASE_URL}/absenteismo?data=${data}`);
+        const res = await fetch(`${BASE_URL}/absenteismo?data=${data}&estado=${selectedEstado}`);
         const stats = await res.json();
         setAbsenteismo(stats);
       } catch (err) {
@@ -42,12 +43,13 @@ export default function PainelAbsenteismo() {
 
     fetchDados();
     fetchAbsenteismo();
-  }, [data]);
+  }, [data, selectedEstado]);  // ✅ Incluído selectedEstado
+
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = `${BASE_URL}/composicao/export?data=${data}`;
-    link.download = `composicao_${data}.xlsx`;
+    link.href = `${BASE_URL}/composicao/export?data=${data}&estado=${selectedEstado}`;
+    link.download = `composicao_${data}_${selectedEstado}.xlsx`;
     link.click();
   };
 
@@ -116,6 +118,20 @@ export default function PainelAbsenteismo() {
           onChange={(e) => setData(e.target.value)}
           className="border rounded-md px-3 py-2 text-sm"
         />
+
+        {/* Select de Estado */}
+        {!estado && (
+          <select
+            value={selectedEstado}
+            onChange={(e) => setSelectedEstado(e.target.value)}
+            className="border rounded-md px-3 py-2 text-sm"
+          >
+            <option value="ALL">Todos os Estados</option>
+            <option value="SP">SP</option>
+            <option value="RJ">RJ</option>
+            <option value="RJB">RJB</option>
+          </select>
+        )}
       </div>
 
       {/* METRIC CARDS */}
