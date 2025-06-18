@@ -84,34 +84,31 @@ export default function PainelAbsenteismo() {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto bg-white shadow-lg rounded-lg mt-10">
-      <Link to="/" className="text-blue-600 underline text-sm mb-4 inline-block">
-        ← Voltar para Cadastro
-      </Link>
-
-      <h1 className="text-3xl font-semibold text-gray-800 text-center mb-6">Painel de Absenteísmo</h1>
-
-      <header className="bg-white shadow mb-6">
-        <div className="w-full max-w-[1700px] mx-auto px-6 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-              <Activity className="w-6 h-6 text-yellow-500" />
-              Painel de Absenteísmo
-            </h1>
-            <p className="text-sm text-gray-500">Acompanhamento diário de equipes e ausências</p>
-          </div>
-          <div>
-            <button
-              onClick={handleDownload}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm"
-            >
-              <UserX className="w-4 h-4" />
-              Exportar Excel
-            </button>
-          </div>
+  <div className="min-h-screen bg-gray-50">
+    {/* TOPO COM TÍTULO E BOTÃO */}
+    <header className="bg-white shadow">
+      <div className="w-full max-w-[1700px] mx-auto px-6 py-4 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <Activity className="w-6 h-6 text-yellow-500" />
+            Painel de Absenteísmo
+          </h1>
+          <p className="text-sm text-gray-500">Acompanhamento diário de equipes e ausências</p>
         </div>
-      </header>
+        <div>
+          <button
+            onClick={handleDownload}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm"
+          >
+            <UserX className="w-4 h-4" />
+            Exportar Excel
+          </button>
+        </div>
+      </div>
+    </header>
 
+    <main className="w-full max-w-[1700px] mx-auto px-6 py-6">
+      {/* INPUT DE DATA */}
       <div className="flex justify-between items-center gap-4 mb-6">
         <input
           type="date"
@@ -120,12 +117,13 @@ export default function PainelAbsenteismo() {
           className="border rounded-md px-3 py-2 text-sm"
         />
       </div>
-  
+
+      {/* METRIC CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <MetricCard
           title="Equipes"
           value={absenteismo.completas}
-          icon={<Users />} // Exemplo com ícone de usuários (substitua pelo ícone adequado)
+          icon={<Users />}
           iconBg="bg-green-50"
           iconColor="text-green-500"
         >
@@ -135,7 +133,7 @@ export default function PainelAbsenteismo() {
         <MetricCard
           title="Ausências"
           value={absenteismo.ausentes}
-          icon={<UserX />} // Ícone de usuário com X (substitua conforme sua biblioteca)
+          icon={<UserX />}
           iconBg="bg-red-50"
           iconColor="text-red-500"
         >
@@ -145,7 +143,7 @@ export default function PainelAbsenteismo() {
         <MetricCard
           title="Absenteísmo"
           value={`${absenteismo.percentual}%`}
-          icon={<Activity />} // Ícone de atividade/gráfico
+          icon={<Activity />}
           iconBg="bg-yellow-50"
           iconColor="text-yellow-500"
         >
@@ -153,6 +151,7 @@ export default function PainelAbsenteismo() {
         </MetricCard>
       </div>
 
+      {/* TABELA */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -161,7 +160,7 @@ export default function PainelAbsenteismo() {
       >
         <div className="max-h-[600px] overflow-y-auto">
           <table className="min-w-full text-[11.5px] text-gray-800">
-            <thead className="sticky top-0 z-10 bg-gray-100 text-gray-600 uppercase text-[11px] tracking-wide">
+            <thead className="sticky top-0 z-10 bg-gray-100 text-gray-600 uppercase text-[10px] tracking-wide">
               <tr>
                 {[
                   { key: "data_atividade", label: "Data" },
@@ -173,18 +172,18 @@ export default function PainelAbsenteismo() {
                   { key: "placa_veiculo", label: "Placa" },
                   { key: "status", label: "Status" },
                 ].map(({ key, label }) => (
-                <th
-                  key={key}
-                  onClick={() => requestSort(key)}
-                  className={`p-3 border-b border-gray-200 text-left cursor-pointer hover:bg-gray-200 relative`}
-                >
-                  {label}
-                  {sortConfig.key === key && (
-                    <span className="absolute right-2">
-                      {sortConfig.direction === 'ascending' ? '↑' : '↓'}
-                    </span>
-                  )}
-                </th>
+                  <th
+                    key={key}
+                    onClick={() => requestSort(key)}
+                    className={`p-3 border-b border-gray-200 text-left cursor-pointer hover:bg-gray-200 relative`}
+                  >
+                    {label}
+                    {sortConfig.key === key && (
+                      <span className="absolute right-2">
+                        {sortConfig.direction === 'ascending' ? '↑' : '↓'}
+                      </span>
+                    )}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -229,15 +228,7 @@ export default function PainelAbsenteismo() {
           </table>
         </div>
       </motion.div>
-      {/*
-      <button
-        onClick={handleDownload}
-        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
-      >
-        Exportar Excel
-      </button>
-      */}
-
-    </div>
-  );
+    </main>
+  </div>
+);
 }
