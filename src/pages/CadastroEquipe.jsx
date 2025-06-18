@@ -804,17 +804,17 @@ const handleFinalizar = async () => {
   </button>
   <Tooltip id="clear-tooltip" />
 </div>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-        <input
-          type="date"
-          name="data_atividade"
-          value={formData.data_atividade}
-          onChange={handleDateChange}
-          required
-          max={format(new Date(), "yyyy-MM-dd")}
-          onKeyDown={(e) => e.preventDefault()}
-          className="w-full p-2 border rounded-md bg-gray-50 cursor-pointer"
+  <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="grid grid-cols-2 gap-4">
+      <input
+        type="date"
+        name="data_atividade"
+        value={formData.data_atividade}
+        onChange={handleDateChange}
+        required
+        max={format(new Date(), "yyyy-MM-dd")}          // ✅ Limita até hoje
+        onKeyDown={(e) => e.preventDefault()}           // ✅ Bloqueia digitação manual
+        className="w-full p-2 border rounded-md bg-gray-50 cursor-pointer"
       />
       {/* Campo: Supervisor */}
       <Select
