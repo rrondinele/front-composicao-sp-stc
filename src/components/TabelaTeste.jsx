@@ -133,126 +133,97 @@ export default function PainelAbsenteismo() {
         </MetricCard>
       </div>
 
-      <div className="mt-3 w-full max-w-[1800px] mx-auto">
-        <div className="overflow-x-auto shadow-sm border rounded-lg">
-          <div className="max-h-[600px] overflow-y-auto">
-            <table className="min-w-full bg-white">
-              <thead className="sticky top-0 z-10">
-                <tr className="bg-gray-200 text-gray-700 text-xs">
-                  <th 
-                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('data_atividade')}`}
-                    onClick={() => requestSort('data_atividade')}
-                  >
-                    Data {getSortIndicator('data_atividade')}
-                  </th>
-                  <th 
-                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('supervisor')}`}
-                    onClick={() => requestSort('supervisor')}
-                  >
-                    Supervisor (a) {getSortIndicator('supervisor')}
-                  </th>
-                  <th 
-                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('equipe')}`}
-                    onClick={() => requestSort('equipe')}
-                  >
-                    Equipe {getSortIndicator('equipe')}
-                  </th>
-                  <th 
-                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('eletricista_motorista')}`}
-                    onClick={() => requestSort('eletricista_motorista')}
-                  >
-                    Eletricista Motorista {getSortIndicator('eletricista_motorista')}
-                  </th>
-                  <th 
-                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('eletricista_parceiro')}`}
-                    onClick={() => requestSort('eletricista_parceiro')}
-                  >
-                    Eletricista Parceiro (a) {getSortIndicator('eletricista_parceiro')}
-                  </th>
-                  <th 
-                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('servico')}`}
-                    onClick={() => requestSort('servico')}
-                  >
-                    Serviço {getSortIndicator('servico')}
-                  </th>
-                  <th 
-                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('placa_veiculo')}`}
-                    onClick={() => requestSort('placa_veiculo')}
-                  >
-                    Placa {getSortIndicator('placa_veiculo')}
-                  </th>
-                  <th 
-                    className={`p-2 border whitespace-nowrap text-left cursor-pointer hover:bg-gray-300 ${getSortClass('status')}`}
-                    onClick={() => requestSort('status')}
-                  >
-                    Status {getSortIndicator('status')}
-                  </th>
+
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="overflow-x-auto shadow-md border border-gray-100 rounded bg-gradient-to-br from-white to-gray-50"
+      >
+        <div className="max-h-[600px] overflow-y-auto">
+          <table className="min-w-full text-sm text-gray-800">
+            <thead className="sticky top-0 z-10 bg-gray-100 text-gray-600 uppercase text-xs">
+              <tr>
+                {[
+                  { key: "data_atividade", label: "Data" },
+                  { key: "supervisor", label: "Supervisor (a)" },
+                  { key: "equipe", label: "Equipe" },
+                  { key: "eletricista_motorista", label: "Eletricista Motorista" },
+                  { key: "eletricista_parceiro", label: "Eletricista Parceiro (a)" },
+                  { key: "servico", label: "Serviço" },
+                  { key: "placa_veiculo", label: "Placa" },
+                  { key: "status", label: "Status" },
+                ].map(({ key, label }) => (
+                <th
+                  key={key}
+                  onClick={() => requestSort(key)}
+                  className={`p-3 border-b border-gray-200 text-left cursor-pointer hover:bg-gray-200 relative`}
+                >
+                  {label}
+                  {sortConfig.key === key && (
+                    <span className="absolute right-2">
+                      {sortConfig.direction === 'ascending' ? '↑' : '↓'}
+                    </span>
+                  )}
+                </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sortedData.length === 0 ? (
+                <tr>
+                  <td colSpan="8" className="text-center py-4 text-gray-500">
+                    Nenhuma equipe encontrada.
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="text-xs">
-                {sortedData.length === 0 ? (
-                  <tr>
-                    <td colSpan="8" className="text-center py-4 text-gray-500">
-                      Nenhuma equipe encontrada.
+              ) : (
+                sortedData.map((item, index) => (
+                  <tr key={index} className="hover:bg-gray-50 transition">
+                    <td className="p-2 border-b border-gray-100">{item.data_atividade}</td>
+
+                    <td className="p-2 border-b border-gray-100 text-left overflow-hidden text-ellipsis max-w-[200px] whitespace-nowrap">
+                      {item.supervisor}
+                    </td>
+
+                    <td className="p-2 border-b border-gray-100">{item.equipe}</td>
+
+                    <td className="p-2 border-b border-gray-100 text-left overflow-hidden text-ellipsis max-w-[200px] whitespace-nowrap">
+                      {item.eletricista_motorista}
+                    </td>
+
+                    <td className="p-2 border-b border-gray-100 text-left overflow-hidden text-ellipsis max-w-[200px] whitespace-nowrap">
+                      {item.eletricista_parceiro}
+                    </td>
+
+                    <td className="p-2 border-b border-gray-100">{item.servico}</td>
+                    <td className="p-2 border-b border-gray-100">{item.placa_veiculo}</td>
+
+                    <td
+                      className={`p-2 border-b border-gray-100 font-semibold rounded text-center ${statusColors[item.status] || statusColors.OUTRO}`}
+                    >
+                      {item.status}
                     </td>
                   </tr>
-                ) : (
-                  sortedData.map((item, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="p-2 border whitespace-nowrap">{item.data_atividade}</td>
-                      <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
-                        {item.supervisor}
-                      </td>
-                      <td className="p-2 border whitespace-nowrap">{item.equipe}</td>
-                      <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
-                        {item.eletricista_motorista}
-                      </td>
-                      <td className="p-2 border whitespace-nowrap text-left overflow-hidden text-ellipsis max-w-[200px]">
-                        {item.eletricista_parceiro}
-                      </td>
-                      <td className="p-2 border whitespace-nowrap">{item.servico}</td>
-                      <td className="p-2 border whitespace-nowrap">{item.placa_veiculo}</td>
-                      <td className={`p-2 border whitespace-nowrap text-left font-semibold rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
-                        {item.status}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
-      </div>
+      </motion.div>
+
+
+
+
+
+
 
       <button
         onClick={handleDownload}
         className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
       >
-        Baixar Excel
+        Exportar Excel
       </button>
-
-      <style jsx>{`
-        .sort-asc {
-          background-color: #e5e7eb;
-          position: relative;
-        }
-        .sort-asc::after {
-          content: "↑";
-          margin-left: 5px;
-          position: absolute;
-          right: 8px;
-        }
-        .sort-desc {
-          background-color: #e5e7eb;
-          position: relative;
-        }
-        .sort-desc::after {
-          content: "↓";
-          margin-left: 5px;
-          position: absolute;
-          right: 8px;
-        }
-      `}</style>
     </div>
   );
 }
