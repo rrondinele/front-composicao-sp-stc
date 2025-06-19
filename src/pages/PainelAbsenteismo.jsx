@@ -12,12 +12,22 @@ const statusColors = {
   OUTRO: "bg-gray-100 text-gray-800",
 };
 
-export default function PainelAbsenteismo() {
+export default function PainelAbsenteismo({ estado }) {
   const [data, setData] = useState(format(new Date(), "yyyy-MM-dd"));
-  const [selectedEstado, setSelectedEstado] = useState('ALL');  // ✅ Corrigido: sem estado indefinido
+  //const [selectedEstado, setSelectedEstado] = useState('ALL');  // ✅ Corrigido: sem estado indefinido
+  const [selectedEstado, setSelectedEstado] = useState(estado || 'ALL');
   const [dados, setDados] = useState([]);
   const [absenteismo, setAbsenteismo] = useState({ total: 0, completas: 0, ausentes: 0, percentual: "0" });
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+
+    // ✅ Força o estado vindo da rota (caso tenha)
+  useEffect(() => {
+    if (isEstadoFixo) {
+      setSelectedEstado(estado);
+    }
+  }, [estado, isEstadoFixo]);
+
+  const isEstadoFixo = !!estado;
 
   useEffect(() => {
     async function fetchDados() {
