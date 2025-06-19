@@ -10,9 +10,9 @@ function App() {
       <Routes>
         <Route path="/" element={<CadastroEquipe />} />
         <Route path="/painel" element={<PainelAbsenteismo />} />
-        <Route path="/painel/sp" element={<PainelAbsenteismo estado="SP" />} />
-        <Route path="/painel/rj" element={<PainelAbsenteismo estado="RJ" />} />
-        <Route path="/painel/rjb" element={<PainelAbsenteismo estado="RJB" />} />
+        <Route path="/painel/enelsp" element={<PainelAbsenteismo estado="SP" />} />
+        <Route path="/painel/enel-soc-marica" element={<PainelAbsenteismo estado="RJ" />} />
+        <Route path="/painel/light-vale" element={<PainelAbsenteismo estado="RJB" />} />
         <Route path="/teste-tabela" element={<TesteTabela />} /> {/* Nova rota */}
       </Routes>
     </BrowserRouter>
