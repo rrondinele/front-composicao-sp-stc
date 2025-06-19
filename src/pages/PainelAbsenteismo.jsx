@@ -16,18 +16,17 @@ export default function PainelAbsenteismo({ estado }) {
   const [data, setData] = useState(format(new Date(), "yyyy-MM-dd"));
   //const [selectedEstado, setSelectedEstado] = useState('ALL');  // ✅ Corrigido: sem estado indefinido
   const [selectedEstado, setSelectedEstado] = useState(estado || 'ALL');
+  const isEstadoFixo = !!estado;
   const [dados, setDados] = useState([]);
   const [absenteismo, setAbsenteismo] = useState({ total: 0, completas: 0, ausentes: 0, percentual: "0" });
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
 
-    // ✅ Força o estado vindo da rota (caso tenha)
+  // ✅ Força o estado vindo da rota (caso tenha)
   useEffect(() => {
     if (isEstadoFixo) {
       setSelectedEstado(estado);
     }
   }, [estado, isEstadoFixo]);
-
-  const isEstadoFixo = !!estado;
 
   useEffect(() => {
     async function fetchDados() {
@@ -112,16 +111,18 @@ export default function PainelAbsenteismo({ estado }) {
           />
 
           {/* Dropdown de Estado */}
-          <select
-            value={selectedEstado}
-            onChange={(e) => setSelectedEstado(e.target.value)}
-            className="border rounded-md px-3 py-2 text-sm"
-          >
-            <option value="ALL">Todos os Estados</option>
-            <option value="SP">SP</option>
-            <option value="RJ">RJ</option>
-            <option value="RJB">RJB</option>
-          </select>
+          {!isEstadoFixo && (
+            <select
+              value={selectedEstado}
+              onChange={(e) => setSelectedEstado(e.target.value)}
+              className="border rounded-md px-3 py-2 text-sm"
+            >
+              <option value="ALL">Todos os Estados</option>
+              <option value="SP">SP</option>
+              <option value="RJ">RJ</option>
+              <option value="RJB">RJB</option>
+            </select>
+          )}
         </div>
 
         {/* METRIC CARDS */}
