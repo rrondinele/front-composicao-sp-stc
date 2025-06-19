@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { TextField, Button, MenuItem, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { TextField, Button, MenuItem, Grid, Typography, Paper, List, ListItem, ListItemText } from '@mui/material';
 import { eletricistasCompletos } from '../data/eletricistas';
 import { br0MappingPorEstado } from '../data/eletricistas';
 import { equipeOptionsCompleta } from '../data/equipes';
 import { supervisorOptions } from '../data/supervisor';
 import { placasPorEstado } from '../data/PlacasVeiculos';
+
+const BASE_URL = 'https://composicao-sp-soc.onrender.com';
 
 const CadastroEquipe = () => {
   const estado = localStorage.getItem('estado') || 'SP';
@@ -16,6 +19,8 @@ const CadastroEquipe = () => {
   const [br0Parceiro, setBr0Parceiro] = useState('');
   const [equipe, setEquipe] = useState('');
   const [placaVeiculo, setPlacaVeiculo] = useState('');
+  const [dataAtividade, setDataAtividade] = useState('');
+  const [eletricistasFaltantes, setEletricistasFaltantes] = useState([]);
 
   const handleEletricistaMotoristaChange = (value) => {
     setEletricistaMotorista(value);
@@ -27,8 +32,48 @@ const CadastroEquipe = () => {
     setBr0Parceiro(br0MappingPorEstado[estado][value] || '');
   };
 
+  // Função para buscar eletricistas já apontados no dia
+  const fetchFaltantes = async () => {
+    if (!dataAtividade) return;
+
+    try {
+      const res = await axios.get(`${BASE_URL}/eletricistas/apontados`, {
+        params: {
+          data: dataAtividade,
+          estado: estado,
+        },
+      });
+
+      const apontados = res.data; // Lista de nomes já apontados
+      const todosEletricistas = eletricistasCompletos[estado].map((el) => el.value);
+
+      // Filtrar quem ainda falta
+      const faltantes = todosEletricistas.filter((nome) => !apontados.includes(nome));
+
+      setEletricistasFaltantes(faltantes);
+    } catch (error) {
+      console.error('Erro ao buscar faltantes:', error);
+    }
+  };
+
+  // Recarregar o quadro sempre que supervisor mudar a data
+  useEffect(() => {
+    fetchFaltantes();
+  }, [dataAtividade]);
+
   return (
     <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <TextField
+          type="date"
+          label="Data da Atividade"
+          value={dataAtividade}
+          onChange={(e) => setDataAtividade(e.target.value)}
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+        />
+      </Grid>
+
       <Grid item xs={12} sm={6}>
         <TextField
           select
@@ -62,12 +107,7 @@ const CadastroEquipe = () => {
       </Grid>
 
       <Grid item xs={12} sm={6}>
-        <TextField
-          label="BR0 Motorista"
-          fullWidth
-          value={br0Motorista}
-          disabled
-        />
+        <TextField label="BR0 Motorista" fullWidth value={br0Motorista} disabled />
       </Grid>
 
       <Grid item xs={12} sm={6}>
@@ -87,12 +127,7 @@ const CadastroEquipe = () => {
       </Grid>
 
       <Grid item xs={12} sm={6}>
-        <TextField
-          label="BR0 Parceiro"
-          fullWidth
-          value={br0Parceiro}
-          disabled
-        />
+        <TextField label="BR0 Parceiro" fullWidth value={br0Parceiro} disabled />
       </Grid>
 
       <Grid item xs={12} sm={6}>
@@ -132,6 +167,24 @@ const CadastroEquipe = () => {
           Salvar
         </Button>
       </Grid>
+
+      {/* Quadro de Faltantes */}
+      {dataAtividade && eletricistasFaltantes.length > 0 && (
+        <Grid item xs={12}>
+          <Paper elevation={3} style={{ padding: 16, marginTop: 20 }}>
+            <Typography variant="h6" color="error" gutterBottom>
+              Eletricistas ainda NÃO apontados ({estado}) - {dataAtividade}:
+            </Typography>
+            <List dense>
+              {eletricistasFaltantes.map((nome, index) => (
+                <ListItem key={index}>
+                  <ListItemText primary={nome} />
+                </ListItem>
+              ))}
+            </List>
+          </Paper>
+        </Grid>
+      )}
     </Grid>
   );
 };
