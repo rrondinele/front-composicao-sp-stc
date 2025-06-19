@@ -85,6 +85,15 @@ const CadastroEquipe = () => {
         />
       </Grid>
 
+
+
+      <Grid item xs={12}>
+        <Typography variant="body2" color="textSecondary">
+          Total de eletricistas cadastrados no estado <strong>{estado}</strong>:{" "}
+          <strong>{eletricistasCompletos[estado]?.length || 0}</strong>
+        </Typography>
+      </Grid>
+
       <Grid item xs={12} sm={6}>
         <TextField
           select
