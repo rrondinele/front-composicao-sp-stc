@@ -31,6 +31,7 @@ const CadastroEquipe = () => {
   const [placaVeiculo, setPlacaVeiculo] = useState('');
   const [dataAtividade, setDataAtividade] = useState('');
   const [eletricistasFaltantes, setEletricistasFaltantes] = useState([]);
+  const [loadingFaltantes, setLoadingFaltantes] = useState(false);
 
   const handleEletricistaMotoristaChange = (value) => {
     setEletricistaMotorista(value);
@@ -42,12 +43,9 @@ const CadastroEquipe = () => {
     setBr0Parceiro(br0MappingPorEstado[estado][value] || '');
   };
 
-  // Normalização de nomes para evitar problema de espaços ou letras maiúsculas
-  const normalize = (str) => str.trim().toUpperCase();
-
-  // Função para buscar os faltantes
   const fetchFaltantes = async () => {
     if (!dataAtividade) return;
+    setLoadingFaltantes(true);
 
     try {
       const res = await axios.get(`${BASE_URL}/eletricistas/apontados`, {
@@ -57,16 +55,16 @@ const CadastroEquipe = () => {
         },
       });
 
-      const apontados = res.data || [];
+      const apontados = res.data; // Exemplo: ["015105 - FULANO"]
       const todosEletricistas = eletricistasCompletos[estado].map((el) => el.value);
 
-      const faltantes = todosEletricistas.filter(
-        (nome) => !apontados.map(normalize).includes(normalize(nome))
-      );
+      const faltantes = todosEletricistas.filter((nome) => !apontados.includes(nome));
 
       setEletricistasFaltantes(faltantes);
     } catch (error) {
       console.error('Erro ao buscar faltantes:', error);
+    } finally {
+      setLoadingFaltantes(false);
     }
   };
 
@@ -182,38 +180,41 @@ const CadastroEquipe = () => {
       </Grid>
 
       {/* Quadro de Faltantes */}
-      <Grid item xs={12}>
-        {dataAtividade && (
-          <>
-            <Button
-              variant="outlined"
-              onClick={fetchFaltantes}
-              style={{ marginBottom: 10 }}
-            >
-              Atualizar Faltantes
-            </Button>
+      {dataAtividade && (
+        <Grid item xs={12}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={fetchFaltantes}
+            style={{ marginBottom: 10 }}
+          >
+            🔄 Atualizar Faltantes
+          </Button>
 
-            {eletricistasFaltantes.length > 0 ? (
-              <Paper elevation={3} style={{ padding: 16, marginTop: 10 }}>
-                <Typography variant="h6" color="error" gutterBottom>
-                  Eletricistas ainda NÃO apontados ({estado}) - {dataAtividade}:
-                </Typography>
-                <List dense>
-                  {eletricistasFaltantes.map((nome, index) => (
-                    <ListItem key={index}>
-                      <ListItemText primary={nome} />
-                    </ListItem>
-                  ))}
-                </List>
-              </Paper>
-            ) : (
+          {loadingFaltantes ? (
+            <Typography variant="body2">🔄 Buscando eletricistas faltantes...</Typography>
+          ) : eletricistasFaltantes.length > 0 ? (
+            <Paper elevation={3} style={{ padding: 16, marginTop: 10 }}>
+              <Typography variant="h6" color="error" gutterBottom>
+                ❌ Eletricistas ainda NÃO apontados ({estado}) - {dataAtividade}:
+              </Typography>
+              <List dense>
+                {eletricistasFaltantes.map((nome, index) => (
+                  <ListItem key={index}>
+                    <ListItemText primary={nome} />
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+          ) : (
+            <Paper elevation={1} style={{ padding: 16, marginTop: 10 }}>
               <Typography variant="body2" color="success.main">
                 ✅ Todos os eletricistas já foram apontados para esta data!
               </Typography>
-            )}
-          </>
-        )}
-      </Grid>
+            </Paper>
+          )}
+        </Grid>
+      )}
     </Grid>
   );
 };
