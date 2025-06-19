@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, MenuItem, Grid, Typography, Paper, List, ListItem, ListItemText } from '@mui/material';
+import {
+  TextField,
+  Button,
+  MenuItem,
+  Grid,
+  Typography,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material';
 import { eletricistasCompletos } from '../data/eletricistas';
 import { br0MappingPorEstado } from '../data/eletricistas';
 import { equipeOptionsCompleta } from '../data/equipes';
@@ -32,7 +42,10 @@ const CadastroEquipe = () => {
     setBr0Parceiro(br0MappingPorEstado[estado][value] || '');
   };
 
-  // Função para buscar eletricistas já apontados no dia
+  // Normalização de nomes para evitar problema de espaços ou letras maiúsculas
+  const normalize = (str) => str.trim().toUpperCase();
+
+  // Função para buscar os faltantes
   const fetchFaltantes = async () => {
     if (!dataAtividade) return;
 
@@ -44,11 +57,12 @@ const CadastroEquipe = () => {
         },
       });
 
-      const apontados = res.data; // Lista de nomes já apontados
+      const apontados = res.data || [];
       const todosEletricistas = eletricistasCompletos[estado].map((el) => el.value);
 
-      // Filtrar quem ainda falta
-      const faltantes = todosEletricistas.filter((nome) => !apontados.includes(nome));
+      const faltantes = todosEletricistas.filter(
+        (nome) => !apontados.map(normalize).includes(normalize(nome))
+      );
 
       setEletricistasFaltantes(faltantes);
     } catch (error) {
@@ -56,7 +70,6 @@ const CadastroEquipe = () => {
     }
   };
 
-  // Recarregar o quadro sempre que supervisor mudar a data
   useEffect(() => {
     fetchFaltantes();
   }, [dataAtividade]);
@@ -169,22 +182,38 @@ const CadastroEquipe = () => {
       </Grid>
 
       {/* Quadro de Faltantes */}
-      {dataAtividade && eletricistasFaltantes.length > 0 && (
-        <Grid item xs={12}>
-          <Paper elevation={3} style={{ padding: 16, marginTop: 20 }}>
-            <Typography variant="h6" color="error" gutterBottom>
-              Eletricistas ainda NÃO apontados ({estado}) - {dataAtividade}:
-            </Typography>
-            <List dense>
-              {eletricistasFaltantes.map((nome, index) => (
-                <ListItem key={index}>
-                  <ListItemText primary={nome} />
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
-        </Grid>
-      )}
+      <Grid item xs={12}>
+        {dataAtividade && (
+          <>
+            <Button
+              variant="outlined"
+              onClick={fetchFaltantes}
+              style={{ marginBottom: 10 }}
+            >
+              Atualizar Faltantes
+            </Button>
+
+            {eletricistasFaltantes.length > 0 ? (
+              <Paper elevation={3} style={{ padding: 16, marginTop: 10 }}>
+                <Typography variant="h6" color="error" gutterBottom>
+                  Eletricistas ainda NÃO apontados ({estado}) - {dataAtividade}:
+                </Typography>
+                <List dense>
+                  {eletricistasFaltantes.map((nome, index) => (
+                    <ListItem key={index}>
+                      <ListItemText primary={nome} />
+                    </ListItem>
+                  ))}
+                </List>
+              </Paper>
+            ) : (
+              <Typography variant="body2" color="success.main">
+                ✅ Todos os eletricistas já foram apontados para esta data!
+              </Typography>
+            )}
+          </>
+        )}
+      </Grid>
     </Grid>
   );
 };
