@@ -355,29 +355,32 @@ const handleLogin = async (e) => {
     }
   };
 
-  const atualizarListasDeSelecao = (equipesCadastradas) => {
-    // Extrai todos os eletricistas já utilizados (motoristas e parceiros)
-    const todosEletricistasUtilizados = [
-      ...equipesCadastradas.map(e => e.eletricista_motorista),
-      ...equipesCadastradas.map(e => e.eletricista_parceiro)
-    ].filter(e => e && e !== "N/A"); // Remove valores nulos e "N/A"
-  
-    // Filtra as opções disponíveis removendo os já utilizados
-    const eletricistasDisponiveis = eletricistasCompletos[estadoAtual].filter(
-      e => !todosEletricistasUtilizados.includes(e.value)
-    );
-  
-    // Atualiza ambas as listas com os mesmos valores disponíveis
-    setEletricistaMotoristaOptions(eletricistasDisponiveis);
-    setEletricistaParceiroOptions(eletricistasDisponiveis);
-  
-    // Atualiza também as outras listas (equipe e placa) se necessário
-    const equipesUtilizadas = equipesCadastradas.map(e => e.equipe).filter(Boolean);
-    const placasUtilizadas = equipesCadastradas.map(e => e.placa_veiculo).filter(Boolean);
-  
-    setEquipeOptions(equipeOptionsCompleta[estadoAtual].filter(e => !equipesUtilizadas.includes(e.value)));
-    setPlacaVeiculoOptions(placaVeiculoOptionsCompleta[estadoAtual].filter(p => !placasUtilizadas.includes(p.value)));
-  };
+const atualizarListasDeSelecao = (equipesCadastradas) => {
+  // Filtra apenas equipes não finalizadas para evitar bloquear opções desnecessariamente
+  const equipesAtivas = equipesCadastradas.filter(team => !team.finalizado);
+
+  // Extrai todos os eletricistas já utilizados (motoristas e parceiros)
+  const todosEletricistasUtilizados = [
+    ...equipesAtivas.map(e => e.eletricista_motorista),
+    ...equipesAtivas.map(e => e.eletricista_parceiro)
+  ].filter(e => e && e !== "N/A");
+
+  // Filtra as opções disponíveis removendo os já utilizados
+  const eletricistasDisponiveis = eletricistasCompletos[estadoAtual].filter(
+    e => !todosEletricistasUtilizados.includes(e.value)
+  );
+
+  // Atualiza ambas as listas com os mesmos valores disponíveis
+  setEletricistaMotoristaOptions(eletricistasDisponiveis);
+  setEletricistaParceiroOptions(eletricistasDisponiveis);
+
+  // Atualiza também as outras listas (equipe e placa) se necessário
+  const equipesUtilizadas = equipesAtivas.map(e => e.equipe).filter(e => e && e !== "N/A");
+  const placasUtilizadas = equipesAtivas.map(e => e.placa_veiculo).filter(e => e && e !== "N/A");
+
+  setEquipeOptions(equipeOptionsCompleta[estadoAtual].filter(e => !equipesUtilizadas.includes(e.value)));
+  setPlacaVeiculoOptions(placaVeiculoOptionsCompleta[estadoAtual].filter(p => !placasUtilizadas.includes(p.value)));
+};
 
   // Funcao Buscar as equipes cadastradas para a data selecionada. + Atualizar as listas de seleção com base nas equipes cadastradas.
   const handleDateChange = async (e) => {
@@ -538,46 +541,56 @@ const fetchTeams = async () => {
     }
   };
 
-  const handleEdit = async (team) => {
-    const estado = localStorage.getItem("estado") || "SP";
+const handleEdit = async (team) => {
+  const estado = localStorage.getItem("estado") || "SP";
 
-    const currentOptions = {
-      equipe: { value: team.equipe, label: team.equipe },
-      motorista: { value: team.eletricista_motorista, label: team.eletricista_motorista },
-      parceiro: { value: team.eletricista_parceiro, label: team.eletricista_parceiro },
-      placa: { value: team.placa_veiculo, label: team.placa_veiculo }
-    };
+  // 1. Primeiro busca todas as equipes cadastradas na mesma data
+  const equipesCadastradas = await fetchEquipesPorData(team.data_atividade);
   
-    // 2. Atualiza as opções incluindo os valores atuais
-    setEquipeOptions([
-      currentOptions.equipe,
-      ...equipeOptionsCompleta[estado].filter(o => o.value !== team.equipe)
-    ]);
-  
-    setEletricistaMotoristaOptions([
-      currentOptions.motorista,
-      ...eletricistasCompletos[estado].filter(o => o.value !== team.eletricista_motorista)
-    ]);
-  
-    setEletricistaParceiroOptions([
-      currentOptions.parceiro,
-      ...eletricistasCompletos[estado].filter(o => o.value !== team.eletricista_parceiro)
-    ]);
-  
-    setPlacaVeiculoOptions([
-      currentOptions.placa,
-      ...placaVeiculoOptionsCompleta[estado].filter(o => o.value !== team.placa_veiculo)
-    ]);
-  
-    // 3. Atualiza o formData
-    setFormData({
-      ...team,
-      br0_motorista: br0Mapping[team.eletricista_motorista] || "",
-      br0_parceiro: br0Mapping[team.eletricista_parceiro] || ""
-    });
-  
-    setEditId(team.id);
+  // 2. Filtra as que não são a equipe atual sendo editada
+  const outrasEquipes = equipesCadastradas.filter(t => t.id !== team.id);
+
+  // 3. Atualiza as listas considerando apenas as outras equipes
+  atualizarListasDeSelecao(outrasEquipes);
+
+  // 4. Prepara os valores atuais para inclusão nas listas
+  const currentOptions = {
+    equipe: { value: team.equipe, label: team.equipe },
+    motorista: { value: team.eletricista_motorista, label: team.eletricista_motorista },
+    parceiro: { value: team.eletricista_parceiro, label: team.eletricista_parceiro },
+    placa: { value: team.placa_veiculo, label: team.placa_veiculo }
   };
+
+  // 5. Atualiza as opções incluindo os valores atuais (permitindo edição)
+  setEquipeOptions(prev => [
+    currentOptions.equipe,
+    ...prev.filter(o => o.value !== team.equipe)
+  ]);
+
+  setEletricistaMotoristaOptions(prev => [
+    currentOptions.motorista,
+    ...prev.filter(o => o.value !== team.eletricista_motorista)
+  ]);
+
+  setEletricistaParceiroOptions(prev => [
+    currentOptions.parceiro,
+    ...prev.filter(o => o.value !== team.eletricista_parceiro)
+  ]);
+
+  setPlacaVeiculoOptions(prev => [
+    currentOptions.placa,
+    ...prev.filter(o => o.value !== team.placa_veiculo)
+  ]);
+
+  // 6. Atualiza o formData
+  setFormData({
+    ...team,
+    br0_motorista: br0Mapping[team.eletricista_motorista] || "",
+    br0_parceiro: br0Mapping[team.eletricista_parceiro] || ""
+  });
+
+  setEditId(team.id);
+};
 
   // Função para excluir uma equipe
   const handleDelete = async (id) => {
