@@ -24,21 +24,16 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const estadoAtual = localStorage.getItem("estado") || "SP";
-  const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(
-    eletricistasCompletos[estadoAtual]
-  );
-  const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(
-    eletricistasCompletos[estadoAtual]
-  );
+  const [eletricistaMotoristaOptions, setEletricistaMotoristaOptions] = useState(eletricistasCompletos[estadoAtual]);
+  const [eletricistaParceiroOptions, setEletricistaParceiroOptions] = useState(eletricistasCompletos[estadoAtual]);
   const [equipeOptions, setEquipeOptions] = useState(equipeOptionsCompleta[estadoAtual] || []);
   const [placaVeiculoOptions, setPlacaVeiculoOptions] = useState(placaVeiculoOptionsCompleta[estadoAtual]);
   const br0Mapping = br0MappingPorEstado[estadoAtual];
 
-
   const getServicosDisponiveis = () => {
-  const estado = localStorage.getItem("estado") || "SP";
-  return servicoOptionsPorEstado[estado] || [];
-};
+    const estado = localStorage.getItem("estado") || "SP";
+    return servicoOptionsPorEstado[estado] || [];
+  };
 
   const [formData, setFormData] = useState({
     data_atividade: "",
