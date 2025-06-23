@@ -476,70 +476,78 @@ const fetchTeams = async () => {
     }
   };
 
-  // Função para enviar o formulário de cadastro/edição
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-  
-    setLoading(true);
-    try {
-      // Prepara os dados para envio
-      const dadosParaEnvio = {
-        ...formData,
-        // Se status não for CAMPO, envia equipe como string vazia ao invés de N/A
-        equipe: formData.status !== "CAMPO" ? "" : formData.equipe,
-        servico: formData.status !== "CAMPO" ? "" : formData.servico,
-        placa_veiculo: formData.status !== "CAMPO" ? "" : formData.placa_veiculo
-      };
-  
-      const url = editId 
-        ? `https://composicao-sp-soc.onrender.com/teams/${editId}` 
-        : "https://composicao-sp-soc.onrender.com/teams";
-      const method = editId ? "put" : "post";
-  
-      const response = await axios[method](url, dadosParaEnvio);
-  
-      if (response.status === 201 || response.status === 200) {
-        toast.success(editId ? "Equipe atualizada com sucesso!" : "Equipe cadastrada com sucesso!");
-        setEditId(null);
-        
-        // Busca as equipes cadastradas na mesma data
-        const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
-        
-        // Atualiza as listas de seleção com base nas equipes cadastradas
-        atualizarListasDeSelecao(equipesCadastradas);
-        
-        // Limpa apenas os campos que devem ser resetados
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          eletricista_motorista: null,
-          br0_motorista: "",
-          eletricista_parceiro: null,
-          br0_parceiro: "",
-          equipe: null,
-          placa_veiculo: null,
-        }));
+// Função para enviar o formulário de cadastro/edição
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-        // Recarrega as opções de acordo com o estado atual
-        const estado = localStorage.getItem("estado") || "SP";
-        setEletricistaMotoristaOptions(eletricistasCompletos[estado]);
-        setEletricistaParceiroOptions(eletricistasCompletos[estado]);
-        setEquipeOptions(equipeOptionsCompleta[estado]);
-        setPlacaVeiculoOptions(placaVeiculoOptionsCompleta[estado]);
-        
-        // Atualiza a lista de equipes
-        fetchTeams();
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("Erro ao cadastrar/atualizar equipe.");
-      }
-    } finally {
+  // ✅ BLOQUEIO IMEDIATO ANTES DE QUALQUER COISA
+  if (loading) return;
+  setLoading(true);
+
+  try {
+    // ✅ VALIDAÇÃO DO FORMULÁRIO
+    if (!validateForm()) {
       setLoading(false);
+      return;
     }
-  };
+
+    // Prepara os dados para envio
+    const dadosParaEnvio = {
+      ...formData,
+      // Se status não for CAMPO, envia campos como string vazia ao invés de N/A
+      equipe: formData.status !== "CAMPO" ? "" : formData.equipe,
+      servico: formData.status !== "CAMPO" ? "" : formData.servico,
+      placa_veiculo: formData.status !== "CAMPO" ? "" : formData.placa_veiculo
+    };
+
+    const url = editId 
+      ? `https://composicao-sp-soc.onrender.com/teams/${editId}` 
+      : "https://composicao-sp-soc.onrender.com/teams";
+    const method = editId ? "put" : "post";
+
+    const response = await axios[method](url, dadosParaEnvio);
+
+    if (response.status === 201 || response.status === 200) {
+      toast.success(editId ? "Equipe atualizada com sucesso!" : "Equipe cadastrada com sucesso!");
+      setEditId(null);
+
+      // Busca as equipes cadastradas na mesma data
+      const equipesCadastradas = await fetchEquipesPorData(formData.data_atividade);
+
+      // Atualiza as listas de seleção com base nas equipes cadastradas
+      atualizarListasDeSelecao(equipesCadastradas);
+
+      // Limpa apenas os campos que devem ser resetados
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        eletricista_motorista: null,
+        br0_motorista: "",
+        eletricista_parceiro: null,
+        br0_parceiro: "",
+        equipe: null,
+        placa_veiculo: null,
+      }));
+
+      // Recarrega as opções de acordo com o estado atual
+      const estado = localStorage.getItem("estado") || "SP";
+      setEletricistaMotoristaOptions(eletricistasCompletos[estado]);
+      setEletricistaParceiroOptions(eletricistasCompletos[estado]);
+      setEquipeOptions(equipeOptionsCompleta[estado]);
+      setPlacaVeiculoOptions(placaVeiculoOptionsCompleta[estado]);
+
+      // Atualiza a lista de equipes
+      fetchTeams();
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Erro ao cadastrar/atualizar equipe.");
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
 const handleEdit = async (team) => {
   const estado = localStorage.getItem("estado") || "SP";
