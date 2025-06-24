@@ -23,38 +23,41 @@ export default function PainelAbsenteismo({ estado }) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      try {
-        const start = format(startDate, "yyyy-MM-dd");
-        const end = format(endDate, "yyyy-MM-dd");
+useEffect(() => {
+  async function fetchData() {
+    setLoading(true);
+    try {
+      const start = format(startDate, "yyyy-MM-dd");
+      const end = format(endDate, "yyyy-MM-dd");
 
-        //const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
-        const queryString = `startDate=${start}&endDate=${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+      // Rota /teams/finalizadas usa 'data=INICIO,FIM'
+      const queryStringTeams = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
 
+      // Rota /absenteismo usa 'startDate=INICIO&endDate=FIM'
+      const queryStringAbsenteismo = `startDate=${start}&endDate=${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
 
-        const [dadosRes, absenteismoRes] = await Promise.all([
-          fetch(`${BASE_URL}/teams/finalizadas?${queryString}`),
-          fetch(`${BASE_URL}/absenteismo?${queryString}`)
-        ]);
+      const [dadosRes, absenteismoRes] = await Promise.all([
+        fetch(`${BASE_URL}/teams/finalizadas?${queryStringTeams}`),
+        fetch(`${BASE_URL}/absenteismo?${queryStringAbsenteismo}`)
+      ]);
 
-        const [dadosJson, absenteismoJson] = await Promise.all([
-          dadosRes.json(),
-          absenteismoRes.json()
-        ]);
+      const [dadosJson, absenteismoJson] = await Promise.all([
+        dadosRes.json(),
+        absenteismoRes.json()
+      ]);
 
-        setDados(dadosJson);
-        setAbsenteismo(absenteismoJson);
-      } catch (err) {
-        console.error("Erro ao buscar dados:", err);
-      } finally {
-        setLoading(false);
-      }
+      setDados(dadosJson);
+      setAbsenteismo(absenteismoJson);
+    } catch (err) {
+      console.error("Erro ao buscar dados:", err);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    fetchData();
-  }, [startDate, endDate, selectedEstado]);
+  fetchData();
+}, [startDate, endDate, selectedEstado]);
+
 
   const handleDownload = () => {
     const start = format(startDate, "yyyy-MM-dd");
@@ -62,7 +65,6 @@ export default function PainelAbsenteismo({ estado }) {
 
     //const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
     const queryString = `startDate=${start}&endDate=${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
-
 
     const link = document.createElement("a");
     link.href = `${BASE_URL}/composicao/export?${queryString}`;
