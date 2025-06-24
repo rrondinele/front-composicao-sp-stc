@@ -22,37 +22,31 @@ export default function PainelAbsenteismo({ estado }) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [loading, setLoading] = useState(true); // Estado inicial: true (carregando)
 
-  // ✅ Força o estado vindo da rota (caso tenha)
-  useEffect(() => {
-    if (isEstadoFixo) {
-      setSelectedEstado(estado);
-    }
-  }, [estado, isEstadoFixo]);
+useEffect(() => {
+  async function fetchData() {
+    setLoading(true); // Ativa o loading
+    try {
+      const [dadosRes, absenteismoRes] = await Promise.all([
+        fetch(`${BASE_URL}/teams/finalizadas?data=${data}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`),
+        fetch(`${BASE_URL}/absenteismo?data=${data}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`)
+      ]);
+      
+      const [dadosJson, absenteismoJson] = await Promise.all([
+        dadosRes.json(),
+        absenteismoRes.json()
+      ]);
 
-  useEffect(() => {
-    async function fetchDados() {
-      try {
-        const res = await fetch(`${BASE_URL}/teams/finalizadas?data=${data}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`);
-        const json = await res.json();
-        setDados(json);
-      } catch (err) {
-        console.error("Erro ao buscar equipes:", err);
-      }
+      setDados(dadosJson);
+      setAbsenteismo(absenteismoJson);
+    } catch (err) {
+      console.error("Erro ao buscar dados:", err);
+    } finally {
+      setLoading(false); // Desativa o loading
     }
+  }
 
-    async function fetchAbsenteismo() {
-      try {
-        const res = await fetch(`${BASE_URL}/absenteismo?data=${data}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`);
-        const stats = await res.json();
-        setAbsenteismo(stats);
-      } catch (err) {
-        console.error("Erro ao calcular absenteísmo:", err);
-      }
-    }
-
-    fetchDados();
-    fetchAbsenteismo();
-  }, [data, selectedEstado]);  // ✅ Incluído selectedEstado no useEffect
+  fetchData();
+}, [data, selectedEstado]);
 
   const handleDownload = () => {
     const link = document.createElement("a");
@@ -196,7 +190,19 @@ export default function PainelAbsenteismo({ estado }) {
                 </tr>
               </thead>
               <tbody>
-                {sortedData.length === 0 ? (
+                {loading ? (
+                  <tr>
+                    <td colSpan="8">
+                      <div className="flex justify-center items-center py-10">
+                        <svg className="animate-spin h-8 w-8 text-blue-500 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span className="text-gray-600 text-sm">Carregando equipes...</span>
+                      </div>
+                    </td>
+                  </tr>
+                ) : sortedData.length === 0 ? (
                   <tr>
                     <td colSpan="8" className="text-center py-4 text-gray-500">
                       Nenhuma equipe encontrada.
