@@ -59,18 +59,23 @@ useEffect(() => {
 }, [startDate, endDate, selectedEstado]);
 
 
-  const handleDownload = () => {
-    const start = format(startDate, "yyyy-MM-dd");
-    const end = format(endDate, "yyyy-MM-dd");
+const handleDownload = () => {
+  const start = format(startDate, "yyyy-MM-dd");
+  const end = format(endDate, "yyyy-MM-dd");
 
-    //const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
-    const queryString = `startDate=${start}&endDate=${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+  const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
 
-    const link = document.createElement("a");
-    link.href = `${BASE_URL}/composicao/export?${queryString}`;
-    link.download = `composicao_${start}_a_${end}_${selectedEstado}.xlsx`;
-    link.click();
-  };
+  const link = document.createElement("a");
+  link.href = `${BASE_URL}/composicao/export?${queryString}`;
+  link.download = `composicao_${start}_a_${end}_${selectedEstado}.xlsx`;
+  link.style.display = 'none';       // Oculta o elemento
+  link.target = "_blank";            // Garante que não afete a aba atual
+
+  document.body.appendChild(link);   // Anexa ao DOM
+  link.click();                      // Dispara o download
+  document.body.removeChild(link);   // Limpa após o clique
+};
+
 
   const requestSort = (key) => {
     let direction = 'ascending';
