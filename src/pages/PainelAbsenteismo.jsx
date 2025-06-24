@@ -30,7 +30,9 @@ export default function PainelAbsenteismo({ estado }) {
         const start = format(startDate, "yyyy-MM-dd");
         const end = format(endDate, "yyyy-MM-dd");
 
-        const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+        //const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+        const queryString = `startDate=${start}&endDate=${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+
 
         const [dadosRes, absenteismoRes] = await Promise.all([
           fetch(`${BASE_URL}/teams/finalizadas?${queryString}`),
@@ -58,7 +60,9 @@ export default function PainelAbsenteismo({ estado }) {
     const start = format(startDate, "yyyy-MM-dd");
     const end = format(endDate, "yyyy-MM-dd");
 
-    const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+    //const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+    const queryString = `startDate=${start}&endDate=${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+
 
     const link = document.createElement("a");
     link.href = `${BASE_URL}/composicao/export?${queryString}`;
