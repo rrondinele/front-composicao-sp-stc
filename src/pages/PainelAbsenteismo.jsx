@@ -59,23 +59,30 @@ useEffect(() => {
 }, [startDate, endDate, selectedEstado]);
 
 
-const handleDownload = () => {
+const handleDownload = async () => {
   const start = format(startDate, "yyyy-MM-dd");
   const end = format(endDate, "yyyy-MM-dd");
-
   const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
 
-  const link = document.createElement("a");
-  link.href = `${BASE_URL}/composicao/export?${queryString}`;
-  link.download = `composicao_${start}_a_${end}_${selectedEstado}.xlsx`;
-  link.style.display = 'none';       // Oculta o elemento
-  link.target = "_blank";            // Garante que não afete a aba atual
+  try {
+    const response = await fetch(`${BASE_URL}/composicao/export?${queryString}`);
+    if (!response.ok) throw new Error("Erro ao baixar o Excel");
 
-  document.body.appendChild(link);   // Anexa ao DOM
-  link.click();                      // Dispara o download
-  document.body.removeChild(link);   // Limpa após o clique
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `composicao_${start}_a_${end}_${selectedEstado}.xlsx`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Erro ao exportar Excel:", error);
+  }
 };
-
 
   const requestSort = (key) => {
     let direction = 'ascending';
