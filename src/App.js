@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CadastroEquipe from "./pages/CadastroEquipe";
 import PainelAbsenteismo from "./pages/PainelAbsenteismo";
 import TesteTabela from "./pages/teste-tabela"; // Importe o novo componente
+import TesteFiltroPeriodo from "./pages/TesteFiltroPeriodo";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/painel/enel-soc-marica" element={<PainelAbsenteismo estado="RJ" />} />
         <Route path="/painel/light-vale" element={<PainelAbsenteismo estado="RJB" />} />
         <Route path="/teste-tabela" element={<TesteTabela />} /> {/* Nova rota */}
+        <Route path="/teste-periodo" element={<TesteFiltroPeriodo />} />  {/* <<< Nova Rota */}
       </Routes>
     </BrowserRouter>
   );

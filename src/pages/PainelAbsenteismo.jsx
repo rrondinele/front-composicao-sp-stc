@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { MetricCard } from '../components/tMetrics';
 import { Users, UserX, Activity } from 'lucide-react';
+import DateRangeModalSelector from '../components/DateRangeModalSelector';
 
 const BASE_URL = "https://composicao-sp-soc.onrender.com";
 
@@ -13,45 +14,55 @@ const statusColors = {
 };
 
 export default function PainelAbsenteismo({ estado }) {
-  const [data, setData] = useState(format(new Date(), "yyyy-MM-dd"));
-  //const [selectedEstado, setSelectedEstado] = useState('ALL');  // ✅ Corrigido: sem estado indefinido
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [selectedEstado, setSelectedEstado] = useState(estado || 'ALL');
   const isEstadoFixo = !!estado;
   const [dados, setDados] = useState([]);
   const [absenteismo, setAbsenteismo] = useState({ total: 0, completas: 0, ausentes: 0, percentual: "0" });
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
-  const [loading, setLoading] = useState(true); // Estado inicial: true (carregando)
+  const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  async function fetchData() {
-    setLoading(true); // Ativa o loading
-    try {
-      const [dadosRes, absenteismoRes] = await Promise.all([
-        fetch(`${BASE_URL}/teams/finalizadas?data=${data}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`),
-        fetch(`${BASE_URL}/absenteismo?data=${data}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`)
-      ]);
-      
-      const [dadosJson, absenteismoJson] = await Promise.all([
-        dadosRes.json(),
-        absenteismoRes.json()
-      ]);
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const start = format(startDate, "yyyy-MM-dd");
+        const end = format(endDate, "yyyy-MM-dd");
 
-      setDados(dadosJson);
-      setAbsenteismo(absenteismoJson);
-    } catch (err) {
-      console.error("Erro ao buscar dados:", err);
-    } finally {
-      setLoading(false); // Desativa o loading
+        const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+
+        const [dadosRes, absenteismoRes] = await Promise.all([
+          fetch(`${BASE_URL}/teams/finalizadas?${queryString}`),
+          fetch(`${BASE_URL}/absenteismo?${queryString}`)
+        ]);
+
+        const [dadosJson, absenteismoJson] = await Promise.all([
+          dadosRes.json(),
+          absenteismoRes.json()
+        ]);
+
+        setDados(dadosJson);
+        setAbsenteismo(absenteismoJson);
+      } catch (err) {
+        console.error("Erro ao buscar dados:", err);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
 
-  fetchData();
-}, [data, selectedEstado]);
+    fetchData();
+  }, [startDate, endDate, selectedEstado]);
 
   const handleDownload = () => {
+    const start = format(startDate, "yyyy-MM-dd");
+    const end = format(endDate, "yyyy-MM-dd");
+
+    const queryString = `data=${start},${end}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
+
     const link = document.createElement("a");
-    link.href = `${BASE_URL}/composicao/export?data=${data}${selectedEstado !== 'ALL' ? `&estado=${selectedEstado}` : ''}`;
-    link.download = `composicao_${data}_${selectedEstado}.xlsx`;
+    link.href = `${BASE_URL}/composicao/export?${queryString}`;
+    link.download = `composicao_${start}_a_${end}_${selectedEstado}.xlsx`;
     link.click();
   };
 
@@ -81,7 +92,7 @@ useEffect(() => {
               <Activity className="w-6 h-6 text-yellow-500" />
               Painel de Absenteísmo
             </h1>
-            <p className="text-sm text-gray-500">Acompanhamento diário de equipes e ausências</p>
+            <p className="text-sm text-gray-500">Acompanhamento de equipes e ausências</p>
           </div>
           <div>
             <button
@@ -98,14 +109,13 @@ useEffect(() => {
       <main className="w-full max-w-[1700px] mx-auto px-6 py-6">
         {/* FILTROS */}
         <div className="flex justify-between items-center gap-4 mb-6">
-          <input
-            type="date"
-            value={data}
-            onChange={(e) => setData(e.target.value)}
-            className="border rounded-md px-3 py-2 text-sm"
+          <DateRangeModalSelector
+            onRangeChange={({ startDate, endDate }) => {
+              setStartDate(startDate);
+              setEndDate(endDate);
+            }}
           />
 
-          {/* Dropdown de Estado */}
           {!isEstadoFixo && (
             <select
               value={selectedEstado}
@@ -166,10 +176,10 @@ useEffect(() => {
                 <tr>
                   {[
                     { key: "data_atividade", label: "Data" },
-                    { key: "supervisor", label: "Supervisor (a)" },
+                    { key: "supervisor", label: "Supervisor" },
                     { key: "equipe", label: "Equipe" },
-                    { key: "eletricista_motorista", label: "Eletricista Motorista" },
-                    { key: "eletricista_parceiro", label: "Eletricista Parceiro (a)" },
+                    { key: "eletricista_motorista", label: "Motorista" },
+                    { key: "eletricista_parceiro", label: "Parceiro" },
                     { key: "servico", label: "Serviço" },
                     { key: "placa_veiculo", label: "Placa" },
                     { key: "status", label: "Status" },
@@ -177,7 +187,7 @@ useEffect(() => {
                     <th
                       key={key}
                       onClick={() => requestSort(key)}
-                      className={`p-3 border-b border-gray-200 text-left cursor-pointer hover:bg-gray-200 relative`}
+                      className="p-3 border-b border-gray-200 text-left cursor-pointer hover:bg-gray-200 relative"
                     >
                       {label}
                       {sortConfig.key === key && (
@@ -212,13 +222,13 @@ useEffect(() => {
                   sortedData.map((item, index) => (
                     <tr key={index} className="hover:bg-gray-50 transition">
                       <td className="p-2 border-b border-gray-100">{item.data_atividade}</td>
-                      <td className="p-2 border-b border-gray-100 text-left overflow-hidden text-ellipsis max-w-[200px] whitespace-nowrap">{item.supervisor}</td>
+                      <td className="p-2 border-b border-gray-100">{item.supervisor}</td>
                       <td className="p-2 border-b border-gray-100">{item.equipe}</td>
-                      <td className="p-2 border-b border-gray-100 text-left overflow-hidden text-ellipsis max-w-[200px] whitespace-nowrap">{item.eletricista_motorista}</td>
-                      <td className="p-2 border-b border-gray-100 text-left overflow-hidden text-ellipsis max-w-[200px] whitespace-nowrap">{item.eletricista_parceiro}</td>
+                      <td className="p-2 border-b border-gray-100">{item.eletricista_motorista}</td>
+                      <td className="p-2 border-b border-gray-100">{item.eletricista_parceiro}</td>
                       <td className="p-2 border-b border-gray-100">{item.servico}</td>
                       <td className="p-2 border-b border-gray-100">{item.placa_veiculo}</td>
-                      <td className={`p-2 border-b border-gray-100 font-semibold rounded text-center ${statusColors[item.status] || statusColors.OUTRO}`}>
+                      <td className={`p-2 border-b border-gray-100 font-semibold text-center rounded ${statusColors[item.status] || statusColors.OUTRO}`}>
                         {item.status}
                       </td>
                     </tr>
