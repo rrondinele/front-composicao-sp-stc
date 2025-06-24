@@ -16,6 +16,7 @@ function App() {
         <Route path="/painel/light-vale" element={<PainelAbsenteismo estado="RJB" />} />
         <Route path="/teste-tabela" element={<TesteTabela />} /> {/* Nova rota */}
         <Route path="/teste-periodo" element={<TesteFiltroPeriodo />} />  {/* <<< Nova Rota */}
+        <Route path="/teste-perdiodo" element={<TesteFiltroPeriodo />} />  {/* <<< Nova Rota */}
       </Routes>
     </BrowserRouter>
   );
