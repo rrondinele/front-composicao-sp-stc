@@ -20,6 +20,7 @@ export default function PainelAbsenteismo({ estado }) {
   const [dados, setDados] = useState([]);
   const [absenteismo, setAbsenteismo] = useState({ total: 0, completas: 0, ausentes: 0, percentual: "0" });
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+  const [loading, setLoading] = useState(true); // Estado inicial: true (carregando)
 
   // ✅ Força o estado vindo da rota (caso tenha)
   useEffect(() => {
