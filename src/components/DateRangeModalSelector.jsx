@@ -66,8 +66,14 @@ export default function DateRangeModalSelector({ onRangeChange }) {
               Hoje
             </button>
             <button
-              onClick={() => handleQuickSelect("last7days")}
+              onClick={() => handleQuickSelect("yesterday")}
               className="text-sm px-3 py-1 bg-gray-100 rounded hover:bg-gray-200"
+            >
+              Ontem
+            </button>
+            <button
+              onClick={() => handleQuickSelect("last7days")}
+              className="text-sm px-3 py-1 bg-gray-100 rounded hover:bg-gray-200"            
             >
               Últimos 7 dias
             </button>
@@ -80,14 +86,16 @@ export default function DateRangeModalSelector({ onRangeChange }) {
           </div>
 
           {/* Calendário Range */}
-          <DateRange
-            ranges={range}
-            onChange={(item) => setRange([item.selection])}
-            showSelectionPreview={true}
-            moveRangeOnFirstSelection={false}
-            months={2}
-            direction="horizontal"
-          />
+          <div className="scale-90 text-xs">
+            <DateRange
+              ranges={range}
+              onChange={(item) => setRange([item.selection])}
+              showSelectionPreview={true}
+              moveRangeOnFirstSelection={false}
+              months={2}
+              direction="horizontal"
+            />
+          </div>
 
           {/* Botões de ação */}
           <div className="flex justify-end gap-2 mt-3">

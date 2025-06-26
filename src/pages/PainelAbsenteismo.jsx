@@ -194,10 +194,10 @@ const handleDownload = async () => {
                 <tr>
                   {[
                     { key: "data_atividade", label: "Data" },
-                    { key: "supervisor", label: "Supervisor" },
+                    { key: "supervisor", label: "Supervisor (a)" },
                     { key: "equipe", label: "Equipe" },
                     { key: "eletricista_motorista", label: "Motorista" },
-                    { key: "eletricista_parceiro", label: "Parceiro" },
+                    { key: "eletricista_parceiro", label: "Parceiro (a)" },
                     { key: "servico", label: "Serviço" },
                     { key: "placa_veiculo", label: "Placa" },
                     { key: "status", label: "Status" },
