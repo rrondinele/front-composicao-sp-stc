@@ -49,11 +49,6 @@ const handleApply = () => {
   setShowModal(false);
 };
 
-const textoPeriodo =
-  dataRange.startDate.getTime() === dataRange.endDate.getTime()
-    ? format(dataRange.startDate, "dd/MM/yyyy")
-    : `${format(dataRange.startDate, "dd/MM/yyyy")} - ${format(dataRange.endDate, "dd/MM/yyyy")}`;
-
   return (
     <div className="relative inline-block text-left">
       {/* Botão principal */}
@@ -63,10 +58,6 @@ const textoPeriodo =
       >
         Selecionar Período
       </button>
-      <p className="mt-1 text-sm text-gray-500">
-      Período selecionado: <span className="font-medium text-gray-700">{textoPeriodo}</span>
-      </p>
-
 
       {/* Modal */}
       {showModal && (

@@ -101,6 +101,11 @@ const handleDownload = async () => {
     });
   }, [dados, sortConfig]);
 
+  const textoPeriodo =
+  dataRange.startDate.getTime() === dataRange.endDate.getTime()
+    ? format(dataRange.startDate, "dd/MM/yyyy")
+    : `${format(dataRange.startDate, "dd/MM/yyyy")} - ${format(dataRange.endDate, "dd/MM/yyyy")}`;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
@@ -127,12 +132,18 @@ const handleDownload = async () => {
       <main className="w-full max-w-[1700px] mx-auto px-6 py-6">
         {/* FILTROS */}
         <div className="flex justify-between items-center gap-4 mb-6">
-          <DateRangeModalSelector
-            onRangeChange={({ startDate, endDate }) => {
-              setStartDate(startDate);
-              setEndDate(endDate);
-            }}
-          />
+          <div>
+            <DateRangeModalSelector
+              onRangeChange={({ startDate, endDate }) => {
+                setStartDate(startDate);
+                setEndDate(endDate);
+              }}
+            />
+            <p className="text-sm text-gray-500 mt-1">
+              Período selecionado:{" "}
+              <span className="font-medium text-gray-700">{textoPeriodo}</span>
+            </p>
+          </div>
 
           {!isEstadoFixo && (
             <select
