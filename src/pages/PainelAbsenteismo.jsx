@@ -58,7 +58,6 @@ useEffect(() => {
   fetchData();
 }, [startDate, endDate, selectedEstado]);
 
-
 const handleDownload = async () => {
   const start = format(startDate, "yyyy-MM-dd");
   const end = format(endDate, "yyyy-MM-dd");
@@ -102,9 +101,9 @@ const handleDownload = async () => {
   }, [dados, sortConfig]);
 
   const textoPeriodo =
-  dataRange.startDate.getTime() === dataRange.endDate.getTime()
-    ? format(dataRange.startDate, "dd/MM/yyyy")
-    : `${format(dataRange.startDate, "dd/MM/yyyy")} - ${format(dataRange.endDate, "dd/MM/yyyy")}`;
+    startDate.getTime() === endDate.getTime()
+      ? format(startDate, "dd/MM/yyyy")
+      : `${format(startDate, "dd/MM/yyyy")} - ${format(endDate, "dd/MM/yyyy")}`;
 
   return (
     <div className="min-h-screen bg-gray-50">
