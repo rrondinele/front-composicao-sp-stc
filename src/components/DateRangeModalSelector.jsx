@@ -44,6 +44,11 @@ const handleQuickSelect = (period) => {
   setShowModal(false);
 };
 
+const handleApply = () => {
+  onRangeChange(range[0]);
+  setShowModal(false);
+};
+
   return (
     <div className="relative inline-block text-left">
       {/* Botão principal */}
