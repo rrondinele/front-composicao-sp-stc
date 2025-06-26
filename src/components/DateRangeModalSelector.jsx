@@ -14,35 +14,35 @@ export default function DateRangeModalSelector({ onRangeChange }) {
     },
   ]);
 
-  const handleQuickSelect = (period) => {
-    const today = new Date();
-    let startDate = today;
-    let endDate = today;
+const handleQuickSelect = (period) => {
+  const today = new Date();
+  let startDate = today;
+  let endDate = today;
 
-    switch (period) {
-      case "today":
-        break;
-      case "last7days":
-        startDate = new Date(today);
-        startDate.setDate(today.getDate() - 6);
-        break;
-      case "thismonth":
-        startDate = new Date(today.getFullYear(), today.getMonth(), 1);
-        break;
-      default:
-        break;
-    }
+  switch (period) {
+    case "today":
+      break;
+    case "yesterday":
+      startDate = new Date(today);
+      startDate.setDate(today.getDate() - 1);
+      endDate = new Date(startDate);
+      break;
+    case "last7days":
+      startDate = new Date(today);
+      startDate.setDate(today.getDate() - 6);
+      break;
+    case "thismonth":
+      startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+      break;
+    default:
+      break;
+  }
 
-    const newRange = [{ startDate, endDate, key: "selection" }];
-    setRange(newRange);
-    onRangeChange(newRange[0]);
-    setShowModal(false);
-  };
-
-  const handleApply = () => {
-    onRangeChange(range[0]);
-    setShowModal(false);
-  };
+  const newRange = [{ startDate, endDate, key: "selection" }];
+  setRange(newRange);
+  onRangeChange(newRange[0]);
+  setShowModal(false);
+};
 
   return (
     <div className="relative inline-block text-left">
@@ -86,7 +86,7 @@ export default function DateRangeModalSelector({ onRangeChange }) {
           </div>
 
           {/* Calendário Range */}
-          <div className="scale-90 text-xs">
+          <div className="scale-50 text-xs">
             <DateRange
               ranges={range}
               onChange={(item) => setRange([item.selection])}
