@@ -61,7 +61,7 @@ const handleApply = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="absolute z-20 mt-2 bg-white border shadow-lg rounded p-4">
+        <div className="absolute z-20 mt-2 bg-white border shadow-lg rounded p-4 transform scale-90 text-sm">
           {/* Quick Buttons */}
           <div className="flex gap-2 mb-3">
             <button
@@ -91,7 +91,6 @@ const handleApply = () => {
           </div>
 
           {/* Calendário Range */}
-          <div className="scale-50 text-xs">
             <DateRange
               ranges={range}
               onChange={(item) => setRange([item.selection])}
@@ -100,7 +99,6 @@ const handleApply = () => {
               months={2}
               direction="horizontal"
             />
-          </div>
 
           {/* Botões de ação */}
           <div className="flex justify-end gap-2 mt-3">
