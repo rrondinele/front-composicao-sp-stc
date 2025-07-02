@@ -40,6 +40,7 @@ export const placaVeiculoOptionsCompleta = {
     { value: "RMI6F35", label: "RMI6F35" },
     { value: "RMG6106", label: "RMG6106" },
     { value: "TIT3D32", label: "TIT3D32" },
+    { value: "TMH0F06", label: "TMH0F06" },
     { value: "TKR5A94", label: "TKR5A94" },
     { value: "TLN1J81", label: "TLN1J81" }
   ],
