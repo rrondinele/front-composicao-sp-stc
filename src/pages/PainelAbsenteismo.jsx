@@ -151,9 +151,9 @@ const handleDownload = async () => {
               className="border rounded-md px-3 py-2 text-sm"
             >
               <option value="ALL">Todos os Estados</option>
-              <option value="SP">SP</option>
-              <option value="RJ">RJ</option>
-              <option value="RJB">RJB</option>
+              <option value="SP">Enel - SP - São Paulo</option>
+              <option value="RJ">Enel - RJ - Maricá</option>
+              <option value="RJB">Light - RJ - Vale do Paraíba</option>
             </select>
           )}
         </div>
