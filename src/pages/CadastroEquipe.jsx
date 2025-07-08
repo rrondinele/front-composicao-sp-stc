@@ -84,6 +84,7 @@ function App() {
     "19704" : "019704 - JORGE MICHAEL DE CASTRO PIRES",
     "20116" : "020116 - WANDERSON FERREIRA DA CONCEICAO",
     "20203" : "020203 - MICHEL DE PAIVA BRESSANI",
+    "19104" : "019104 - PAULO OTAVIO DE OLIVEIRA",
     "19475" : "019475 - JONATAS DE OLIVEIRA ALVIM ESTEVES"
   };
 
@@ -126,7 +127,7 @@ const definirEstadoPorSupervisor = (matricula) => {
     "18089", "18273", "18274", "18275", "18276", 
     "18412", "18466", "18468", "18761", "18575",
     "19231", "19412", "19485", "19704", "20116",
-    "20203", "19475"
+    "20203", "19475", "19104"
   ];
   
   if (supervisoresRJ.includes(matricula)) {
