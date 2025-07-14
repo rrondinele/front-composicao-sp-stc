@@ -151,8 +151,7 @@ export const eletricistasCompletos = {
       { value: "015830 - WALDEMIR LUCIO SILVA", label: "015830 - WALDEMIR LUCIO SILVA" },
       { value: "015706 - WALLACE DIAS FALCAO", label: "015706 - WALLACE DIAS FALCAO" },
       { value: "020264 - WELLINGTON MARINS DE ABREU", label: "020264 - WELLINGTON MARINS DE ABREU" },
-      { value: "017419 - WILLIAN FELIX SILVA DE PAULA", label: "017419 - WILLIAN FELIX SILVA DE PAULA" }
-
+      { value: "017419 - WILLIAN FELIX SILVA DE PAULA", label: "017419 - WILLIAN FELIX SILVA DE PAULA" }''
   ],
   RJB: [
       { value: "018723 - AGNALDO IOTI MAIA", label: "018723 - AGNALDO IOTI MAIA" },
