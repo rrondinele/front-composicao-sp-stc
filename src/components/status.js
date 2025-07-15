@@ -2,6 +2,7 @@ export const statusOptions = [
     { value: "AFASTADO", label: "AFASTADO" },
     { value: "ATESTADO", label: "ATESTADO" },
     { value: "BASE", label: "BASE" },
+    { value: "BANCO DE HORAS", label: "BANCO DE HORAS" },
     { value: "CAMPO", label: "CAMPO" },
     { value: "DESLIGADO", label: "DESLIGADO" },
     { value: "FALTA", label: "FALTA" },
