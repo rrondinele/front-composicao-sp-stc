@@ -150,6 +150,7 @@ export const equipeOptionsCompleta = {
     { value: "TRCGDL007", label: "TRCGDL007" },
     { value: "TRCGDL008", label: "TRCGDL008" },
     { value: "TRCGDL010", label: "TRCGDL010" },
+    { value: "TRCGDL011", label: "TRCGDL011" },
     { value: "TRCGDL012", label: "TRCGDL012" },
     { value: "TRCGDR001", label: "TRCGDR001" },
     { value: "TRCGDR002", label: "TRCGDR002" },
