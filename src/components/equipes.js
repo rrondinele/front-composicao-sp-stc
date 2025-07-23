@@ -14,6 +14,7 @@ export const equipeOptionsCompleta = {
     { value: "CCE017", label: "CCE017" },
     { value: "CCE021", label: "CCE021" },
     { value: "CCE022", label: "CCE022" },
+    { value: "CCE023", label: "CCE023" },
     { value: "CCE025", label: "CCE025" },
     { value: "CCE028", label: "CCE028" },
     { value: "CCE029", label: "CCE029" },
