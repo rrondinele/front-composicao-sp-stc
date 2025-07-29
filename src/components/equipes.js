@@ -90,6 +90,7 @@ export const equipeOptionsCompleta = {
   RJB: [
     { value: "BPCGDA001", label: "BPCGDA001" },
     { value: "BPCGDA002", label: "BPCGDA002" },
+    { value: "BPCGDC001", label: "BPCGDC001" },
     { value: "BPCGDC002", label: "BPCGDC002" },
     { value: "BPCGDC003", label: "BPCGDC003" },
     { value: "BPCGDC004", label: "BPCGDC004" },
@@ -114,6 +115,7 @@ export const equipeOptionsCompleta = {
     { value: "BPCGDR003", label: "BPCGDR003" },
     { value: "BPCGDR004", label: "BPCGDR004" },
     { value: "BPCGDR005", label: "BPCGDR005" },
+    { value: "BPCGDR006", label: "BPCGDR006" },
     { value: "RCVBPCG001", label: "RCVBPCG001" },
     { value: "RCVBPCG002", label: "RCVBPCG002" },
     { value: "RCVBPCG003", label: "RCVBPCG003" },
