@@ -87,7 +87,7 @@ function App() {
     "19104" : "019104 - PAULO OTAVIO DE OLIVEIRA",
     "19475" : "019475 - JONATAS DE OLIVEIRA ALVIM ESTEVES",
     "20306" : "020306 - LEANDRO DE MORAES CASTRO",
-    "18505l" : "018505 - DIEGO RAFAEL DE MELO SILVA"
+    "18505l" : "018505l - DIEGO RAFAEL DE MELO SILVA"
   };
 
 useEffect(() => {
@@ -129,7 +129,7 @@ const definirEstadoPorSupervisor = (matricula) => {
     "18089", "18273", "18274", "18275", "18276", 
     "18412", "18466", "18468", "18761", "18575",
     "19231", "19412", "19485", "19704", "20116",
-    "20203", "19475", "19104","20306","18505l"
+    "20203", "19475", "19104","20306", "18505l"
   ];
   
   if (supervisoresRJ.includes(matricula)) {
