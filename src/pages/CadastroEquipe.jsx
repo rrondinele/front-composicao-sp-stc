@@ -309,30 +309,33 @@ const handleLogin = async (e) => {
     let updatedFormData = { ...formData, [fieldName]: selectedOption.value };
 
     // Se o campo "status" for alterado
-    if (fieldName === "status") {
-      if (selectedOption.value !== "CAMPO") {
-        // Status DIFERENTE de CAMPO: preenche valores como "N/A"
-        updatedFormData = {
-          ...updatedFormData,
-          eletricista_motorista: "N/A",
-          equipe: "N/A",
-          servico: "N/A",
-          placa_veiculo: "N/A",        
-        };
-      } else {
-        // Status é CAMPO: LIMPA os valores automáticos
-        updatedFormData = {
-          ...updatedFormData,
-          eletricista_motorista: "", // Limpa
-          br0_motorista: "", // Limpa
-          eletricista_parceiro: "", // Limpa  
-          br0_parceiro: "", // Limpa
-          equipe: "", // Limpa
-          servico: "", // ⭐ LIMPA O SERVIÇO TAMBÉM!
-          placa_veiculo: "", // Limpa
-        };
-      }
-    }      
+  if (fieldName === "status") {
+    if (selectedOption.value !== "CAMPO") {
+      // Status DIFERENTE de CAMPO → preenche com "N/A"
+      updatedFormData = {
+        ...updatedFormData,
+        eletricista_motorista: "N/A",
+        equipe: "N/A",
+        servico: "N/A",
+        placa_veiculo: "N/A",
+        // parceiro/BR0s podem ficar vazios se não forem obrigatórios fora de CAMPO
+        eletricista_parceiro: "N/A",
+        br0_motorista: "",
+        br0_parceiro: "",
+      };
+    } else {
+      // Status CAMPO → LIMPA TUDO IMEDIATAMENTE
+      updatedFormData = {
+        ...updatedFormData,
+        equipe: null,
+        eletricista_motorista: null,
+        br0_motorista: "",
+        eletricista_parceiro: null,
+        br0_parceiro: "",
+        servico: null,
+        placa_veiculo: null,
+      }; 
+
     // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
     if (fieldName === "eletricista_motorista") {
       updatedFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
