@@ -306,6 +306,18 @@ const handleLogin = async (e) => {
         servico: "N/A", // Preenche "Servico" com "N/A"
         placa_veiculo: "N/A", // Preenche "Placa" com "N/A"        
       };
+    } else {
+    // Status é CAMPO: LIMPA os valores automáticos
+    updatedFormData = {
+      ...updatedFormData,
+      eletricista_motorista: "", // Limpa
+      br0_motorista: "", // Limpa
+      eletricista_parceiro: "", // Limpa  
+      br0_parceiro: "", // Limpa
+      equipe: "", // Limpa
+      servico: "", // ⭐ LIMPA O SERVIÇO TAMBÉM!
+      placa_veiculo: "", // Limpa
+    };
     }  
     // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
     if (fieldName === "eletricista_motorista") {
