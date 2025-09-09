@@ -284,41 +284,55 @@ const handleLogin = async (e) => {
       "placa_veiculo",
     ];
 
+    // Validação ESPECÍFICA para serviço
+    if (formData.status === "CAMPO" && (!formData.servico || formData.servico === "N/A")) {
+      toast.error("Para status CAMPO, é obrigatório selecionar um serviço válido.");
+      return false;
+    }
+    
+    if (formData.status !== "CAMPO" && formData.servico === "N/A") {
+      toast.error("Por favor, selecione um serviço válido.");
+      return false;
+    }
+
     for (const field of requiredFields) {
-      if (!formData[field]) {
-        toast.error(`Por favor, preencha o campo: ${field.replace("_", " ")}`);
+      if (!formData[field] || formData[field] === "N/A") {
+        toast.error(`Por favor, preencha o campo: ${field.replace(/_/g, " ")}`);
         return false;
       }
     }
     return true;
-  };  
+  }; 
   
   const handleSelectChange = async (selectedOption, fieldName) => {
     // Atualiza o formData com o valor selecionado
     let updatedFormData = { ...formData, [fieldName]: selectedOption.value };
-  
-    // Se o campo "status" for alterado e for diferente de "CAMPO", definir valores como "N/A"
-    if (fieldName === "status" && selectedOption.value !== "CAMPO") {
-      updatedFormData = {
-        ...updatedFormData, // Mantém os valores existentes
-        eletricista_motorista: "N/A", // Preenche "Eletricista_Motorista" com "N/A"
-        equipe: "N/A", // Preenche "Equipe" com "N/A"
-        servico: "N/A", // Preenche "Servico" com "N/A"
-        placa_veiculo: "N/A", // Preenche "Placa" com "N/A"        
-      };
-    } else {
-    // Status é CAMPO: LIMPA os valores automáticos
-    updatedFormData = {
-      ...updatedFormData,
-      eletricista_motorista: "", // Limpa
-      br0_motorista: "", // Limpa
-      eletricista_parceiro: "", // Limpa  
-      br0_parceiro: "", // Limpa
-      equipe: "", // Limpa
-      servico: "", // ⭐ LIMPA O SERVIÇO TAMBÉM!
-      placa_veiculo: "", // Limpa
-    };
-    }  
+
+    // Se o campo "status" for alterado
+    if (fieldName === "status") {
+      if (selectedOption.value !== "CAMPO") {
+        // Status DIFERENTE de CAMPO: preenche valores como "N/A"
+        updatedFormData = {
+          ...updatedFormData,
+          eletricista_motorista: "N/A",
+          equipe: "N/A",
+          servico: "N/A",
+          placa_veiculo: "N/A",        
+        };
+      } else {
+        // Status é CAMPO: LIMPA os valores automáticos
+        updatedFormData = {
+          ...updatedFormData,
+          eletricista_motorista: "", // Limpa
+          br0_motorista: "", // Limpa
+          eletricista_parceiro: "", // Limpa  
+          br0_parceiro: "", // Limpa
+          equipe: "", // Limpa
+          servico: "", // ⭐ LIMPA O SERVIÇO TAMBÉM!
+          placa_veiculo: "", // Limpa
+        };
+      }
+    }      
     // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
     if (fieldName === "eletricista_motorista") {
       updatedFormData.br0_motorista = br0Mapping[selectedOption.value] || "";
