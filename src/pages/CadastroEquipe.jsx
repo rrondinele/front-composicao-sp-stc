@@ -271,38 +271,41 @@ const handleLogin = async (e) => {
       border: "1px solid #e5e7eb",
     }),
   };
-  // Função para validar se todos os campos estão preenchidos
+
+  // ✅ Validação condicional: só exige campos operacionais quando status = CAMPO
   const validateForm = () => {
-    const requiredFields = [
-      "data_atividade",
-      "supervisor",
-      "status",
-      "eletricista_motorista",
-      "eletricista_parceiro",
-      "equipe",
-      "servico",
-      "placa_veiculo",
-    ];
+    // Sempre obrigatórios
+    const obrigatoriosBase = ["data_atividade", "supervisor", "status"];
 
-    // Validação ESPECÍFICA para serviço
-    if (formData.status === "CAMPO" && (!formData.servico || formData.servico === "N/A")) {
-      toast.error("Para status CAMPO, é obrigatório selecionar um serviço válido.");
-      return false;
-    }
-    
-    if (formData.status !== "CAMPO" && formData.servico === "N/A") {
-      toast.error("Por favor, selecione um serviço válido.");
-      return false;
-    }
-
-    for (const field of requiredFields) {
-      if (!formData[field] || formData[field] === "N/A") {
+    for (const field of obrigatoriosBase) {
+      if (!formData[field]) {
         toast.error(`Por favor, preencha o campo: ${field.replace(/_/g, " ")}`);
         return false;
       }
     }
+
+    // Se for CAMPO, exigir os demais
+    if (formData.status === "CAMPO") {
+      const camposOperacionais = [
+        "eletricista_motorista",
+        "eletricista_parceiro",
+        "equipe",
+        "servico",
+        "placa_veiculo",
+      ];
+
+      for (const field of camposOperacionais) {
+        if (!formData[field] || formData[field] === "N/A") {
+          toast.error(`Para status CAMPO, preencha o campo: ${field.replace(/_/g, " ")}`);
+          return false;
+        }
+      }
+    }
+
+    // Se NÃO for CAMPO, aceitamos "N/A" nesses campos (não bloqueia)
     return true;
-  }; 
+  };
+
   
   const handleSelectChange = async (selectedOption, fieldName) => {
     // Atualiza o formData com o valor selecionado
