@@ -308,34 +308,43 @@ const handleLogin = async (e) => {
 
   
   const handleSelectChange = async (selectedOption, fieldName) => {
-    // Atualiza o formData com o valor selecionado
-    let updatedFormData = { ...formData, [fieldName]: selectedOption.value };
+    const value = selectedOption?.value ?? null;
 
-    // Se o campo "status" for alterado
+    // 1) Atualiza o campo alterado
+    let updatedFormData = { ...formData, [fieldName]: value };
+
+    // 2) Regras específicas quando o campo alterado é "status"
     if (fieldName === "status") {
-      if (selectedOption.value !== "CAMPO") {
-        // Status DIFERENTE de CAMPO: preenche valores como "N/A"
+      if (value !== "CAMPO") {
+        // Status DIFERENTE de CAMPO: marca todos operacionais como "N/A"
         updatedFormData = {
           ...updatedFormData,
           eletricista_motorista: "N/A",
+          br0_motorista: "",
+          eletricista_parceiro: "N/A",  // ⚠️ importante
+          br0_parceiro: "",
           equipe: "N/A",
           servico: "N/A",
-          placa_veiculo: "N/A",        
+          placa_veiculo: "N/A",
         };
+
+        // Seta o estado e encerra (campos ficarão desabilitados via shouldDisableFields)
+        setFormData(updatedFormData);
+        return;
       } else {
-        // Status é CAMPO: LIMPA os valores automáticos
+        // Status CAMPO: limpa operacionais para obrigar seleção
         updatedFormData = {
           ...updatedFormData,
-          eletricista_motorista: null, // Limpa
-          br0_motorista: "", // Limpa
-          eletricista_parceiro: null, // Limpa  
-          br0_parceiro: "", // Limpa
-          equipe: null, // Limpa
-          servico: null, // ⭐ LIMPA O SERVIÇO TAMBÉM!
-          placa_veiculo: null, // Limpa
+          eletricista_motorista: null,
+          br0_motorista: "",
+          eletricista_parceiro: null,
+          br0_parceiro: "",
+          equipe: null,
+          servico: null,
+          placa_veiculo: null,
         };
       }
-    }  
+    }
         
     // Preenche automaticamente o campo BR0 Motorista ou BR0 Parceiro
     if (fieldName === "eletricista_motorista") {
