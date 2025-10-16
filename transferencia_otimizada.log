@@ -1,0 +1,16 @@
+2025-03-27 17:30:45,631 - INFO - Processo iniciado em 2025-03-27 17:30:45.631323
+2025-03-27 17:30:45,631 - INFO - Iniciando processo de transferência incremental
+2025-03-27 17:30:45,676 - INFO - Conexão source estabelecida com sucesso
+2025-03-27 17:30:46,899 - INFO - Conexão target estabelecida com sucesso
+2025-03-27 17:30:48,245 - INFO - Total de novos registros identificados: 631
+2025-03-27 17:30:48,505 - ERROR - Erro na inserção do lote: ('22007', '[22007] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The conversion of a datetime2 data type to a datetime data type resulted in an out-of-range value. (242) (SQLExecDirectW); [22007] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2025-03-27 17:30:48,622 - ERROR - Falha no lote 1: ('22007', '[22007] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The conversion of a datetime2 data type to a datetime data type resulted in an out-of-range value. (242) (SQLExecDirectW); [22007] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. (3621)')
+2025-03-27 17:30:48,896 - INFO - 
+            RESUMO DA TRANSFERÊNCIA:
+            - Novos registros identificados: 631
+            - Registros inseridos com sucesso: 0
+            - Total na tabela destino: 85922
+            
+2025-03-27 17:30:49,126 - INFO - Conexão target fechada
+2025-03-27 17:30:49,126 - INFO - Conexão source fechada
+2025-03-27 17:30:49,126 - INFO - Processo concluído em 2025-03-27 17:30:49.126450 (Duração: 0:00:03.495127)
