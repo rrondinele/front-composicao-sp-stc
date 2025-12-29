@@ -78,7 +78,19 @@ export const placaVeiculoOptionsCompleta = {
     { value: "TJD6G90", label: "TJD6G90" },
     { value: "TJI5B09", label: "TJI5B09" },
     { value: "TUS4C58", label: "TUS4C58" },  
-    { value: "TUX1E08", label: "TUX1E08" }  
+    { value: "TUX1E08", label: "TUX1E08" },
+    { value: "TIT3D32", label: "TIT3D32" },
+    { value: "TLN1J81", label: "TLN1J81" },
+    { value: "TMH0F06", label: "TMH0F06" },
+    { value: "TIM1G66", label: "TIM1G66" },
+    { value: "TIM3G16", label: "TIM3G16" },
+    { value: "TIZ9A26", label: "TIZ9A26" },
+    { value: "THZ6G90", label: "THZ6G90" },
+    { value: "SRX4H55", label: "SRX4H55" },
+    { value: "THS6I90", label: "THS6I90" },
+
+
+
   ],
   RJB: [
     { value: "TCS4I48", label: "TCS4I48" },
