@@ -1,0 +1,12 @@
+{
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "nodeVersion": "20.x",
+        "installCommand": "npm install --no-package-lock"
+      }
+    }
+  ]
+}
