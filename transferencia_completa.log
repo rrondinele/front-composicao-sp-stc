@@ -1,0 +1,27 @@
+2025-07-30 10:07:59,579 - INFO - Iniciando processo de transferência completa
+2025-07-30 10:07:59,628 - INFO - Conexão source estabelecida com sucesso
+2025-07-30 10:08:01,086 - INFO - Conexão target estabelecida com sucesso
+2025-07-30 10:08:01,086 - INFO - Obtendo metadados das tabelas...
+2025-07-30 10:08:01,882 - INFO - Obtendo chaves existentes no destino...
+2025-07-30 10:08:05,482 - INFO - Identificando novos registros na origem...
+2025-07-30 10:08:25,907 - INFO - Exemplo de registro a ser inserido:
+{'Instalação': '0413112902', 'Nota': '1591446869', 'Data da nota': Timestamp('2025-07-28 00:00:00'), 'Texto das medidas': 'Religar/Rest. no Borne', 'Descrição': 'Religação Técnica', 'Texto breve para o code': 'Religação por Ordem Judicial', 'Tipo de nota': 'BR', 'Tipo de nota.1': 'Religação Técnica', 'Status do Usuário': 'EXEC', 'Fim da avaria': Timestamp('2025-07-28 00:00:00'), 'Texto do item': None, 'Criado por': '4009461', 'Nº referência': None, 'Código do dano': 'RC53', 'Logradouro': 'R S SALVADOR', 'Hora da nota': '17:04:12', 'Número da solicitação': None, 'Início desejado': Timestamp('2025-07-28 00:00:00'), 'Hora de início desejada': '17:04:12', 'Conclusão desejada': Timestamp('2025-07-29 00:00:00'), 'Hora final desejada': '05:04:12', 'Encerram.por data': Timestamp('2025-07-28 00:00:00'), 'Hora de encerramento': '00:00:00', 'Cliente': '30567281', 'Local de instalação': '1001048410', 'Grupo de codes': None, 'Code codificação': None, 'Conjunto contratos': '03L786', 'Data de Inclusão do Registro': None, 'Desc. Cód. Codif.': None, 'Unidade de leitura': '03L78604', 'Objeto de ligação': '1001048410', 'Nome': 'MARIA EDUARDA MENDES DE SOUZA', 'Sobrenome': 'LOPES', 'Nome 1': None, 'Nível de tensão': '01', 'Tipo de instalação': 'B', 'Categoria de tarifa': 'B1', 'ramo de Ativid': 'X001', 'Classe / SubClasse': '1002', 'Área operacional': 'PI', 'Localização': 'L786', 'Código ABC': 'U', 'Abreviatura de rua': None, 'Nº': '1293', 'Sigla edifício': None, 'Suplemento': 'CA 1', 'Sub-bairro': 'SANTA TEREZINHA', 'Município': 'TRES RIOS', 'Região': 'RJ', 'TOI': None, 'Número Predial Próximo': None, 'Medidor Próximo': None, 'Tipo de Ligação': None, 'Proteção': '0', 'Observação para Atendimento Primário': None, 'Número do CONCOD': '18120907', 'GrpCódigos': 'SVC-GER', 'Tipo de medição': '0', 'Proced.adver.': 'UB', 'Referências': None, 'Empresa Executora': 'CENEGED COMPANHIA ELETROMECANI', 'Equipamento Removido': None, 'Equipamento Instalado': None, 'Nº de série': '2861618', 'GrpCódigos.1': 'ZBR-JUD', 'Código de medidas': '17.5'}
+2025-07-30 10:08:25,907 - INFO - Iniciando transferência de 3052 registros...
+2025-07-30 10:09:56,061 - INFO - Inseridos 500 registros no lote
+2025-07-30 10:11:26,978 - INFO - Inseridos 500 registros no lote
+2025-07-30 10:13:00,972 - INFO - Inseridos 500 registros no lote
+2025-07-30 10:14:36,584 - INFO - Inseridos 500 registros no lote
+2025-07-30 10:16:09,707 - INFO - Inseridos 500 registros no lote
+2025-07-30 10:18:01,591 - INFO - Inseridos 500 registros no lote
+2025-07-30 10:18:12,416 - INFO - Inseridos 52 registros no lote
+2025-07-30 10:18:13,121 - INFO - 
+            RESUMO FINAL:
+            - Tempo total: 0:10:13.541351
+            - Registros na origem: 181485
+            - Registros existentes no destino: 178433
+            - Novos registros identificados: 3052
+            - Registros inseridos com sucesso: 3052
+            - Total no destino após transferência: 181485
+            
+2025-07-30 10:18:13,374 - INFO - Conexão target fechada
+2025-07-30 10:18:13,375 - INFO - Conexão source fechada

@@ -1,0 +1,16 @@
+export const statusOptions = [
+    { value: "AFASTADO", label: "AFASTADO" },
+    { value: "ATESTADO", label: "ATESTADO" },
+    { value: "BASE", label: "BASE" },
+    { value: "BANCO DE HORAS", label: "BANCO DE HORAS" },
+    { value: "CAMPO", label: "CAMPO" },
+    { value: "DESLIGADO", label: "DESLIGADO" },
+    { value: "FALTA", label: "FALTA" },
+    { value: "FERIAS", label: "FERIAS" },
+    { value: "FOLGA", label: "FOLGA" },
+    { value: "LICENCA MATERNIDADE", label: "LICENCA MATERNIDADE" },
+    { value: "LICENCA PATERNIDADE", label: "LICENCA PATERNIDADE" },
+    { value: "PERIODICO", label: "PERIODICO" },
+    { value: "SUSPENSAO", label: "SUSPENSAO" },
+    { value: "TREINAMENTO", label: "TREINAMENTO" },
+  ];
