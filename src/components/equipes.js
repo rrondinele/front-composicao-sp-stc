@@ -86,7 +86,7 @@ export const equipeOptionsCompleta = {
     { value: "NI223LLP-B", label: "NI223LLP-B" },
     { value: "NI224LLP-B", label: "NI224LLP-B" },
     { value: "NI225LRP-B", label: "NI225LRP-B" },
-    { value: "NI226SRP-B", label: "NI226SRP-B" }
+    { value: "NI226SLP-B", label: "NI226SLP-B" }
   ],
   RJB: [
     { value: "BPCGDA001", label: "BPCGDA001" },
