@@ -12,6 +12,7 @@ export const servicoOptionsPorEstado = {
     { value: "CORTE", label: "CORTE" },
     { value: "EMERGENCIA", label: "EMERGENCIA" },
     { value: "LIGACAO NOVA", label: "LIGACAO NOVA" },
+    { value: "PERDAS", label: "PERDAS" },
     { value: "PRE-VENDA", label: "PRE-VENDA" },
     { value: "RELIGA", label: "RELIGA" }
 

@@ -55,6 +55,7 @@ export const placaVeiculoOptionsCompleta = {
     { value: "SVK0G61", label: "SVK0G61" },
     { value: "SVL2D32", label: "SVL2D32" },
     { value: "SVN8G81", label: "SVN8G81" },
+    { value: "TCS4I56", label: "TCS4I56" },
     { value: "TCT8C08", label: "TCT8C08" },
     { value: "TCU5D82", label: "TCU5D82" },
     { value: "TCU5D82", label: "TCU5D82" },
@@ -77,6 +78,8 @@ export const placaVeiculoOptionsCompleta = {
     { value: "TIT3D32", label: "TIT3D32" },
     { value: "TKR5A94", label: "TKR5A94" },
     { value: "TLN1J81", label: "TLN1J81" },
+    { value: "TJI5B09", label: "TJI5B09" },
+    { value: "TJD6G90", label: "TJD6G90" },
     { value: "TMH0F06", label: "TMH0F06" },
     { value: "TUS4C58", label: "TUS4C58" }
   ],
